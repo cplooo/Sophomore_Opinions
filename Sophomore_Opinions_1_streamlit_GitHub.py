@@ -54,27 +54,28 @@ column_title = []
 
 ####### Part1  基本資料
 ###### Part1-1 您選擇目前就讀科系的理由為何 ?
-# df_sophomore.iloc[:,7] ## 1.您選擇目前就讀科系的理由為何? (可複選)
-column_title.append(df_sophomore.columns[7][2:])
-##### 将字符串按逗号分割并展平
-split_values = df_sophomore.iloc[:,7].str.split(',').explode()
-##### 计算不同子字符串的出现次数
-value_counts = split_values.value_counts()
-##### 计算不同子字符串的比例
-proportions = value_counts / value_counts.sum()
-##### 轉換成 numpy array
-value_counts_numpy = value_counts.values
-proportions_numpy = proportions.values
-items_numpy = proportions.index.to_numpy()
-##### 创建一个新的DataFrame来显示结果
-result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
-##### 存到 list 'df_streamlit'
-df_streamlit.append(result_df)  
-##### 使用Streamlit展示DataFrame，但不显示索引
-st.write("選擇目前就讀科系的理由:", result_df.to_html(index=False), unsafe_allow_html=True)
-st.markdown("##")  ## 更大的间隔
-##### 使用Streamlit畫圖
 with st.expander("繪圖: 選擇目前就讀科系的理由:"):
+    # df_sophomore.iloc[:,7] ## 1.您選擇目前就讀科系的理由為何? (可複選)
+    column_title.append(df_sophomore.columns[7][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,7].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write("選擇目前就讀科系的理由:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+    ##### 使用Streamlit畫圖
     # st.markdown(f"圖形中項目(由下至上): {result_df['項目'].values.tolist()}")
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -218,30 +219,30 @@ st.markdown("##")  ## 更大的间隔
 # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習不良課程.xlsx', index=False, engine='openpyxl')
 # #%% (四) 以上
 
+
 ###### Part1-4 大學畢業後的規劃
-#df_sophomore.columns
-# df_sophomore.iloc[:,10] ## 4. 大學畢業後的規劃
-column_title.append(df_sophomore.columns[10][2:])
-##### 将字符串按逗号分割并展平
-split_values = df_sophomore.iloc[:,10].str.split(',').explode()
-##### 计算不同子字符串的出现次数
-value_counts = split_values.value_counts()
-##### 计算不同子字符串的比例
-proportions = value_counts / value_counts.sum()
-##### 轉換成 numpy array
-value_counts_numpy = value_counts.values
-proportions_numpy = proportions.values
-items_numpy = proportions.index.to_numpy()
-##### 创建一个新的DataFrame来显示结果
-result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
-##### 存到 list 'df_streamlit'
-df_streamlit.append(result_df)  
-##### 使用Streamlit展示DataFrame，但不显示索引
-st.write("大學畢業後的規劃:", result_df.to_html(index=False), unsafe_allow_html=True)
-st.markdown("##")  ## 更大的间隔
-##### 使用Streamlit畫圖
-with st.expander("繪圖: 大學畢業後的規劃:"):
-    # st.markdown(f"圖形中項目(由下至上): {result_df['項目'].values.tolist()}")
+with st.expander("大學畢業後的規劃:"):
+    #df_sophomore.columns
+    # df_sophomore.iloc[:,10] ## 4. 大學畢業後的規劃
+    column_title.append(df_sophomore.columns[10][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,10].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write("大學畢業後的規劃:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+    ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
