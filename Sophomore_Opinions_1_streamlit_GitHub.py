@@ -55,7 +55,7 @@ column_title = []
 
 ####### Part1  基本資料
 ###### Part1-1 您選擇目前就讀科系的理由為何 ?
-with st.expander("繪圖: 選擇目前就讀科系的理由:"):
+with st.expander("選擇目前就讀科系的理由:"):
     # df_sophomore.iloc[:,7] ## 1.您選擇目前就讀科系的理由為何? (可複選)
     column_title.append(df_sophomore.columns[7][2:])
     ##### 将字符串按逗号分割并展平
