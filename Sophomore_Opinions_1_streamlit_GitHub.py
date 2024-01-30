@@ -126,16 +126,16 @@ with st.expander("繪圖: 選擇目前就讀科系的理由:"):
 # '''
 # 科系   學習良好課程    
 # 中文系  無             27
-#      文學概論           8
-#      語言學概論          7
-#      兒童文學概論         5
-#      國學導讀           4
-#                    ..
+#       文學概論           8
+#       語言學概論          7
+#       兒童文學概論         5
+#       國學導讀           4
+#                     ..
 # 食營系  食品基礎分析化學實驗     1
-#      食品基礎分析實驗       1
-#      食品工程           1
-#      食物製備           1
-#      食物製備實驗         1
+#       食品基礎分析實驗       1
+#       食品工程           1
+#       食物製備           1
+#       食物製備實驗         1
 # Name: 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」, Length: 590, dtype: int64
 # '''
 # ##### 将 MultiIndex Series 'counts' 转换为DataFrame
@@ -217,44 +217,57 @@ with st.expander("繪圖: 選擇目前就讀科系的理由:"):
 # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習不良課程.xlsx', index=False, engine='openpyxl')
 # #%% (四) 以上
 
-# ###### Part1-4 大學畢業後的規劃
-# #df_sophomore.columns
+###### Part1-4 大學畢業後的規劃
+#df_sophomore.columns
 # df_sophomore.iloc[:,10] ## 4. 大學畢業後的規劃
-# ##### 将字符串按逗号分割并展平
-# split_values = df_sophomore.iloc[:,10].str.split(',').explode()
-# ##### 计算不同子字符串的出现次数
-# value_counts = split_values.value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
+column_title.append(df_sophomore.columns[10][2:])
+##### 将字符串按逗号分割并展平
+split_values = df_sophomore.iloc[:,10].str.split(',').explode()
+##### 计算不同子字符串的出现次数
+value_counts = split_values.value_counts()
+##### 计算不同子字符串的比例
+proportions = value_counts / value_counts.sum()
+##### 轉換成 numpy array
+value_counts_numpy = value_counts.values
+proportions_numpy = proportions.values
+items_numpy = proportions.index.to_numpy()
+##### 创建一个新的DataFrame来显示结果
+result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+##### 存到 list 'df_streamlit'
+df_streamlit.append(result_df)  
+##### 使用Streamlit展示DataFrame，但不显示索引
+st.write("大學畢業後的規劃:", result_df.to_html(index=False), unsafe_allow_html=True)
+st.markdown("##")  ## 更大的间隔
+##### 使用Streamlit畫圖
+with st.expander("繪圖: 大學畢業後的規劃:"):
+    # st.markdown(f"圖形中項目(由下至上): {result_df['項目'].values.tolist()}")
+    #### 設置中文顯示
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 创建图形和坐标轴
+    plt.figure(figsize=(11, 8))
+    #### 绘制条形图
+    plt.barh(result_df['項目'], result_df['人數'])
+    #### 標示比例數據
+    for i in range(len(result_df['項目'])):
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+    #### 添加一些图形元素
+    plt.title('大學畢業後的規劃', fontsize=16)
+    plt.xlabel('人數', fontsize=16)
+    #plt.ylabel('本校現在所提供的資源或支援事項')
+    #### 调整x轴和y轴刻度标签的字体大小
+    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
+    plt.legend()
+    #### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    #### 显示图形
+    ### 一般顯示
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
 
-# #%% (五) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(2)
-# })
-# print('畢業後規劃:')
-# print(result_df)
-# '''
-# 畢業後規劃:
-#         人數    比例
-# 就業     784  0.43
-# 還沒有想法  630  0.34
-# 升學     420  0.23
-# '''
-# #### 將 index 變column
-# result_df_r = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_r .rename(columns={'index': '畢業後規劃'}, inplace=True)
-# print(result_df_r)
-
-# '''
-#    畢業後規劃   人數    比例
-# 0     就業  784  0.43
-# 1  還沒有想法  630  0.34
-# 2     升學  420  0.23
-# '''
-# #%% (五) 以上
 
 
 # ###### Part1-5 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
