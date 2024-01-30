@@ -40,15 +40,25 @@ html_temp = """
 		</div>
 		"""
 stc.html(html_temp)
-
-
-
-####### 選擇學系
-department_choice = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
-#department_choice = '化科系'
-df_sophomore = df_sophomore_original[df_sophomore_original['科系']==department_choice]
-
 st.markdown("##")  ## 更大的间隔
+
+
+####### 選擇院系
+###### 預選 df_sophomore 以防止讀取df_sophomore錯誤
+df_sophomore = df_sophomore_original[df_sophomore_original['科系']=='化科系']
+###### 選擇 院 or 系:
+院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1 : ')
+if 院_系 == '0':
+    choice = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
+    #choice = '化科系'
+    df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
+elif 院_系 == '1':
+    choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique())
+    #choice = '管理'
+    df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
+
+
+
 
 df_streamlit = []
 column_title = []
