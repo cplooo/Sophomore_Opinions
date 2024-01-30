@@ -48,6 +48,7 @@ department_choice = st.selectbox('選擇學系', df_sophomore_original['科系']
 #department_choice = '化科系'
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']==department_choice]
 
+st.markdown("##")  ## 更大的间隔
 
 df_streamlit = []
 column_title = []
