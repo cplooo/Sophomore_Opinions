@@ -102,7 +102,7 @@ with st.expander("繪圖: 選擇目前就讀科系的理由:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
-    st.markdown("##")  ## 更大的间隔
+st.markdown("##")  ## 更大的间隔    
 
 
 
@@ -268,7 +268,7 @@ with st.expander("繪圖: 大學畢業後的規劃:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
-    st.markdown("##")  ## 更大的间隔
+st.markdown("##")  ## 更大的间隔    
 
 
 
