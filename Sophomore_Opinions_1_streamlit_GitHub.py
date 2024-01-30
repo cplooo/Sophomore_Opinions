@@ -817,63 +817,60 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-# ####### Part3  學習投入 (依多數課程情況回答)
-# ###### Part3-1 學習投入 (依多數課程情況回答): 上課時我
-# df_sophomore.iloc[:,28] ##  學習投入 (依多數課程情況回答): 上課時我
-# ##### 将字符串按逗号分割并展平
-# split_values = df_sophomore.iloc[:,28].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# value_counts = split_values.value_counts()
-# #value_counts = df_sophomore.iloc[:,26].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
+####### Part3  學習投入 (依多數課程情況回答)
+###### Part3-1 學習投入 (依多數課程情況回答): 上課時我
+with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
+    # df_sophomore.iloc[:,28] ##  學習投入 (依多數課程情況回答): 上課時我
+    column_title.append(df_sophomore.columns[28][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,28].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write("學習投入 (依多數課程情況回答): 上課時我:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+    ##### 使用Streamlit畫圖
+    #### 設置中文顯示
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 创建图形和坐标轴
+    plt.figure(figsize=(11, 8))
+    #### 绘制条形图
+    plt.barh(result_df['項目'], result_df['人數'])
+    #### 標示比例數據
+    for i in range(len(result_df['項目'])):
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+    #### 添加一些图形元素
+    plt.title('學習投入 (依多數課程情況回答): 上課時我', fontsize=16)
+    plt.xlabel('人數', fontsize=16)
+    #plt.ylabel('本校現在所提供的資源或支援事項')
+    #### 调整x轴和y轴刻度标签的字体大小
+    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
+    plt.legend()
+    #### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    #### 显示图形
+    ### 一般顯示
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+st.markdown("##")  ## 更大的间隔   
 
-# #%% (十五) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('上學習投入(依多數課程情況回答):上課時我:')
-# print(result_df)
-# '''
-# 上學習投入(依多數課程情況回答):上課時我:
-#                                                       人數     比例
-# 會準時完成老師指定的作業                                        1203  0.156
-# 遇到課業難題會上網找資料或向人請教                                   1074  0.140
-# 能整理上課重點                                             1017  0.132
-# 會提前或準時到教室上課                                          886  0.115
-# 容易與同學共同完成團體作業                                        708  0.092
-# 樂於參與老師用(玩課雲/IG/Line/臉書/Kahoot/數位學習平台/Zuvio/…)社群...   638  0.083
-# 能妥善規劃課業學習的時間                                         593  0.077
-# 念書時會把正在學習的知識和過去所學做連結                                 508  0.066
-# 會盡力表現以達到或超越教師期望                                      476  0.062
-# 對於自己目前的學業表現感到滿意                                      368  0.048
-# 對課業的學習得心應手                                           217  0.028
-# '''
-# #### 將 index 變column
-# result_df_r = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_r.rename(columns={'index': '學習投入(依多數課程情況回答):上課時我'}, inplace=True)
-# print(result_df_r)
 
-# '''
-#                                  學習投入(依多數課程情況回答):上課時我    人數     比例
-# 0                                        會準時完成老師指定的作業  1203  0.156
-# 1                                   遇到課業難題會上網找資料或向人請教  1074  0.140
-# 2                                             能整理上課重點  1017  0.132
-# 3                                         會提前或準時到教室上課   886  0.115
-# 4                                       容易與同學共同完成團體作業   708  0.092
-# 5   樂於參與老師用(玩課雲/IG/Line/臉書/Kahoot/數位學習平台/Zuvio/…)社...   638  0.083
-# 6                                        能妥善規劃課業學習的時間   593  0.077
-# 7                                念書時會把正在學習的知識和過去所學做連結   508  0.066
-# 8                                     會盡力表現以達到或超越教師期望   476  0.062
-# 9                                     對於自己目前的學業表現感到滿意   368  0.048
-# 10                                         對課業的學習得心應手   217  0.028
-# '''
-# #%% (十五) 以上
+
+
 
 
 # ####### Part4  學校學習環境滿意度
