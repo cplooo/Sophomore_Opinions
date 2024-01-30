@@ -544,144 +544,58 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-# ###### Part2-10  您工讀次要的原因為何?
-# df_sophomore.iloc[:,22] ##  10.您工讀次要的原因為何?
-# ##### 将字符串按逗号分割并展平
-# #split_values = df_sophomore.iloc[:,19].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# #value_counts = split_values.value_counts()
-# value_counts = df_sophomore.iloc[:,22].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (十) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df_2nd = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('工讀次要原因:')
-# print(result_df_2nd)
-# '''
-# 工讀次要原因:
-#                  人數     比例
-# 為未來工作累積經驗       218  0.258
-# 不須負擔生活費但想增加零用錢  211  0.250
-# 負擔生活費           194  0.230
-# 學習應對與表達能力       173  0.205
-# 增加人脈             29  0.034
-# 無                 3  0.004
-# 負擔學費              1  0.001
-# 因為沒錢              1  0.001
-# 獎學金工讀             1  0.001
-# 儲蓄                1  0.001
-# 以上皆是              1  0.001
-# 增加積蓄              1  0.001
-# 我花錢如流水            1  0.001
-# 同替家裡減輕負擔          1  0.001
-# 想自己存錢出國旅遊         1  0.001
-# 興趣                1  0.001
-# 喜歡小朋友，所以在補習班上班    1  0.001
-# 有新的領域想要嘗試         1  0.001
-# 每月多餘的錢存進帳戶        1  0.001
-# 準備好畢業出路           1  0.001
-# 體驗生活              1  0.001
-# 不想跟家裡拿生活費想靠自己賺    1  0.001
-# 存錢                1  0.001
-# '''
-# #### 將 index 變column
-# result_df_2nd_r = result_df_2nd.reset_index()
-# #### 重新命名新的column
-# result_df_2nd_r.rename(columns={'index': '工讀次要原因'}, inplace=True)
-# print(result_df_2nd_r)
-
-# '''
-#             工讀次要原因   人數     比例
-# 0        為未來工作累積經驗  218  0.258
-# 1   不須負擔生活費但想增加零用錢  211  0.250
-# 2            負擔生活費  194  0.230
-# 3        學習應對與表達能力  173  0.205
-# 4             增加人脈   29  0.034
-# 5                無    3  0.004
-# 6             負擔學費    1  0.001
-# 7             因為沒錢    1  0.001
-# 8            獎學金工讀    1  0.001
-# 9               儲蓄    1  0.001
-# 10            以上皆是    1  0.001
-# 11            增加積蓄    1  0.001
-# 12          我花錢如流水    1  0.001
-# 13        同替家裡減輕負擔    1  0.001
-# 14       想自己存錢出國旅遊    1  0.001
-# 15              興趣    1  0.001
-# 16  喜歡小朋友，所以在補習班上班    1  0.001
-# 17       有新的領域想要嘗試    1  0.001
-# 18      每月多餘的錢存進帳戶    1  0.001
-# 19         準備好畢業出路    1  0.001
-# 20            體驗生活    1  0.001
-# 21  不想跟家裡拿生活費想靠自己賺    1  0.001
-# 22              存錢    1  0.001
-# '''
-# #%% (十) 以上
-
-# #%% (十圖) 以下
-# # ##### 畫圖: 
-# # #### 获取索引的数值表示
-# # #y_values = range(len(df_total_Q25_MeanValuesSDProportion.index))
-# # #### 创建图形和坐标轴
-# # plt.figure(figsize=(11, 8))
-# # #### 绘制散点图
-# # plt.plot(result_df_2nd_r.iloc[:,1], result_df_2nd_r.iloc[:,0], '-b', label='工讀次要原因', marker='o')
-# # # ### 標示數據
-# # # for i in range(len(result_df_2nd_r.iloc[:,0])):
-# # #     plt.text(result_df_2nd_r.iloc[:,1][i]+14, result_df_2nd_r.iloc[:,0][i], f'{result_df_2nd_r.iloc[:,2][i]:.0%}')
-# # #### 绘制散点图
-# # plt.plot(result_df_1st_r.iloc[:,1], result_df_1st_r.iloc[:,0], '-r', label='工讀主要原因', marker='*')
-# # # ### 標示數據
-# # # for i in range(len(result_df_1st_r.iloc[:,0])):
-# # #     plt.text(result_df_1st_r.iloc[:,1][i]+14, result_df_1st_r.iloc[:,0][i], f'{result_df_1st_r.iloc[:,2][i]:.0%}', fontsize=16)
-
-# # ### 添加一些图形元素
-# # plt.title('工讀主要與次要原因', fontsize=16)
-# # plt.xlabel('所占比例', fontsize=16)
-# # #plt.ylabel('所提供的資源或支援事項')
-# # ### 调整x轴和y轴刻度标签的字体大小
-# # plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-# # plt.legend()
-# # ### 显示网格线
-# # plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
-# # ### 显示图形
-# # plt.show()
+###### Part2-10  您工讀次要的原因為何?
+with st.expander("您工讀次要的原因為何:"):
+    # df_sophomore.iloc[:,22] ##  10.您工讀次要的原因為何?
+    column_title.append(df_sophomore.columns[22][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,22].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write("您工讀次要的原因為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+    ##### 使用Streamlit畫圖
+    #### 設置中文顯示
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 创建图形和坐标轴
+    plt.figure(figsize=(11, 8))
+    #### 绘制条形图
+    plt.barh(result_df['項目'], result_df['人數'])
+    #### 標示比例數據
+    for i in range(len(result_df['項目'])):
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+    #### 添加一些图形元素
+    plt.title('您工讀次要的原因為何', fontsize=16)
+    plt.xlabel('人數', fontsize=16)
+    #plt.ylabel('本校現在所提供的資源或支援事項')
+    #### 调整x轴和y轴刻度标签的字体大小
+    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
+    plt.legend()
+    #### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    #### 显示图形
+    ### 一般顯示
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+st.markdown("##")  ## 更大的间隔   
 
 
-# #### 圖：
-# ### 创建图形和坐标轴
-# plt.figure(figsize=(11, 8))
-# ### 绘制条形图
-# bar_num = 5
-# plt.barh(result_df_2nd_r['工讀次要原因'][:bar_num], result_df_2nd_r['人數'][:bar_num])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# #for i in range(len(result_df_2nd_r['工讀次要原因'])):
-# for i in range(bar_num):
-#     plt.text(result_df_2nd_r['人數'][i]+5, result_df_2nd_r['工讀次要原因'][i], f'{result_df_2nd_r.iloc[:, 2][i]:.0%}', fontsize=16)
 
-# ### 添加一些图形元素
-# plt.title('工讀次要原因', fontsize=16)
-# plt.xlabel('人數', fontsize=16)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-
-# plt.legend()
-# ### 显示网格线
-# plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
-# ### 显示图形
-# plt.show()
-
-
-# #%% (十圖) 以上
 
 
 
