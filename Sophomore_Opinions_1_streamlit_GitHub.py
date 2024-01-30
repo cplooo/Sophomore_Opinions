@@ -274,77 +274,59 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-# ###### Part1-5 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
-# #df_sophomore.columns
-# df_sophomore.iloc[:,11] ## 5. 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
-# ##### 将字符串按逗号分割并展平
-# split_values = df_sophomore.iloc[:,11].str.split(',').explode()
-# ##### 计算不同子字符串的出现次数
-# value_counts = split_values.value_counts()
-# #value_counts = df_sophomore.iloc[:,11].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
+###### Part1-5 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
+with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源:"):
+    # df_sophomore.columns
+    # df_sophomore.iloc[:,11] ## 5. 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
+    column_title.append(df_sophomore.columns[11][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,11].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write("學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+    ##### 使用Streamlit畫圖
+    #### 設置中文顯示
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 创建图形和坐标轴
+    plt.figure(figsize=(11, 8))
+    #### 绘制条形图
+    plt.barh(result_df['項目'], result_df['人數'])
+    #### 標示比例數據
+    for i in range(len(result_df['項目'])):
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+    #### 添加一些图形元素
+    plt.title('學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源', fontsize=16)
+    plt.xlabel('人數', fontsize=16)
+    #plt.ylabel('本校現在所提供的資源或支援事項')
+    #### 调整x轴和y轴刻度标签的字体大小
+    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
+    plt.legend()
+    #### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    #### 显示图形
+    ### 一般顯示
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+st.markdown("##")  ## 更大的间隔    
 
-# #%% (六) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('學習及生活費主要來源:')
-# print(result_df)
-# '''
-# 學習及生活費主要來源:
-#                           人數     比例(由大至小)
-# 家庭提供                    1364  0.744
-# 打工或工讀所得                  336  0.183
-# 助學貸款                      67  0.037
-# 個人儲蓄                      38  0.021
-# 校內外獎助學金                   15  0.008
-# 老公                         1  0.001
-# 現在是家庭提供，但是父親屆退，可能有經濟困難     1  0.001
-# 家裡有礦                       1  0.001
-# 打工加獎學金                     1  0.001
-# 家庭、工作                      1  0.001
-# 沒有多選嗎                      1  0.001
-# 家庭提供跟個人儲蓄                  1  0.001
-# 股票投資                       1  0.001
-# 家庭 打工 學貸都有                 1  0.001
-# 前四項                        1  0.001
-# 家庭+外面兼學校工讀                 1  0.001
-# 家庭提供 助學貸款 打工 都有            1  0.001
-# 家庭加就學貸款                    1  0.001
-# 家庭提供跟打工                    1  0.001
-# '''
-# #### 將 index 變column
-# result_df_r = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_r .rename(columns={'index': '學習及生活費主要來源'}, inplace=True)
-# print(result_df_r)
 
-# '''
-#                 學習及生活費主要來源    人數     比例
-# 0                     家庭提供  1364  0.744
-# 1                  打工或工讀所得   336  0.183
-# 2                     助學貸款    67  0.037
-# 3                     個人儲蓄    38  0.021
-# 4                  校內外獎助學金    15  0.008
-# 5                       老公     1  0.001
-# 6   現在是家庭提供，但是父親屆退，可能有經濟困難     1  0.001
-# 7                     家裡有礦     1  0.001
-# 8                   打工加獎學金     1  0.001
-# 9                    家庭、工作     1  0.001
-# 10                   沒有多選嗎     1  0.001
-# 11               家庭提供跟個人儲蓄     1  0.001
-# 12                    股票投資     1  0.001
-# 13              家庭 打工 學貸都有     1  0.001
-# 14                     前四項     1  0.001
-# 15              家庭+外面兼學校工讀     1  0.001
-# 16         家庭提供 助學貸款 打工 都有     1  0.001
-# 17                 家庭加就學貸款     1  0.001
-# 18                 家庭提供跟打工     1  0.001
-# '''
-# #%% (六) 以上
+
 
 
 # ####### Part2  時間規劃
