@@ -53,6 +53,7 @@ def Frequency_Distribution(df, column_index):
 #### 調整項目次序
 ###定义期望的項目顺序
 ### 函数：调整 DataFrame 以包含所有項目，且顺序正确
+@st.cache_data(ttl=3600, show_spinner="正在加載資料...")  ## Add the caching decorator
 def adjust_df(df, order):
     # 确保 DataFrame 包含所有滿意度值
     for item in order:
