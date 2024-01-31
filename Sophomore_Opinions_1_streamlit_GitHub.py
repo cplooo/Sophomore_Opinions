@@ -1037,7 +1037,7 @@ with st.expander("您工讀最主要的原因為何:"):
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.tick_params(axis='both', labelsize=11)  # 同时调整x轴和y轴
     plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
@@ -1160,7 +1160,7 @@ with st.expander("您工讀次要的原因為何:"):
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.tick_params(axis='both', labelsize=11)  # 同时调整x轴和y轴
     plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
@@ -1779,7 +1779,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.tick_params(axis='both', labelsize=11)  # 同时调整x轴和y轴
     plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
