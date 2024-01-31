@@ -151,7 +151,7 @@ with st.expander("選擇目前就讀科系的理由:"):
     st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     # st.markdown(f"圖形中項目(由下至上): {result_df['項目'].values.tolist()}")
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -197,8 +197,9 @@ with st.expander("選擇目前就讀科系的理由:"):
     # #### 去掉 level 1 index
     # combined_df_r = combined_df.reset_index(level=1, drop=True)
 
-    ###### 比較圖
-    ### 設置 matplotlib 支持中文的字體: 這裡使用的是 'SimHei' 字體，您也可以替換為任何支持中文的字體
+    
+    ##### 使用streamlit 畫比較圖
+    #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
     # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
@@ -247,9 +248,6 @@ with st.expander("選擇目前就讀科系的理由:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
-
-
-
 
 st.markdown("##")  ## 更大的间隔    
 
@@ -390,6 +388,7 @@ with st.expander("大學畢業後的規劃:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("大學畢業後的規劃:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -417,6 +416,51 @@ with st.expander("大學畢業後的規劃:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+
+    ##### 使用streamlit 畫比較圖
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
 st.markdown("##")  ## 更大的间隔    
 
 
