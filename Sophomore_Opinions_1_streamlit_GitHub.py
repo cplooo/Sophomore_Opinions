@@ -33,8 +33,6 @@ def load_data(path):
     df = pd.read_pickle(path)
     return df
 
-df = load_data("https://raw.githubusercontent.com/plotly/datasets/master/26k-consumer-complaints.csv")
-
 
 ######  读取Pickle文件
 df_sophomore_original = load_data('df_sophomore_original.pkl')
