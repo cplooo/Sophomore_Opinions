@@ -221,7 +221,11 @@ with st.expander("選擇目前就讀科系的理由:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -461,7 +465,11 @@ with st.expander("大學畢業後的規劃:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1575,7 +1583,7 @@ with st.expander("您上網次要用途為何:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+        rects = ax.barh(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1696,7 +1704,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+        rects = ax.barh(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1821,7 +1829,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+        rects = ax.barh(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
