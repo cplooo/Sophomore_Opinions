@@ -50,6 +50,23 @@ def Frequency_Distribution(df, column_index):
     return result_df
 
 
+#### 調整項目次序
+###定义期望的項目顺序
+# desired_order = ['非常滿意', '滿意', '普通', '不滿意', '非常不滿意']
+### 函数：调整 DataFrame 以包含所有項目，且顺序正确
+def adjust_df(df, order):
+    # 确保 DataFrame 包含所有項目
+    for item in order:
+        if item not in df['項目'].values:
+            df = df.append({'項目': item, '人數': 0, '比例': 0}, ignore_index=True)
+
+    # 根据期望的顺序重新排列 DataFrame
+    df = df.set_index('項目').reindex(order).reset_index()
+    return df
+
+
+
+
 
 ######  读取Pickle文件
 df_sophomore_original = load_data('df_sophomore_original.pkl')
@@ -78,11 +95,61 @@ selected_options = ['化科系','企管系']
 collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
 # len(collections) ## 2
 # type(collections[0])   ## pandas.core.frame.DataFrame
-dataframes = [Frequency_Distribution(df, 7) for df in collections]
+dataframes = [Frequency_Distribution(df, 22) for df in collections]  ## 22: "您工讀次要的原因為何:"
 # len(dataframes)  ## 2
 # len(dataframes[1]) ## 6
-combined_df = pd.concat(dataframes, keys=selected_options)
-# combined_df = pd.concat([dataframes[0], dataframes[1]], axis=0)
+# len(dataframes[0]) ## 5
+
+## 形成所有學系'項目'欄位的所有值
+desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+
+## 缺的項目值加以擴充， 並統一一樣的項目次序
+dataframes_r = [adjust_df(df, desired_order) for df in dataframes]
+# len(dataframes_r)  ## 2
+# len(dataframes_r[1]) ## 6
+# len(dataframes_r[0]) ## 6, 從原本的5變成6 
+# dataframes_r[0]['項目']
+# '''
+# 0              體驗生活
+# 1         為未來工作累積經驗
+# 2             負擔生活費
+# 3              增加人脈
+# 4    不須負擔生活費但想增加零用錢
+# 5         學習應對與表達能力
+# Name: 項目, dtype: object
+# '''
+# dataframes_r[1]['項目']
+# '''
+# 0              體驗生活
+# 1         為未來工作累積經驗
+# 2             負擔生活費
+# 3              增加人脈
+# 4    不須負擔生活費但想增加零用錢
+# 5         學習應對與表達能力
+# Name: 項目, dtype: object
+# '''
+
+                     
+combined_df = pd.concat(dataframes_r, keys=selected_options)
+# ''' 
+#                    項目  人數      比例
+# 化科系 0            體驗生活   0  0.0000
+#     1       為未來工作累積經驗  13  0.3824
+#     2           負擔生活費   2  0.0588
+#     3            增加人脈   2  0.0588
+#     4  不須負擔生活費但想增加零用錢   7  0.2059
+#     5       學習應對與表達能力  10  0.2941
+# 企管系 0            體驗生活   1  0.0417
+#     1       為未來工作累積經驗   9  0.3750
+#     2           負擔生活費   4  0.1667
+#     3            增加人脈   2  0.0833
+#     4  不須負擔生活費但想增加零用錢   2  0.0833
+#     5       學習應對與表達能力   6  0.2500
+# '''
+
+
+
+
 
 
 global 院_系
@@ -193,12 +260,20 @@ with st.expander("選擇目前就讀科系的理由:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]        
         combined_df = pd.concat(dataframes, keys=selected_options)
         
     #### 設置 matplotlib 支持中文的字體: 
@@ -437,12 +512,20 @@ with st.expander("大學畢業後的規劃:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
   
     #### 設置 matplotlib 支持中文的字體: 
@@ -560,12 +643,20 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -685,12 +776,20 @@ with st.expander("您二年級就學期間是否工讀:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -809,12 +908,20 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -936,12 +1043,20 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -1057,12 +1172,20 @@ with st.expander("您工讀最主要的原因為何:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -1180,12 +1303,20 @@ with st.expander("您工讀次要的原因為何:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -1304,12 +1435,20 @@ with st.expander("您每周平均上網時間為何:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -1428,12 +1567,20 @@ with st.expander("您上網主要用途為何:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -1553,12 +1700,20 @@ with st.expander("您上網次要用途為何:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -1674,12 +1829,20 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
@@ -1799,12 +1962,20 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
     #### 設置 matplotlib 支持中文的字體: 
