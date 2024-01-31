@@ -199,6 +199,8 @@ with st.expander("選擇目前就讀科系的理由:"):
 
     
     ##### 使用streamlit 畫比較圖
+    dataframes = [Frequency_Distribution(df,column_index) for df in collections]
+    combined_df = pd.concat(dataframes, keys=selected_options)
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -420,6 +422,8 @@ with st.expander("大學畢業後的規劃:"):
     st.pyplot(plt)
 
     ##### 使用streamlit 畫比較圖
+    dataframes = [Frequency_Distribution(df,column_index) for df in collections]
+    combined_df = pd.concat(dataframes, keys=selected_options)
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -521,6 +525,8 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     st.pyplot(plt)
 
     ##### 使用streamlit 畫比較圖
+    dataframes = [Frequency_Distribution(df,column_index) for df in collections]
+    combined_df = pd.concat(dataframes, keys=selected_options)
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -653,7 +659,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -710,7 +716,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -765,7 +771,7 @@ with st.expander("您工讀最主要的原因為何:"):
     st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -1051,7 +1057,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -1110,7 +1116,8 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
-    ##### 使用Streamlit畫圖
+
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
