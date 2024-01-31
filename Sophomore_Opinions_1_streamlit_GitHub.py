@@ -370,9 +370,11 @@ st.markdown("##")  ## 更大的间隔
 with st.expander("大學畢業後的規劃:"):
     #df_sophomore.columns
     # df_sophomore.iloc[:,10] ## 4. 大學畢業後的規劃
-    column_title.append(df_sophomore.columns[10][2:])
+    column_index = 10
+    item_name = "大學畢業後的規劃:"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,10].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -386,7 +388,7 @@ with st.expander("大學畢業後的規劃:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("大學畢業後的規劃:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
     ##### 使用Streamlit畫單一圖
@@ -403,7 +405,7 @@ with st.expander("大學畢業後的規劃:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('大學畢業後的規劃', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -469,9 +471,11 @@ st.markdown("##")  ## 更大的间隔
 with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,11] ## 5. 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
-    column_title.append(df_sophomore.columns[11][2:])
+    column_index = 11
+    item_name = "學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源:"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,11].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -485,7 +489,7 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
     ##### 使用Streamlit畫單一圖
@@ -502,7 +506,7 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -570,9 +574,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-6 您二年級就學期間是否工讀 ?
 with st.expander("您二年級就學期間是否工讀:"):
     # df_sophomore.iloc[:,18] ## 6. 您二年級就學期間是否工讀?
-    column_title.append(df_sophomore.columns[18][2:])
+    column_index = 18
+    item_name = "您二年級就學期間是否工讀:"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,18].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -586,10 +592,10 @@ with st.expander("您二年級就學期間是否工讀:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("您二年級就學期間是否工讀:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -603,7 +609,7 @@ with st.expander("您二年級就學期間是否工讀:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您二年級就學期間是否工讀', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -626,9 +632,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-7 您二年級「上學期」平均每周工讀時數 ?
 with st.expander("您二年級「上學期」平均每周工讀時數:"):
     # df_sophomore.iloc[:,19] ## 7.您二年級「上學期」平均每周工讀時數 ?
-    column_title.append(df_sophomore.columns[19][2:])
+    column_index = 19
+    item_name = "您二年級「上學期」平均每周工讀時數:"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,19].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -642,7 +650,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("二年級「上學期」平均每周工讀時數:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
     ##### 使用Streamlit畫圖
@@ -659,7 +667,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('二年級「上學期」平均每周工讀時數', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -681,9 +689,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-8 您二年級「上學期」的工讀地點為何 ?
 with st.expander("您二年級「上學期」的工讀地點為何:"):
     # df_sophomore.iloc[:,20] ## 8.您二年級「上學期」的工讀地點為何 ?
-    column_title.append(df_sophomore.columns[20][2:])
+    column_index = 20
+    item_name = "您二年級「上學期」的工讀地點為何"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,20].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -697,7 +707,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("您二年級「上學期」的工讀地點為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
     ##### 使用Streamlit畫圖
@@ -714,7 +724,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您二年級「上學期」的工讀地點為何', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -734,9 +744,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-9  您工讀最主要的原因為何?
 with st.expander("您工讀最主要的原因為何:"):
     # df_sophomore.iloc[:,21] ##  9.您工讀最主要的原因為何?
-    column_title.append(df_sophomore.columns[21][2:])
+    column_index = 21
+    item_name = "您工讀最主要的原因為何"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,21].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -750,7 +762,7 @@ with st.expander("您工讀最主要的原因為何:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("您工讀最主要的原因為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
     ##### 使用Streamlit畫圖
@@ -767,7 +779,7 @@ with st.expander("您工讀最主要的原因為何:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您工讀最主要的原因為何', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -788,9 +800,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-10  您工讀次要的原因為何?
 with st.expander("您工讀次要的原因為何:"):
     # df_sophomore.iloc[:,22] ##  10.您工讀次要的原因為何?
-    column_title.append(df_sophomore.columns[22][2:])
+    column_index = 22
+    item_name = "您工讀次要的原因為何"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,22].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -804,10 +818,10 @@ with st.expander("您工讀次要的原因為何:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("您工讀次要的原因為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -821,7 +835,7 @@ with st.expander("您工讀次要的原因為何:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您工讀次要的原因為何', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -844,9 +858,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-11 您每周平均上網時間為何?
 with st.expander("您每周平均上網時間為何:"):
     # df_sophomore.iloc[:,23] ##  11.您每周平均上網時間為何?
-    column_title.append(df_sophomore.columns[23][2:])
+    column_index = 23
+    item_name = "您每周平均上網時間為何"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,23].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -860,10 +876,10 @@ with st.expander("您每周平均上網時間為何:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("您每周平均上網時間為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -877,7 +893,7 @@ with st.expander("您每周平均上網時間為何:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您每周平均上網時間為何', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -900,9 +916,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-12 您上網主要用途為何? (最主要用途)
 with st.expander("您上網主要用途為何:"):
     # df_sophomore.iloc[:,24] ##  12.您上網主要用途為何? (最主要用途)
-    column_title.append(df_sophomore.columns[24][2:])
+    column_index = 24
+    item_name = "您上網主要用途為何"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,24].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -916,10 +934,10 @@ with st.expander("您上網主要用途為何:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("您上網主要用途為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -933,7 +951,7 @@ with st.expander("您上網主要用途為何:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您上網主要用途為何', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -957,9 +975,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-13 您上網次要用途為何? (次要用途)
 with st.expander("您上網次要用途為何:"):
     # df_sophomore.iloc[:,25] ##  13.您上網次要用途為何? (次要用途)
-    column_title.append(df_sophomore.columns[25][2:])
+    column_index = 25
+    item_name = "您上網次要用途為何"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,25].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -973,10 +993,10 @@ with st.expander("您上網次要用途為何:"):
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("您上網次要用途為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫圖
+    ##### 使用Streamlit畫單一圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -990,7 +1010,7 @@ with st.expander("您上網次要用途為何:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您上網次要用途為何', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -1010,9 +1030,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part2-14 除了上課時間外，您每天平均念書的時間為何?
 with st.expander("除了上課時間外，您每天平均念書的時間為何:"):
     # df_sophomore.iloc[:,26] ##  14.除了上課時間外，您每天平均念書的時間為何?
-    column_title.append(df_sophomore.columns[26][2:])
+    column_index = 26
+    item_name = "除了上課時間外，您每天平均念書的時間為何"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,26].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -1026,7 +1048,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("除了上課時間外，您每天平均念書的時間為何:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
     ##### 使用Streamlit畫圖
@@ -1043,7 +1065,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('除了上課時間外，您每天平均念書的時間為何', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
@@ -1067,9 +1089,11 @@ st.markdown("##")  ## 更大的间隔
 ###### Part3-1 學習投入 (依多數課程情況回答): 上課時我
 with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     # df_sophomore.iloc[:,28] ##  學習投入 (依多數課程情況回答): 上課時我
-    column_title.append(df_sophomore.columns[28][2:])
+    column_index = 28
+    item_name = "學習投入 (依多數課程情況回答): 上課時我:"
+    column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
-    split_values = df_sophomore.iloc[:,28].str.split(',').explode()
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
@@ -1084,7 +1108,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     df_streamlit.append(result_df)  
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write("學習投入 (依多數課程情況回答): 上課時我:", result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
@@ -1100,7 +1124,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     for i in range(len(result_df['項目'])):
         plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('學習投入 (依多數課程情況回答): 上課時我', fontsize=15)
+    plt.title(item_name, fontsize=15)
     plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
