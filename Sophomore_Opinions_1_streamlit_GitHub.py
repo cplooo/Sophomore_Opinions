@@ -70,7 +70,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
-choice = '化科系'
+choice='化科系'
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']=='化科系']
 ###### 預設定 selected_options, collections
 selected_options = ['化科系','企管系']
@@ -89,7 +89,7 @@ combined_df = pd.concat(dataframes, keys=selected_options)
 ###### 選擇 院 or 系:
 院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1 : ')
 if 院_系 == '0':
-    choice = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
+    choice = st.selectbox('選擇學系', df_sophomore_original['科系'].unique(),index=0)
     #choice = '化科系'
     df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
     selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'])
@@ -100,7 +100,7 @@ if 院_系 == '0':
     # #### 去掉 level 1 index
     # combined_df_r = combined_df.reset_index(level=1, drop=True)
 elif 院_系 == '1':
-    choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique())
+    choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique(),index=0)
     #choice = '管理'
     df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
     selected_options = st.multiselect('選擇比較學的院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'])
