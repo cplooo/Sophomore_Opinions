@@ -851,8 +851,11 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
     ## 计算每个组的中心位置r作为x轴刻度位置
-    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
+    # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ax.set_xticklabels(df['項目'].values, fontsize=xticklabel_fontsize)
     ### 设置标题和轴标签
     ax.set_title(item_name,fontsize=title_fontsize)
     # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
