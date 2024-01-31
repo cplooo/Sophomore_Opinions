@@ -123,15 +123,15 @@ with st.expander("選擇目前就讀科系的理由:"):
     ### 在Streamlit中显示
     st.pyplot(plt)
 
-    with st.expander("比較:"):   
-        if 院_系 == '0':
-            choice1 = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
-            #choice = '化科系'
-            df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
-        elif 院_系 == '1':
-            choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique())
-            #choice = '管理'
-            df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
+    # with st.expander("比較:"):   
+    #     if 院_系 == '0':
+    #         choice1 = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
+    #         #choice = '化科系'
+    #         df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
+    #     elif 院_系 == '1':
+    #         choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique())
+    #         #choice = '管理'
+    #         df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
         
 
 
