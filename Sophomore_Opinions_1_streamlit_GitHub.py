@@ -496,17 +496,17 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -542,6 +542,7 @@ with st.expander("您二年級就學期間是否工讀:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("您二年級就學期間是否工讀:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -551,17 +552,17 @@ with st.expander("您二年級就學期間是否工讀:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您二年級就學期間是否工讀', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('您二年級就學期間是否工讀', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -597,6 +598,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("二年級「上學期」平均每周工讀時數:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -606,17 +608,17 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('二年級「上學期」平均每周工讀時數', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('二年級「上學期」平均每周工讀時數', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -651,6 +653,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("您二年級「上學期」的工讀地點為何:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -660,17 +663,17 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您二年級「上學期」的工讀地點為何', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('您二年級「上學期」的工讀地點為何', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -703,6 +706,7 @@ with st.expander("您工讀最主要的原因為何:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("您工讀最主要的原因為何:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -712,17 +716,17 @@ with st.expander("您工讀最主要的原因為何:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您工讀最主要的原因為何', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('您工讀最主要的原因為何', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -756,6 +760,7 @@ with st.expander("您工讀次要的原因為何:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("您工讀次要的原因為何:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -765,17 +770,17 @@ with st.expander("您工讀次要的原因為何:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您工讀次要的原因為何', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('您工讀次要的原因為何', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -811,6 +816,7 @@ with st.expander("您每周平均上網時間為何:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("您每周平均上網時間為何:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -820,17 +826,17 @@ with st.expander("您每周平均上網時間為何:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您每周平均上網時間為何', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('您每周平均上網時間為何', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -866,6 +872,7 @@ with st.expander("您上網主要用途為何:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("您上網主要用途為何:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -875,17 +882,17 @@ with st.expander("您上網主要用途為何:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您上網主要用途為何', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('您上網主要用途為何', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -922,6 +929,7 @@ with st.expander("您上網次要用途為何:"):
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("您上網次要用途為何:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -931,17 +939,17 @@ with st.expander("您上網次要用途為何:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('您上網次要用途為何', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('您上網次要用途為何', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
     plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -974,6 +982,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("除了上課時間外，您每天平均念書的時間為何:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
+
     ##### 使用Streamlit畫圖
     #### 設置中文顯示
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -983,17 +992,17 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('除了上課時間外，您每天平均念書的時間為何', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('除了上課時間外，您每天平均念書的時間為何', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
@@ -1027,6 +1036,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
+
     ##### 使用Streamlit展示DataFrame，但不显示索引
     st.write("學習投入 (依多數課程情況回答): 上課時我:", result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
@@ -1039,17 +1049,17 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'],label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('學習投入 (依多數課程情況回答): 上課時我', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('學習投入 (依多數課程情況回答): 上課時我', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
