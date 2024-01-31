@@ -527,8 +527,8 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     st.pyplot(plt)
 
     ##### 使用streamlit 畫比較圖
-    dataframes = [Frequency_Distribution(df,column_index) for df in collections]
-    combined_df = pd.concat(dataframes, keys=selected_options)
+    # dataframes = [Frequency_Distribution(df,column_index) for df in collections]
+    # combined_df = pd.concat(dataframes, keys=selected_options)
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -630,6 +630,54 @@ with st.expander("您二年級就學期間是否工讀:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+
+    ##### 使用streamlit 畫比較圖
+    dataframes = [Frequency_Distribution(df,column_index) for df in collections]
+    combined_df = pd.concat(dataframes, keys=selected_options)
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+
 st.markdown("##")  ## 更大的间隔    
 
 
