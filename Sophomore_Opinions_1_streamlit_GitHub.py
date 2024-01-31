@@ -132,7 +132,7 @@ dataframes = [adjust_df(df, desired_order) for df in dataframes]
 # '''
 
                      
-combined_df = pd.concat(dataframes_r, keys=selected_options)
+combined_df = pd.concat(dataframes, keys=selected_options)
 # ''' 
 #                    項目  人數      比例
 # 化科系 0            體驗生活   0  0.0000
