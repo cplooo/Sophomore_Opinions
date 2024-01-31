@@ -705,7 +705,11 @@ with st.expander("您二年級就學期間是否工讀:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -825,7 +829,11 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -945,7 +953,11 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1062,7 +1074,11 @@ with st.expander("您工讀最主要的原因為何:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1181,7 +1197,11 @@ with st.expander("您工讀次要的原因為何:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1301,7 +1321,11 @@ with st.expander("您每周平均上網時間為何:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1421,7 +1445,11 @@ with st.expander("您上網主要用途為何:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1542,7 +1570,11 @@ with st.expander("您上網次要用途為何:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1659,7 +1691,11 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
@@ -1780,7 +1816,11 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
