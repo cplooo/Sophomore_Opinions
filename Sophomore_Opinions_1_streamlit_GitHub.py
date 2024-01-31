@@ -27,8 +27,18 @@ import streamlit.components.v1 as stc
 # ###### 将DataFrame存储为Pickle文件
 # df_sophomore_original.to_pickle('df_sophomore_original.pkl')
 
+
+@st.cache_data(ttl=3600, show_spinner="正在加載資料...")  ## Add the caching decorator
+def load_data(path):
+    df = pd.read_pickle(path)
+    return df
+
+df = load_data("https://raw.githubusercontent.com/plotly/datasets/master/26k-consumer-complaints.csv")
+
+
 ######  读取Pickle文件
-df_sophomore_original = pd.read_pickle('df_sophomore_original.pkl')
+df_sophomore_original = load_data('df_sophomore_original.pkl')
+# df_sophomore_original = pd.read_pickle('df_sophomore_original.pkl')
 # df_sophomore_original.shape  ## (1834, 55)
 # df_sophomore_original.index  ## RangeIndex(start=0, stop=1834, step=1)
 
@@ -44,7 +54,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ####### 選擇院系
-###### 預選 df_sophomore 以防止讀取df_sophomore錯誤
+###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']=='化科系']
 ###### 選擇 院 or 系:
 院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1 : ')
@@ -114,6 +124,22 @@ with st.expander("選擇目前就讀科系的理由:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+
+    with st.expander("比較:"):   
+        if 院_系 == '0':
+            choice1 = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
+            #choice = '化科系'
+            df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
+        elif 院_系 == '1':
+            choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique())
+            #choice = '管理'
+            df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
+        
+
+
+
+
+
 st.markdown("##")  ## 更大的间隔    
 
 
