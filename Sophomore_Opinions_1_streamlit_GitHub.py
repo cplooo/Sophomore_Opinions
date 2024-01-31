@@ -72,17 +72,17 @@ st.markdown("##")  ## 更大的间隔
 ###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
 choice = '化科系'
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']=='化科系']
-# ###### 預設定 selected_options, collections
-# selected_options = ['化科系','企管系']
-# # collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
-# collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
-# # len(collections) ## 2
-# # type(collections[0])   ## pandas.core.frame.DataFrame
-# dataframes = [Frequency_Distribution(df, 7) for df in collections]
-# # len(dataframes)  ## 2
-# # len(dataframes[1]) ## 6
-# combined_df = pd.concat(dataframes, keys=selected_options)
-# # combined_df = pd.concat([dataframes[0], dataframes[1]], axis=0)
+###### 預設定 selected_options, collections
+selected_options = ['化科系','企管系']
+# collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+# len(collections) ## 2
+# type(collections[0])   ## pandas.core.frame.DataFrame
+dataframes = [Frequency_Distribution(df, 7) for df in collections]
+# len(dataframes)  ## 2
+# len(dataframes[1]) ## 6
+combined_df = pd.concat(dataframes, keys=selected_options)
+# combined_df = pd.concat([dataframes[0], dataframes[1]], axis=0)
 
 
 ####### 選擇院系
