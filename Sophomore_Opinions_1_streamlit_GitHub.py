@@ -398,17 +398,17 @@ with st.expander("大學畢業後的規劃:"):
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
     #### 绘制条形图
-    plt.barh(result_df['項目'], result_df['人數'])
+    plt.barh(result_df['項目'], result_df['人數'], label=choice)
     #### 標示比例數據
     for i in range(len(result_df['項目'])):
-        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=16)
+        plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
     #### 添加一些图形元素
-    plt.title('大學畢業後的規劃', fontsize=16)
-    plt.xlabel('人數', fontsize=16)
+    plt.title('大學畢業後的規劃', fontsize=15)
+    plt.xlabel('人數', fontsize=14)
     #plt.ylabel('本校現在所提供的資源或支援事項')
     #### 调整x轴和y轴刻度标签的字体大小
-    plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-    plt.legend()
+    plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+    plt.legend(fontsize=14)
     #### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     #### 显示图形
