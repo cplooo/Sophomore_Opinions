@@ -154,9 +154,9 @@ with st.expander("選擇目前就讀科系的理由:"):
     ##### 使用Streamlit畫圖
     # st.markdown(f"圖形中項目(由下至上): {result_df['項目'].values.tolist()}")
     #### 設置中文顯示
-    matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
-    matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
-    # matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 创建图形和坐标轴
     plt.figure(figsize=(11, 8))
