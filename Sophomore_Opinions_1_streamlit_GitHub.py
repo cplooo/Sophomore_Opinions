@@ -95,8 +95,8 @@ if 院_系 == '0':
     selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'])
     # selected_options = ['化科系','企管系']
     collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
-    dataframes = [Frequency_Distribution(df, 7) for df in collections]
-    combined_df = pd.concat(dataframes, keys=selected_options)
+    # dataframes = [Frequency_Distribution(df, 7) for df in collections]
+    # combined_df = pd.concat(dataframes, keys=selected_options)
     # #### 去掉 level 1 index
     # combined_df_r = combined_df.reset_index(level=1, drop=True)
 elif 院_系 == '1':
@@ -105,8 +105,8 @@ elif 院_系 == '1':
     df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
     selected_options = st.multiselect('選擇比較學的院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'])
     collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
-    dataframes = [Frequency_Distribution(df, 7) for df in collections]
-    combined_df = pd.concat(dataframes, keys=selected_options)
+    # dataframes = [Frequency_Distribution(df, 7) for df in collections]
+    # combined_df = pd.concat(dataframes, keys=selected_options)
 
 
 
@@ -199,8 +199,9 @@ with st.expander("選擇目前就讀科系的理由:"):
 
     
     ##### 使用streamlit 畫比較圖
-    # dataframes = [Frequency_Distribution(df,column_index) for df in collections]
-    # combined_df = pd.concat(dataframes, keys=selected_options)
+    dataframes = [Frequency_Distribution(df,column_index) for df in collections]
+    combined_df = pd.concat(dataframes, keys=selected_options)
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
