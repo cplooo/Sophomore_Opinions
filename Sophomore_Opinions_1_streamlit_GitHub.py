@@ -966,7 +966,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1087,7 +1087,7 @@ with st.expander("您工讀最主要的原因為何:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1210,7 +1210,7 @@ with st.expander("您工讀次要的原因為何:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1334,7 +1334,7 @@ with st.expander("您每周平均上網時間為何:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1458,7 +1458,7 @@ with st.expander("您上網主要用途為何:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1583,7 +1583,7 @@ with st.expander("您上網次要用途為何:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1704,7 +1704,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
@@ -1829,7 +1829,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
         # 生成当前分组的x轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
