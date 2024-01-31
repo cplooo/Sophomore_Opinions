@@ -187,13 +187,13 @@ with st.expander("選擇目前就讀科系的理由:"):
     # st.subheader("不同單位比較")
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'])  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'])
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         combined_df = pd.concat(dataframes, keys=selected_options)
@@ -423,13 +423,13 @@ with st.expander("大學畢業後的規劃:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique())  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique())
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         combined_df = pd.concat(dataframes, keys=selected_options)
