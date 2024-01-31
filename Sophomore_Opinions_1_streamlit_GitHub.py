@@ -68,9 +68,16 @@ stc.html(html_temp)
 st.markdown("##")  ## 更大的间隔
 
 
-####### 選擇院系
+
 ###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']=='化科系']
+###### 預設定 selected_options, collections
+selected_options = ['化科系','企管系']
+# collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+
+
+####### 選擇院系
 ###### 選擇 院 or 系:
 院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1 : ')
 if 院_系 == '0':
