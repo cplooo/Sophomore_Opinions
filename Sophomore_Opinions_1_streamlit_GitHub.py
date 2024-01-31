@@ -52,13 +52,15 @@ def Frequency_Distribution(df, column_index):
 
 #### 調整項目次序
 ###定义期望的項目顺序
-# desired_order = ['非常滿意', '滿意', '普通', '不滿意', '非常不滿意']
 ### 函数：调整 DataFrame 以包含所有項目，且顺序正确
 def adjust_df(df, order):
-    # 确保 DataFrame 包含所有項目
+    # 确保 DataFrame 包含所有滿意度值
     for item in order:
         if item not in df['項目'].values:
-            df = df.append({'項目': item, '人數': 0, '比例': 0}, ignore_index=True)
+            # 创建一个新的 DataFrame，用于添加新的row
+            new_row = pd.DataFrame({'項目': [item], '人數': [0], '比例': [0]})
+            # 使用 concat() 合并原始 DataFrame 和新的 DataFrame
+            df = pd.concat([df, new_row], ignore_index=True)
 
     # 根据期望的顺序重新排列 DataFrame
     df = df.set_index('項目').reindex(order).reset_index()
@@ -104,7 +106,7 @@ dataframes = [Frequency_Distribution(df, 22) for df in collections]  ## 22: "您
 desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
 
 ## 缺的項目值加以擴充， 並統一一樣的項目次序
-dataframes_r = [adjust_df(df, desired_order) for df in dataframes]
+dataframes = [adjust_df(df, desired_order) for df in dataframes]
 # len(dataframes_r)  ## 2
 # len(dataframes_r[1]) ## 6
 # len(dataframes_r[0]) ## 6, 從原本的5變成6 
