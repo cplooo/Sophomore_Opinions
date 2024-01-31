@@ -580,7 +580,11 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        index = r + i * bar_width
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
         rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
