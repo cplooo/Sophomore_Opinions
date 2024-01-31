@@ -527,8 +527,8 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     st.pyplot(plt)
 
     ##### 使用streamlit 畫比較圖
-    # dataframes = [Frequency_Distribution(df,column_index) for df in collections]
-    # combined_df = pd.concat(dataframes, keys=selected_options)
+    dataframes = [Frequency_Distribution(df,column_index) for df in collections]
+    combined_df = pd.concat(dataframes, keys=selected_options)
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
