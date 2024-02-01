@@ -90,9 +90,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
-choice='化科系'
+choice='財金系' ##'化科系'
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
-choice_faculty = df_sophomore['學院'][0]  ## 選擇學系所屬學院: '理學院'
+# choice_faculty = df_sophomore['學院'][0]  ## 選擇學系所屬學院: '理學院'
+choice_faculty = df_sophomore['學院'].values[0]  ## 選擇學系所屬學院: '理學院'
 df_sophomore_faculty = df_sophomore_original[df_sophomore_original['學院']==choice_faculty]  ## 挑出全校所屬學院之資料
 # df_sophomore_faculty['學院']  
 ###### 預設定 selected_options, collections
@@ -168,7 +169,7 @@ if 院_系 == '0':
     choice = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
     #choice = '化科系'
     df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
-    choice_faculty = df_sophomore['學院'][0]  ## 選擇學系所屬學院
+    choice_faculty = df_sophomore['學院'].values[0]  ## 選擇學系所屬學院
     df_sophomore_faculty = df_sophomore_original[df_sophomore_original['學院']==choice_faculty]  ## 挑出全校所屬學院之資料
 
     # selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'])
