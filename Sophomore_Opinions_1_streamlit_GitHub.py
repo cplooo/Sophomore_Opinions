@@ -111,13 +111,14 @@ dataframes = [Frequency_Distribution(df, 22) for df in collections]  ## 22: "您
 
 ##### 形成所有學系'項目'欄位的所有值
 desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+# desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
 
 ##### 缺的項目值加以擴充， 並統一一樣的項目次序
 dataframes = [adjust_df(df, desired_order) for df in dataframes]
-# len(dataframes_r)  ## 2
-# len(dataframes_r[1]) ## 6
-# len(dataframes_r[0]) ## 6, 從原本的5變成6 
-# dataframes_r[0]['項目']
+# len(dataframes)  ## 2
+# len(dataframes[1]) ## 6
+# len(dataframes[0]) ## 6, 從原本的5變成6 
+# dataframes[0]['項目']
 # '''
 # 0              體驗生活
 # 1         為未來工作累積經驗
@@ -127,7 +128,7 @@ dataframes = [adjust_df(df, desired_order) for df in dataframes]
 # 5         學習應對與表達能力
 # Name: 項目, dtype: object
 # '''
-# dataframes_r[1]['項目']
+# dataframes[1]['項目']
 # '''
 # 0              體驗生活
 # 1         為未來工作累積經驗
