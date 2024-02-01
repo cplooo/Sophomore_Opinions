@@ -99,12 +99,14 @@ df_sophomore_faculty = df_sophomore_original[df_sophomore_original['學院']==ch
 selected_options = ['化科系','企管系']
 # collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
 collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+# collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
 # len(collections) ## 2
 # type(collections[0])   ## pandas.core.frame.DataFrame
 dataframes = [Frequency_Distribution(df, 22) for df in collections]  ## 22: "您工讀次要的原因為何:"
 # len(dataframes)  ## 2
-# len(dataframes[1]) ## 6
-# len(dataframes[0]) ## 5
+# len(dataframes[1]) ## 6,5
+# len(dataframes[0]) ## 5,5
+# len(dataframes[2]) ##   23
 
 ##### 形成所有學系'項目'欄位的所有值
 desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
@@ -136,6 +138,7 @@ dataframes = [adjust_df(df, desired_order) for df in dataframes]
 # '''
 
 combined_df = pd.concat(dataframes, keys=selected_options)
+# combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
 # ''' 
 #                    項目  人數      比例
 # 化科系 0            體驗生活   0  0.0000
@@ -237,10 +240,11 @@ with st.expander("選擇目前就讀科系的理由:"):
         collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
-        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
-        combined_df = pd.concat(dataframes, keys=selected_options)
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
