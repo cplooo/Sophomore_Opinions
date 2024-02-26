@@ -111,7 +111,7 @@ collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i i
 # collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
 # len(collections) ## 2
 # type(collections[0])   ## pandas.core.frame.DataFrame
-dataframes = [Frequency_Distribution(df, 22) for df in collections]  ## 22: "您工讀次要的原因為何:"
+dataframes = [Frequency_Distribution(df, 22, 0) for df in collections]  ## 22: "您工讀次要的原因為何:"
 # len(dataframes)  ## 2
 # len(dataframes[1]) ## 6
 # len(dataframes[0]) ## 5
