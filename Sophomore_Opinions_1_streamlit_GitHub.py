@@ -1341,7 +1341,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -1535,7 +1535,7 @@ with st.expander("您工讀最主要的原因為何:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -1731,7 +1731,7 @@ with st.expander("您工讀次要的原因為何:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -1928,7 +1928,7 @@ with st.expander("您每周平均上網時間為何:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -2125,7 +2125,7 @@ with st.expander("您上網主要用途為何:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -2323,7 +2323,7 @@ with st.expander("您上網次要用途為何:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -2517,7 +2517,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -2715,7 +2715,8 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    # proportions = value_counts / value_counts.sum()
+    proportions = value_counts/df_sophomore.shape[0]
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
