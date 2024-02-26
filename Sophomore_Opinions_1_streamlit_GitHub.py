@@ -219,7 +219,8 @@ with st.expander("選擇目前就讀科系的理由:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    # proportions = value_counts / value_counts.sum()
+    proportions = value_counts/df_sophomore.shape[0]
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
