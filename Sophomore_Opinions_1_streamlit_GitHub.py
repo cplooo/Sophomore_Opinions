@@ -226,12 +226,12 @@ with st.expander("選擇目前就讀科系的理由:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
 
-    ##### 使用Streamlit展示DataFrame，但不显示索引
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
     # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
@@ -538,13 +538,13 @@ with st.expander("大學畢業後的規劃:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -735,13 +735,13 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -933,13 +933,13 @@ with st.expander("您二年級就學期間是否工讀:"):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1131,14 +1131,20 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
+    ##### 因為沒有工讀的填答者有些有回覆 "沒有工讀", 有些沒有填答, 因此 "沒有工讀" 的人數要重新計算: 
+    #### 计算除了 "沒有工讀" 外其他index的值之和
+    sum_except_no_work = value_counts.drop('沒有工讀').sum()  ## 
+    ### 更新 "沒有工讀" 的值为total_students减去其他index的值之和
+    value_counts['沒有工讀'] = df_sophomore.shape[0] - sum_except_no_work
+    
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1339,7 +1345,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1533,7 +1539,7 @@ with st.expander("您工讀最主要的原因為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1729,7 +1735,7 @@ with st.expander("您工讀次要的原因為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1926,7 +1932,7 @@ with st.expander("您每周平均上網時間為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2123,7 +2129,7 @@ with st.expander("您上網主要用途為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2321,7 +2327,7 @@ with st.expander("您上網次要用途為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2515,7 +2521,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2713,7 +2719,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
