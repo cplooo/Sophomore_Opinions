@@ -11,7 +11,7 @@ import re
 import seaborn as sns
 import streamlit as st 
 import streamlit.components.v1 as stc 
-os.chdir(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\GitHub上傳')
+# os.chdir(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\GitHub上傳')
 
 
 ####### 定義相關函數 (1)
