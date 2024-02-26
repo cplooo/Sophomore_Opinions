@@ -541,6 +541,7 @@ with st.expander("大學畢業後的規劃:"):
     #df_sophomore.columns
     # df_sophomore.iloc[:,10] ## 4. 大學畢業後的規劃
     column_index = 10
+    total_num_choice = 0
     item_name = "大學畢業後的規劃:"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
@@ -561,6 +562,8 @@ with st.expander("大學畢業後的規劃:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
+    #### 獲得DataFrame "result_df" :
+    result_df = Frequency_Distribution(df_sophomore, column_index, total_num_choice)
     # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
@@ -569,7 +572,7 @@ with st.expander("大學畢業後的規劃:"):
     ##### 使用Streamlit畫單一圖
     if 院_系 == '0':
         collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
-        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
@@ -665,7 +668,7 @@ with st.expander("大學畢業後的規劃:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -675,7 +678,7 @@ with st.expander("大學畢業後的規劃:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
