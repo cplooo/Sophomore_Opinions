@@ -1605,13 +1605,14 @@ with st.expander("您工讀最主要的原因為何:"):
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
         bar_width = 0.2
-        #### 设置x轴的位置
+        #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
         title_fontsize = 15
         xlabel_fontsize = 14
         ylabel_fontsize = 14
         xticklabel_fontsize = 14
+        yticklabel_fontsize = 14
         annotation_fontsize = 8
         legend_fontsize = 14
         #### 绘制条形
@@ -1619,31 +1620,38 @@ with st.expander("您工讀最主要的原因為何:"):
         for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
             # 计算当前分组的条形数量
             num_bars = len(df)
-            # 生成当前分组的x轴位置
+            # 生成当前分组的y轴位置
             index = np.arange(num_bars) + i * bar_width
             # index = r + i * bar_width
-            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+            rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
             #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
-        ### 添加x轴标签
-        ## 计算每个组的中心位置作为x轴刻度位置
-        # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
-        # group_centers = np.arange(len(dataframes[0]))
-        ## 添加x轴标签
-        # ax.set_xticks(group_centers)
-        # dataframes[0]['項目'].values
-        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
-        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
-        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+
+        # ### 添加x轴标签
+        # ## 计算每个组的中心位置作为x轴刻度位置
+        # # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # # group_centers = np.arange(len(dataframes[0]))
+        # ## 添加x轴标签
+        # # ax.set_xticks(group_centers)
+        # # dataframes[0]['項目'].values
+        # # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+
+        ### 设置y轴刻度标签
+        ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
+        ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+
+
         ### 设置标题和轴标签
         ax.set_title(item_name,fontsize=title_fontsize)
         # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
-        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ax.set_xlabel('比例',fontsize=xlabel_fontsize)
         ### 显示网格线
         plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
         plt.tight_layout()
@@ -1710,13 +1718,14 @@ with st.expander("您工讀最主要的原因為何:"):
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
     bar_width = 0.2
-    #### 设置x轴的中心位置
+    #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
     title_fontsize = 15
     xlabel_fontsize = 14
     ylabel_fontsize = 14
-    xticklabel_fontsize = 11
+    xticklabel_fontsize = 14
+    yticklabel_fontsize = 14
     annotation_fontsize = 8
     legend_fontsize = 14
     #### 绘制条形
@@ -1724,24 +1733,32 @@ with st.expander("您工讀最主要的原因為何:"):
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
         # 计算当前分组的条形数量
         num_bars = len(df)
-        # 生成当前分组的x轴位置
+        # 生成当前分组的y轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
         #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
-    ### 添加x轴标签
-    ## 计算每个组的中心位置r作为x轴刻度位置
-    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+
+    # ### 添加x轴标签
+    # ## 计算每个组的中心位置r作为x轴刻度位置
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+
+    ### 设置y轴刻度标签
+    ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
+    ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+
+
     ### 设置标题和轴标签
     ax.set_title(item_name,fontsize=title_fontsize)
     # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
-    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ax.set_xlabel('比例',fontsize=xlabel_fontsize)
+
     ### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     plt.tight_layout()
@@ -1801,13 +1818,14 @@ with st.expander("您工讀次要的原因為何:"):
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
         bar_width = 0.2
-        #### 设置x轴的位置
+        #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
         title_fontsize = 15
         xlabel_fontsize = 14
         ylabel_fontsize = 14
         xticklabel_fontsize = 14
+        yticklabel_fontsize = 14
         annotation_fontsize = 8
         legend_fontsize = 14
         #### 绘制条形
@@ -1815,10 +1833,10 @@ with st.expander("您工讀次要的原因為何:"):
         for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
             # 计算当前分组的条形数量
             num_bars = len(df)
-            # 生成当前分组的x轴位置
+            # 生成当前分组的y轴位置
             index = np.arange(num_bars) + i * bar_width
             # index = r + i * bar_width
-            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+            rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
@@ -1829,17 +1847,25 @@ with st.expander("您工讀次要的原因為何:"):
         ## 计算每个组的中心位置作为x轴刻度位置
         # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
         # group_centers = np.arange(len(dataframes[0]))
-        ## 添加x轴标签
-        # ax.set_xticks(group_centers)
-        # dataframes[0]['項目'].values
-        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
-        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
-        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+
+        # ## 添加x轴标签
+        # # ax.set_xticks(group_centers)
+        # # dataframes[0]['項目'].values
+        # # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+
+        ### 设置y轴刻度标签
+        ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
+        ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+
+
         ### 设置标题和轴标签
         ax.set_title(item_name,fontsize=title_fontsize)
         # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
-        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ax.set_xlabel('比例',fontsize=xlabel_fontsize)
+
         ### 显示网格线
         plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
         plt.tight_layout()
@@ -1906,13 +1932,14 @@ with st.expander("您工讀次要的原因為何:"):
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
     bar_width = 0.2
-    #### 设置x轴的中心位置
+    #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
     title_fontsize = 15
     xlabel_fontsize = 14
     ylabel_fontsize = 14
-    xticklabel_fontsize = 11
+    xticklabel_fontsize = 14
+    yticklabel_fontsize = 14
     annotation_fontsize = 8
     legend_fontsize = 14
     #### 绘制条形
@@ -1920,24 +1947,32 @@ with st.expander("您工讀次要的原因為何:"):
     for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
         # 计算当前分组的条形数量
         num_bars = len(df)
-        # 生成当前分组的x轴位置
+        # 生成当前分组的y轴位置
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
-        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
         #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
-    ### 添加x轴标签
-    ## 计算每个组的中心位置r作为x轴刻度位置
-    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+
+    # ### 添加x轴标签
+    # ## 计算每个组的中心位置r作为x轴刻度位置
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+
+    ### 设置y轴刻度标签
+    ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
+    ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+
+
     ### 设置标题和轴标签
     ax.set_title(item_name,fontsize=title_fontsize)
     # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
-    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ax.set_xlabel('比例',fontsize=xlabel_fontsize)
+
     ### 显示网格线
     plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
     plt.tight_layout()
