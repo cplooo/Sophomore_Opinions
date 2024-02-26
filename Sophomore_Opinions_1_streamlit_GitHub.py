@@ -40,7 +40,7 @@ def Frequency_Distribution(df, column_index):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts / value_counts.sum()
+    proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
@@ -57,7 +57,7 @@ def Frequency_Distribution_1(df, column_index):
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
     ##### 计算不同子字符串的比例
-    proportions = value_counts/df_sophomore.shape[0]
+    proportions = value_counts/df.shape[0]
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
