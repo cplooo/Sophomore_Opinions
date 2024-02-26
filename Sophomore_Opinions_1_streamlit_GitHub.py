@@ -188,8 +188,9 @@ if 院_系 == '0':
     # combined_df_r = combined_df.reset_index(level=1, drop=True)
 elif 院_系 == '1':
     choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique(),index=0)
-    #choice = '管理'
+    #choice = '理學院'
     df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
+    # df_sophomore.shape  ## (330, 55)
     # selected_options = st.multiselect('選擇比較學的院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'])
     # collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
