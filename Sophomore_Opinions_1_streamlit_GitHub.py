@@ -1133,9 +1133,11 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     value_counts = split_values.value_counts()
     ##### 因為沒有工讀的填答者有些有回覆 "沒有工讀", 有些沒有填答, 因此 "沒有工讀" 的人數要重新計算: 
     #### 计算除了 "沒有工讀" 外其他index的值之和
-    sum_except_no_work = value_counts.drop('沒有工讀').sum()  ## 
-    ### 更新 "沒有工讀" 的值为total_students减去其他index的值之和
-    value_counts['沒有工讀'] = df_sophomore.shape[0] - sum_except_no_work
+    ### 检查"沒有工讀"是否在Series的index中
+    if "沒有工讀" in value_counts.index:
+        sum_except_no_work = value_counts.drop('沒有工讀').sum()  ## 
+        ### 更新 "沒有工讀" 的值为total_students减去其他index的值之和
+        value_counts['沒有工讀'] = df_sophomore.shape[0] - sum_except_no_work
     
     ##### 计算不同子字符串的比例
     proportions = value_counts/value_counts.sum()
