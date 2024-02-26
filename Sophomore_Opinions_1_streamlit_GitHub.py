@@ -50,6 +50,25 @@ def Frequency_Distribution(df, column_index):
     return result_df
 
 
+@st.cache_data(ttl=3600, show_spinner="正在處理資料...")  ## Add the caching decorator
+def Frequency_Distribution_1(df, column_index):
+    ##### 将字符串按逗号分割并展平
+    split_values = df.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/df_sophomore.shape[0]
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    return result_df
+
+
+
+
 #### 調整項目次序
 ###定义期望的項目顺序
 ### 函数：调整 DataFrame 以包含所有項目，且顺序正确
@@ -241,7 +260,7 @@ with st.expander("選擇目前就讀科系的理由:"):
     # st.markdown(f"圖形中項目(由下至上): {result_df['項目'].values.tolist()}")
     if 院_系 == '0':
         collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
-        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
@@ -338,7 +357,7 @@ with st.expander("選擇目前就讀科系的理由:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -348,7 +367,7 @@ with st.expander("選擇目前就讀科系的理由:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
