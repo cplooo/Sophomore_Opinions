@@ -11,17 +11,48 @@ import re
 import seaborn as sns
 import streamlit as st 
 import streamlit.components.v1 as stc 
-# os.chdir(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\GitHub上傳')
+#os.chdir(r'C:\Users\user\Dropbox\系務\校務研究IR\大一新生學習適應調查分析\112')
+
+####### 資料前處理
+###### 讀入調查結果
+# df_sophomore_original = pd.read_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\1121_112-1大二學生學習投入問卷調查_填答結果 (曉華 112.11.1)(112.12.8 Lo revised).xlsx')
+# df_sophomore_original.shape  ## (1834, 55)
+# df_sophomore_original.columns
+# df_sophomore_original.index  ## RangeIndex(start=0, stop=1834, step=1)
+#df_sophomore['科系']
+# ###### 检查是否有缺失值
+# print(df_sophomore_original.isna().any().any())  ## True
+# df_sophomore_original.isna().sum(axis=0)  
+
+# ###### 将DataFrame存储为Pickle文件
+# df_sophomore_original.to_pickle('df_sophomore_original.pkl')
 
 
-####### 定義相關函數 (1)
 @st.cache_data(ttl=3600, show_spinner="正在加載資料...")  ## Add the caching decorator
 def load_data(path):
     df = pd.read_pickle(path)
     return df
 
-###### 調整項目次序為期望的項目顺序&補充沒有的項目
-##### 函数：调整 DataFrame 以包含所有項目，且顺序正确
+@st.cache_data(ttl=3600, show_spinner="正在處理資料...")  ## Add the caching decorator
+def Frequency_Distribution(df, column_index):
+    ##### 将字符串按逗号分割并展平
+    split_values = df.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    return result_df
+
+
+#### 調整項目次序
+###定义期望的項目顺序
+### 函数：调整 DataFrame 以包含所有項目，且顺序正确
 @st.cache_data(ttl=3600, show_spinner="正在加載資料...")  ## Add the caching decorator
 def adjust_df(df, order):
     # 确保 DataFrame 包含所有滿意度值
@@ -39,50 +70,12 @@ def adjust_df(df, order):
 
 
 
-####### 資料前處理
-###### 讀入調查結果
-# df_sophomore_original = pd.read_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\1121_112-1大二學生學習投入問卷調查_填答結果 (曉華 112.11.1)(112.12.8 Lo revised).xlsx')
-# df_sophomore_original.shape  ## (1834, 55)
-# df_sophomore_original.columns
-# df_sophomore_original.index  ## RangeIndex(start=0, stop=1834, step=1)
-#df_sophomore['科系']
-# ###### 检查是否有缺失值
-# print(df_sophomore_original.isna().any().any())  ## True
-# df_sophomore_original.isna().sum(axis=0)  
-
-# ###### 将DataFrame存储为Pickle文件
-# df_sophomore_original.to_pickle('df_sophomore_original.pkl')
 
 ######  读取Pickle文件
 df_sophomore_original = load_data('df_sophomore_original.pkl')
 # df_sophomore_original = pd.read_pickle('df_sophomore_original.pkl')
 # df_sophomore_original.shape  ## (1834, 55)
 # df_sophomore_original.index  ## RangeIndex(start=0, stop=1834, step=1)
-
-
-####### 定義相關函數 (2)
-@st.cache_data(ttl=3600, show_spinner="正在處理資料...")  ## Add the caching decorator
-def Frequency_Distribution(df, column_index,total_num_choice):
-    ##### 将字符串按逗号分割并展平
-    split_values = df.iloc[:,column_index].str.split(',| |，|、').explode()
-    ##### 计算不同子字符串的出现次数
-    value_counts = split_values.value_counts()
-    ##### 计算不同子字符串的比例
-    if total_num_choice == 1:
-        proportions = value_counts/df_sophomore.shape[0]
-    if total_num_choice == 0:
-        proportions = value_counts/value_counts.sum()
-    
-    ##### 轉換成 numpy array
-    value_counts_numpy = value_counts.values
-    proportions_numpy = proportions.values
-    items_numpy = proportions.index.to_numpy()
-    ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
-    return result_df
-
-
-
 
 
 ####### 設定呈現標題 
@@ -96,29 +89,30 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-####### 預先設定
-###### 預先設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
+###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
 choice='財金系' ##'化科系'
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
-# df_sophomore.shape  ## (132, 55)
 # choice_faculty = df_sophomore['學院'][0]  ## 選擇學系所屬學院: '理學院'
 choice_faculty = df_sophomore['學院'].values[0]  ## 選擇學系所屬學院: '理學院'
 df_sophomore_faculty = df_sophomore_original[df_sophomore_original['學院']==choice_faculty]  ## 挑出全校所屬學院之資料
 # df_sophomore_faculty['學院']  
-###### 預先設定 selected_options, collections
+###### 預設定 selected_options, collections
 selected_options = ['化科系','企管系']
 # collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
 collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
 # collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
 # len(collections) ## 2
 # type(collections[0])   ## pandas.core.frame.DataFrame
-dataframes = [Frequency_Distribution(df, 22, 0) for df in collections]  ## 22: "您工讀次要的原因為何:"
+dataframes = [Frequency_Distribution(df, 22) for df in collections]  ## 22: "您工讀次要的原因為何:"
 # len(dataframes)  ## 2
-# len(dataframes[1]) ## 6
-# len(dataframes[0]) ## 5
+# len(dataframes[1]) ## 6,5
+# len(dataframes[0]) ## 5,5
+# len(dataframes[2]) ##   23
+
 ##### 形成所有學系'項目'欄位的所有值
 desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
 # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+
 ##### 缺的項目值加以擴充， 並統一一樣的項目次序
 dataframes = [adjust_df(df, desired_order) for df in dataframes]
 # len(dataframes)  ## 2
@@ -126,41 +120,41 @@ dataframes = [adjust_df(df, desired_order) for df in dataframes]
 # len(dataframes[0]) ## 6, 從原本的5變成6 
 # dataframes[0]['項目']
 # '''
-# 0         為未來工作累積經驗
-# 1         學習應對與表達能力
-# 2              體驗生活
+# 0              體驗生活
+# 1         為未來工作累積經驗
+# 2             負擔生活費
 # 3              增加人脈
-# 4             負擔生活費
-# 5    不須負擔生活費但想增加零用錢
+# 4    不須負擔生活費但想增加零用錢
+# 5         學習應對與表達能力
+# Name: 項目, dtype: object
+# '''
+# dataframes[1]['項目']
+# '''
+# 0              體驗生活
+# 1         為未來工作累積經驗
+# 2             負擔生活費
+# 3              增加人脈
+# 4    不須負擔生活費但想增加零用錢
+# 5         學習應對與表達能力
 # Name: 項目, dtype: object
 # '''
 
-# dataframes[1]['項目']
-# '''
-# 0         為未來工作累積經驗
-# 1         學習應對與表達能力
-# 2              體驗生活
-# 3              增加人脈
-# 4             負擔生活費
-# 5    不須負擔生活費但想增加零用錢
-# Name: 項目, dtype: object
-# '''
 combined_df = pd.concat(dataframes, keys=selected_options)
 # combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
 # ''' 
 #                    項目  人數      比例
-# 化科系 0       為未來工作累積經驗  13  0.3824
-#     1       學習應對與表達能力  10  0.2941
-#     2            體驗生活   0  0.0000
+# 化科系 0            體驗生活   0  0.0000
+#     1       為未來工作累積經驗  13  0.3824
+#     2           負擔生活費   2  0.0588
 #     3            增加人脈   2  0.0588
-#     4           負擔生活費   2  0.0588
-#     5  不須負擔生活費但想增加零用錢   7  0.2059
-# 企管系 0       為未來工作累積經驗   9  0.3750
-#     1       學習應對與表達能力   6  0.2500
-#     2            體驗生活   1  0.0417
+#     4  不須負擔生活費但想增加零用錢   7  0.2059
+#     5       學習應對與表達能力  10  0.2941
+# 企管系 0            體驗生活   1  0.0417
+#     1       為未來工作累積經驗   9  0.3750
+#     2           負擔生活費   4  0.1667
 #     3            增加人脈   2  0.0833
-#     4           負擔生活費   4  0.1667
-#     5  不須負擔生活費但想增加零用錢   2  0.0833
+#     4  不須負擔生活費但想增加零用錢   2  0.0833
+#     5       學習應對與表達能力   6  0.2500
 # '''
 
 
@@ -171,7 +165,7 @@ combined_df = pd.concat(dataframes, keys=selected_options)
 global 院_系
 ####### 選擇院系
 ###### 選擇 院 or 系:
-院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現所屬學院及全校資料. (ii)可以選擇比較單位): ')
+院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
 if 院_系 == '0':
     choice = st.selectbox('選擇學系', df_sophomore_original['科系'].unique())
     #choice = '化科系'
@@ -188,9 +182,8 @@ if 院_系 == '0':
     # combined_df_r = combined_df.reset_index(level=1, drop=True)
 elif 院_系 == '1':
     choice = st.selectbox('選擇學院', df_sophomore_original['學院'].unique(),index=0)
-    #choice = '理學院'
+    #choice = '管理'
     df_sophomore = df_sophomore_original[df_sophomore_original['學院']==choice]
-    # df_sophomore.shape  ## (330, 55)
     # selected_options = st.multiselect('選擇比較學的院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'])
     # collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
@@ -219,30 +212,25 @@ column_title = []
 with st.expander("選擇目前就讀科系的理由:"):
     # df_sophomore.iloc[:,7] ## 1.您選擇目前就讀科系的理由為何? (可複選)
     column_index = 7
-    total_num_choice = 1
     item_name = "選擇目前就讀科系的理由:"
-    # column_title.append(df_sophomore.columns[column_index][2:])
-    # ##### 将字符串按逗号分割并展平
-    # split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
-    # ##### 计算不同子字符串的出现次数
-    # value_counts = split_values.value_counts()
-    # ##### 计算不同子字符串的比例
-    # proportions = value_counts / value_counts.sum()
-    # ##### 轉換成 numpy array
-    # value_counts_numpy = value_counts.values
-    # proportions_numpy = proportions.values
-    # items_numpy = proportions.index.to_numpy()
-    # ##### 创建一个新的DataFrame来显示结果
-    # result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
-    
-    # ##### 存到 list 'df_streamlit'
-    # df_streamlit.append(result_df)  
-
+    column_title.append(df_sophomore.columns[column_index][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    #### 獲得DataFrame "result_df" :
-    result_df = Frequency_Distribution(df_sophomore, column_index, total_num_choice)
     # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
@@ -252,7 +240,7 @@ with st.expander("選擇目前就讀科系的理由:"):
     # st.markdown(f"圖形中項目(由下至上): {result_df['項目'].values.tolist()}")
     if 院_系 == '0':
         collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
-        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
@@ -349,7 +337,7 @@ with st.expander("選擇目前就讀科系的理由:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -359,7 +347,7 @@ with st.expander("選擇目前就讀科系的理由:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -542,7 +530,6 @@ with st.expander("大學畢業後的規劃:"):
     #df_sophomore.columns
     # df_sophomore.iloc[:,10] ## 4. 大學畢業後的規劃
     column_index = 10
-    total_num_choice = 0
     item_name = "大學畢業後的規劃:"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
@@ -563,8 +550,6 @@ with st.expander("大學畢業後的規劃:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    #### 獲得DataFrame "result_df" :
-    result_df = Frequency_Distribution(df_sophomore, column_index, total_num_choice)
     # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
@@ -573,7 +558,7 @@ with st.expander("大學畢業後的規劃:"):
     ##### 使用Streamlit畫單一圖
     if 院_系 == '0':
         collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
-        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
@@ -669,7 +654,7 @@ with st.expander("大學畢業後的規劃:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -679,7 +664,7 @@ with st.expander("大學畢業後的規劃:"):
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index,total_num_choice) for df in collections]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
