@@ -178,8 +178,18 @@ html_temp = """
 		"""
 stc.html(html_temp)
 # st.subheader("以下調查與計算母體為大二填答同學1834人")
-## 使用 <h3> 或 <h4> 标签代替更大的标题标签
-st.markdown("### 以下調查與計算母體為大二填答同學1834人")
+###### 使用 <h3> 或 <h4> 标签代替更大的标题标签
+# st.markdown("##### 以下調查與計算母體為大二填答同學1834人")
+###### 或者，使用 HTML 的 <style> 来更精细地控制字体大小
+st.markdown("""
+<style>
+.small-font {
+    font-size:14px !important;
+}
+</style>
+<p class="small-font">以下調查與計算母體為大二填答同學1834人</p>
+""", unsafe_allow_html=True)
+
 st.markdown("##")  ## 更大的间隔
 
 
