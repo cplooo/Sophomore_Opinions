@@ -97,17 +97,9 @@ df_sophomore_original = load_data('df_sophomore_original.pkl')
 # df_sophomore_original.index  ## RangeIndex(start=0, stop=1834, step=1)
 
 
-####### 設定呈現標題 
-html_temp = """
-		<div style="background-color:#3872fb;padding:10px;border-radius:10px">
-		<h1 style="color:white;text-align:center;"> 112年大二學習投入問卷調查分析 </h1>
-		</div>
-		"""
-stc.html(html_temp)
-st.markdown("##")  ## 更大的间隔
 
 
-
+####### 預先設定
 ###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
 choice='財金系' ##'化科系'
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
@@ -178,9 +170,17 @@ combined_df = pd.concat(dataframes, keys=selected_options)
 
 
 
+####### 設定呈現標題 
+html_temp = """
+		<div style="background-color:#3872fb;padding:10px;border-radius:10px">
+		<h1 style="color:white;text-align:center;"> 112年大二學習投入問卷調查分析 </h1>
+		</div>
+		"""
+stc.html(html_temp)
+st.subheader("以下調查與計算母體為大二填答同學1834人")
+st.markdown("##")  ## 更大的间隔
 
 
-# st.subheader("以系或院進行查詢.u3vu4t86")
 global 院_系
 ####### 選擇院系
 ###### 選擇 院 or 系:
