@@ -177,7 +177,9 @@ html_temp = """
 		</div>
 		"""
 stc.html(html_temp)
-st.subheader("以下調查與計算母體為大二填答同學1834人")
+# st.subheader("以下調查與計算母體為大二填答同學1834人")
+## 使用 <h3> 或 <h4> 标签代替更大的标题标签
+st.markdown("### 以下調查與計算母體為大二填答同學1834人")
 st.markdown("##")  ## 更大的间隔
 
 
