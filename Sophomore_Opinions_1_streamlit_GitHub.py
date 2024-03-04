@@ -3044,7 +3044,7 @@ with st.expander("儀器設備滿意度:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
