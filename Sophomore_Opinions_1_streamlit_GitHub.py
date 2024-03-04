@@ -3817,7 +3817,7 @@ with st.expander("自學空間滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,34] ## 5.自學空間
     column_index = 34
-    item_name = "教室環境滿意度"
+    item_name = "自學空間滿意度"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
