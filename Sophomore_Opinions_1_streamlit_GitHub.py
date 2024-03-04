@@ -2879,7 +2879,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
 
@@ -2926,7 +2926,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -2996,7 +2996,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
 
@@ -3096,7 +3096,7 @@ with st.expander("儀器設備滿意度:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -3141,7 +3141,7 @@ with st.expander("儀器設備滿意度:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -3210,7 +3210,7 @@ with st.expander("儀器設備滿意度:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
 
