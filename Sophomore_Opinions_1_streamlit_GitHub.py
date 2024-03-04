@@ -260,7 +260,7 @@ with st.expander("選擇目前就讀科系的理由:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -313,7 +313,7 @@ with st.expander("選擇目前就讀科系的理由:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
 
@@ -357,7 +357,7 @@ with st.expander("選擇目前就讀科系的理由:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -427,7 +427,7 @@ with st.expander("選擇目前就讀科系的理由:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
 
@@ -594,7 +594,7 @@ with st.expander("大學畢業後的規劃:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -646,7 +646,7 @@ with st.expander("大學畢業後的規劃:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -683,7 +683,7 @@ with st.expander("大學畢業後的規劃:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -751,7 +751,7 @@ with st.expander("大學畢業後的規劃:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -791,7 +791,7 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -843,7 +843,7 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -888,7 +888,7 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -957,7 +957,7 @@ with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷)
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
 
@@ -1009,7 +1009,7 @@ with st.expander("您二年級就學期間是否工讀:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1060,7 +1060,7 @@ with st.expander("您二年級就學期間是否工讀:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -1097,7 +1097,7 @@ with st.expander("您二年級就學期間是否工讀:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -1165,7 +1165,7 @@ with st.expander("您二年級就學期間是否工讀:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -1216,7 +1216,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1266,7 +1266,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -1303,7 +1303,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -1372,7 +1372,7 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -1417,7 +1417,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1467,7 +1467,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -1504,7 +1504,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -1572,7 +1572,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -1611,7 +1611,7 @@ with st.expander("您工讀最主要的原因為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1662,7 +1662,7 @@ with st.expander("您工讀最主要的原因為何:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
 
@@ -1706,7 +1706,7 @@ with st.expander("您工讀最主要的原因為何:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -1775,7 +1775,7 @@ with st.expander("您工讀最主要的原因為何:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
 
@@ -1824,7 +1824,7 @@ with st.expander("您工讀次要的原因為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1875,7 +1875,7 @@ with st.expander("您工讀次要的原因為何:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -1920,7 +1920,7 @@ with st.expander("您工讀次要的原因為何:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -1989,7 +1989,7 @@ with st.expander("您工讀次要的原因為何:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
 
@@ -2039,7 +2039,7 @@ with st.expander("您每周平均上網時間為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2089,7 +2089,7 @@ with st.expander("您每周平均上網時間為何:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -2126,7 +2126,7 @@ with st.expander("您每周平均上網時間為何:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -2194,7 +2194,7 @@ with st.expander("您每周平均上網時間為何:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -2236,7 +2236,7 @@ with st.expander("您上網主要用途為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2286,7 +2286,7 @@ with st.expander("您上網主要用途為何:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -2323,7 +2323,7 @@ with st.expander("您上網主要用途為何:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -2391,7 +2391,7 @@ with st.expander("您上網主要用途為何:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -2434,7 +2434,7 @@ with st.expander("您上網次要用途為何:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2484,7 +2484,7 @@ with st.expander("您上網次要用途為何:"):
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -2521,7 +2521,7 @@ with st.expander("您上網次要用途為何:"):
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -2589,7 +2589,7 @@ with st.expander("您上網次要用途為何:"):
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -2628,7 +2628,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -2678,7 +2678,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
-            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         ### 添加图例
         ax.legend(fontsize=legend_fontsize)
         ### 添加x轴标签
@@ -2715,7 +2715,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
-            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.0%}', fontsize=14)
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
         #### 添加一些图形元素
         plt.title(item_name, fontsize=15)
         plt.xlabel('人數', fontsize=14)
@@ -2783,7 +2783,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
 
         # # 在每个条形上标示比例
         # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.2%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
     ### 添加图例
     ax.legend(fontsize=legend_fontsize)
     ### 添加x轴标签
@@ -2827,7 +2827,7 @@ with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
     proportions_numpy = proportions.values
     items_numpy = proportions.index.to_numpy()
     ##### 创建一个新的DataFrame来显示结果
-    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(3)})
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
