@@ -4539,11 +4539,11 @@ st.markdown("##")  ## 更大的间隔
 
 ####### Part5  課程規劃與教師教學滿意度(依多數課程情況回答)
 ###### Part5-1 所屬學系專業必修課程規劃
-with st.expander("所屬學系專業必修課程規劃:"):
+with st.expander("所屬學系專業必修課程規劃滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,40] ##  1. 所屬學系專業必修課程規劃
     column_index = 40
-    item_name = "所屬學系專業必修課程規劃"
+    item_name = "所屬學系專業必修課程規劃滿意度"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
