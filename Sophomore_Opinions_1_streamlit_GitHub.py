@@ -243,7 +243,7 @@ column_title = []
 
 ####### Part1  基本資料
 ###### Part1-1 您選擇目前就讀科系的理由為何 ?
-with st.expander("選擇目前就讀科系的理由:"):
+with st.expander("選擇目前就讀科系的理由 (多選):"):
     # df_sophomore.iloc[:,7] ## 1.您選擇目前就讀科系的理由為何? (可複選)
     column_index = 7
     item_name = "選擇目前就讀科系的理由:"
@@ -2810,7 +2810,7 @@ st.markdown("##")  ## 更大的间隔
 
 ####### Part3  學習投入 (依多數課程情況回答)
 ###### Part3-1 學習投入 (依多數課程情況回答): 上課時我
-with st.expander("學習投入 (依多數課程情況回答): 上課時我:"):
+with st.expander("學習投入(依多數課程情況回答):上課時我 (多選):"):
     # df_sophomore.iloc[:,28] ##  學習投入 (依多數課程情況回答): 上課時我
     column_index = 28
     item_name = "學習投入 (依多數課程情況回答): 上課時我:"
@@ -5327,7 +5327,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part5-6 就學期間老師的影響 (可複選)
-with st.expander("就學期間老師的影響:"):
+with st.expander("就學期間老師的影響 (多選):"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,45] ##  6. 就學期間老師的影響 (可複選)
     column_index = 45
@@ -6724,7 +6724,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part6-7 那些學習輔導方案或輔導活動對您是有幫助的?
-with st.expander("有幫助的學習輔導方案或輔導活動:"):
+with st.expander("有幫助的學習輔導方案或輔導活動 (多選):"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,53] ##  7. 那些學習輔導方案或輔導活動對您是有幫助的?
     column_index = 53
