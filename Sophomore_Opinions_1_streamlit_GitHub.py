@@ -6723,6 +6723,203 @@ st.markdown("##")  ## 更大的间隔
 
 
 
+###### Part6-7 那些學習輔導方案或輔導活動對您是有幫助的?
+with st.expander("有幫助的學習輔導方案或輔導活動:"):
+    # df_sophomore.columns
+    # df_sophomore.iloc[:,53] ##  7. 那些學習輔導方案或輔導活動對您是有幫助的?
+    column_index = 53
+    item_name = "有幫助的學習輔導方案或輔導活動"
+    column_title.append(df_sophomore.columns[column_index][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,53].str.split(',| |，|、').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/df_sophomore.shape[0]   ## 此題為多選題
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+
+    ##### 使用Streamlit畫單一圖
+    if 院_系 == '0':
+        collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 设置条形的宽度
+        bar_width = 0.2
+        #### 设置y轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        #### 设置字体大小
+        title_fontsize = 15
+        xlabel_fontsize = 14
+        ylabel_fontsize = 14
+        xticklabel_fontsize = 14
+        yticklabel_fontsize = 14
+        annotation_fontsize = 8
+        legend_fontsize = 14
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(10, 6))
+        for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的y轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        ax.legend(fontsize=legend_fontsize)
+
+        ### 设置 "y轴刻度标签"
+        ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
+        ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+
+
+        ### 设置 "标题" 和 "x轴标签"
+        ax.set_title(item_name,fontsize=title_fontsize)
+        # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
+        ax.set_xlabel('比例',fontsize=xlabel_fontsize)
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+    if 院_系 == '1':
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(11, 8))
+        #### 绘制条形图
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
+        #### 设置 "标题" 和 "x轴标签"
+        plt.title(item_name, fontsize=15)
+        plt.xlabel('人數', fontsize=14)
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+        plt.legend(fontsize=14)
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+
+    ##### 使用streamlit 畫比較圖
+    if 院_系 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+    elif 院_系 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置y轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    yticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的y轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
+        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+
+
+    ### 设置 "y轴刻度标签"
+    ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
+    ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+
+
+    ### 设置 "标题" 和 "x轴标签"
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_xlabel('比例',fontsize=xlabel_fontsize)
+
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+st.markdown("##")  ## 更大的间隔
+
+
+
 
 
 # ####### Part5  課程規劃與教師教學滿意度(依多數課程情況回答)
@@ -6793,425 +6990,6 @@ st.markdown("##")  ## 更大的间隔
 
 
 # ####### Part6  學生學習與輔導資源
-
-
-
-# ###### Part6-2 您是否申請或參與過「生活相關輔導」(導師/領頭羊) 學習輔導方案或輔導活動嗎?
-# df_sophomore.iloc[:,48] ##  2. 您是否申請或參與過「生活相關輔導」(導師/領頭羊) 學習輔導方案或輔導活動嗎?
-# ##### 将字符串按逗号分割并展平
-# #split_values = df_sophomore.iloc[:,43].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# #value_counts = split_values.value_counts()
-# value_counts = df_sophomore.iloc[:,48].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (三二) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('您是否申請或參與過「生活相關輔導」(導師/領頭羊):')
-# print(result_df)
-# '''
-# 您是否申請或參與過「生活相關輔導」(導師/領頭羊):
-#               人數     比例
-# 否           1145  0.624
-# 是            488  0.266
-# 不知道相關方案/活動   201  0.110
-# '''
-# #### 將 index 變column
-# result_df_生活輔導 = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_生活輔導.rename(columns={'index': '您是否申請或參與過「生活相關輔導」(導師/領頭羊)'}, inplace=True)
-# print(result_df_生活輔導)
-
-# '''
-#   您是否申請或參與過「生活相關輔導」(導師/領頭羊)    人數     比例
-# 0                         否  1145  0.624
-# 1                         是   488  0.266
-# 2                不知道相關方案/活動   201  0.110
-# '''
-# #%% (三二) 以上
-
-
-# ###### Part6-3 您是否申請或參與過「職涯輔導」 學習輔導方案或輔導活動嗎?
-# df_sophomore.iloc[:,49] ##  3. 您是否申請或參與過「職涯輔導」 學習輔導方案或輔導活動嗎?
-# ##### 将字符串按逗号分割并展平
-# #split_values = df_sophomore.iloc[:,43].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# #value_counts = split_values.value_counts()
-# value_counts = df_sophomore.iloc[:,49].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (三三) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('您是否申請或參與過「職涯輔導」:')
-# print(result_df)
-# '''
-# 您是否申請或參與過「職涯輔導」:
-#               人數     比例
-# 否           1297  0.707
-# 是            312  0.170
-# 不知道相關方案/活動   225  0.123
-# '''
-# #### 將 index 變column
-# result_df_職涯輔導 = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_職涯輔導.rename(columns={'index': '您是否申請或參與過「職涯輔導」'}, inplace=True)
-# print(result_df_職涯輔導)
-
-# '''
-#   您是否申請或參與過「職涯輔導」    人數     比例
-# 0               否  1297  0.707
-# 1               是   312  0.170
-# 2      不知道相關方案/活動   225  0.123
-# '''
-# #%% (三三) 以上
-
-
-
-# ###### Part6-4 您是否申請或參與過「外語教學中心學習輔導」 學習輔導方案或輔導活動嗎?
-# df_sophomore.iloc[:,50] ##  4. 您是否申請或參與過「外語教學中心學習輔導」 學習輔導方案或輔導活動嗎?
-# ##### 将字符串按逗号分割并展平
-# #split_values = df_sophomore.iloc[:,43].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# #value_counts = split_values.value_counts()
-# value_counts = df_sophomore.iloc[:,50].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (三四) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('您是否申請或參與過「外語教學中心學習輔導」:')
-# print(result_df)
-# '''
-# 您是否申請或參與過「外語教學中心學習輔導」:
-#               人數     比例
-# 否           1170  0.638
-# 是            453  0.247
-# 不知道相關方案/活動   211  0.115
-# '''
-# #### 將 index 變column
-# result_df_外語教學中心學習輔導 = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_外語教學中心學習輔導.rename(columns={'index': '您是否申請或參與過「外語教學中心學習輔導」'}, inplace=True)
-# print(result_df_外語教學中心學習輔導)
-
-# '''
-#   您是否申請或參與過「外語教學中心學習輔導」    人數     比例
-# 0                     否  1170  0.638
-# 1                     是   453  0.247
-# 2            不知道相關方案/活動   211  0.115
-# '''
-# #%% (三四) 以上
-
-
-# ###### Part6-5 您是否申請或參與過「諮商暨健康中心的諮商輔導」 學習輔導方案或輔導活動嗎?
-# df_sophomore.iloc[:,51] ##  5. 您是否申請或參與過「諮商暨健康中心的諮商輔導」 學習輔導方案或輔導活動嗎?
-# ##### 将字符串按逗号分割并展平
-# #split_values = df_sophomore.iloc[:,43].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# #value_counts = split_values.value_counts()
-# value_counts = df_sophomore.iloc[:,51].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (三五) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('您是否申請或參與過「諮商暨健康中心的諮商輔導」:')
-# print(result_df)
-# '''
-# 您是否申請或參與過「諮商暨健康中心的諮商輔導」:
-#               人數     比例
-# 否           1351  0.737
-# 是            254  0.138
-# 不知道相關方案/活動   229  0.125
-# '''
-# #### 將 index 變column
-# result_df_諮商暨健康中心諮商輔導 = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_諮商暨健康中心諮商輔導.rename(columns={'index': '您是否申請或參與過「諮商暨健康中心的諮商輔導」'}, inplace=True)
-# print(result_df_諮商暨健康中心諮商輔導)
-
-# '''
-#   您是否申請或參與過「諮商暨健康中心的諮商輔導」    人數     比例
-# 0                       否  1351  0.737
-# 1                       是   254  0.138
-# 2              不知道相關方案/活動   229  0.125
-# '''
-# #%% (三五) 以上
-
-
-# ###### Part6-6 您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動嗎?
-# df_sophomore.iloc[:,52] ##  6. 您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動嗎?
-# ##### 将字符串按逗号分割并展平
-# #split_values = df_sophomore.iloc[:,43].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# #value_counts = split_values.value_counts()
-# value_counts = df_sophomore.iloc[:,52].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (三六) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動:')
-# print(result_df)
-# # '''
-# # 您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動:
-# #               人數     比例
-# # 否           1289  0.703
-# # 不知道相關方案/活動   273  0.149
-# # 是            272  0.148
-# # '''
-# #### 將 index 變column
-# result_df_國際化資源 = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_國際化資源.rename(columns={'index': '您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動'}, inplace=True)
-# print(result_df_國際化資源)
-# # '''
-# #   您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動    人數     比例
-# # 0                            否  1289  0.703
-# # 1                   不知道相關方案/活動   273  0.149
-# # 2                            是   272  0.148
-# # '''
-# #### 對調 '不知道相關方案/活動' 與 '是' 的index 次序, 因為要與其他圖的項目順序一致
-# result_df_國際化資源_reindexed = result_df_國際化資源.reindex([0,2,1])
-# result_df_國際化資源_reindexed = result_df_國際化資源_reindexed.reset_index(drop=True)  ## 重設 index
-# print(result_df_國際化資源_reindexed)
-# '''
-#   您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動    人數     比例
-# 0                            否  1289  0.703
-# 2                            是   272  0.148
-# 1                   不知道相關方案/活動   273  0.149
-# '''
-# #%% (三六) 以上
-
-
-# #%% (三六圖) 以下
-# ###### 畫圖: 申請或參與過之學習輔導方案或輔導活動
-# ##### 创建一个 2x3 的子图布局
-# fig, axes = plt.subplots(2, 3, figsize=(11, 8))
-
-# #### 申請或參與過學生學習輔導方案 条形图
-# axes[0,0].bar(result_df_學習輔導.iloc[:,0], result_df_學習輔導.iloc[:,1])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# for i in range(len(result_df_學習輔導.iloc[:,0])):
-#     axes[0,0].text(result_df_學習輔導.iloc[:,0][i], result_df_學習輔導.iloc[:,1][i]+15, f'{result_df_學習輔導.iloc[:, 2][i]:.2%}', fontsize=12)
-# ### 添加一些图形元素
-# axes[0, 0].set_title('申請或參與過學生學習輔導方案', fontsize=12)
-# axes[0, 0].set_ylabel('人數', fontsize=12)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# axes[0, 0].tick_params(axis='both', labelsize=10)  # 同时调整x轴和y轴
-# #axes[0, 1].legend()
-# ### 显示网格线
-# axes[0, 0].grid(True, linestyle='--', linewidth=0.5, color='gray')
-
-
-# #### 申請或參與過生活相關輔導 条形图
-# axes[0, 1].bar(result_df_生活輔導.iloc[:,0], result_df_生活輔導.iloc[:,1])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# for i in range(len(result_df_生活輔導.iloc[:,0])):
-#     axes[0, 1].text(result_df_生活輔導.iloc[:,0][i], result_df_生活輔導.iloc[:,1][i]+15, f'{result_df_生活輔導.iloc[:, 2][i]:.2%}', fontsize=12)
-# ### 添加一些图形元素
-# axes[0, 1].set_title('申請或參與過生活相關輔導', fontsize=12)
-# axes[0, 1].set_ylabel('人數', fontsize=12)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# axes[0, 1].tick_params(axis='both', labelsize=10)  # 同时调整x轴和y轴
-# #axes[0, 1].legend()
-# ### 显示网格线
-# axes[0, 1].grid(True, linestyle='--', linewidth=0.5, color='gray')
-
-
-# #### 申請或參與過職涯輔導 条形图
-# axes[0, 2].bar(result_df_職涯輔導.iloc[:,0], result_df_職涯輔導.iloc[:,1])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# for i in range(len(result_df_職涯輔導.iloc[:,0])):
-#     axes[0, 2].text(result_df_職涯輔導.iloc[:,0][i], result_df_職涯輔導.iloc[:,1][i]+15, f'{result_df_職涯輔導.iloc[:, 2][i]:.2%}', fontsize=12)
-# ### 添加一些图形元素
-# axes[0, 2].set_title('申請或參與過職涯輔導', fontsize=12)
-# axes[0, 2].set_ylabel('人數', fontsize=12)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# axes[0, 2].tick_params(axis='both', labelsize=10)  # 同时调整x轴和y轴
-# #axes[0, 1].legend()
-# ### 显示网格线
-# axes[0, 2].grid(True, linestyle='--', linewidth=0.5, color='gray')
-
-
-# #### 申請或參與過外語教學中心學習輔導 条形图
-# axes[1, 0].bar(result_df_外語教學中心學習輔導.iloc[:,0], result_df_外語教學中心學習輔導.iloc[:,1])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# for i in range(len(result_df_外語教學中心學習輔導.iloc[:,0])):
-#     axes[1, 0].text(result_df_外語教學中心學習輔導.iloc[:,0][i], result_df_外語教學中心學習輔導.iloc[:,1][i]+15, f'{result_df_外語教學中心學習輔導.iloc[:, 2][i]:.2%}', fontsize=12)
-# ### 添加一些图形元素
-# axes[1, 0].set_title('申請或參與過外語教學中心學習輔導', fontsize=12)
-# axes[1, 0].set_ylabel('人數', fontsize=12)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# axes[1, 0].tick_params(axis='both', labelsize=10)  # 同时调整x轴和y轴
-# #axes[0, 1].legend()
-# ### 显示网格线
-# axes[1, 0].grid(True, linestyle='--', linewidth=0.5, color='gray')
-
-
-# #### 申請或參與過諮商暨健康中心的諮商輔導 条形图
-# axes[1, 1].bar(result_df_諮商暨健康中心諮商輔導.iloc[:,0], result_df_諮商暨健康中心諮商輔導.iloc[:,1])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# for i in range(len(result_df_諮商暨健康中心諮商輔導.iloc[:,0])):
-#     axes[1, 1].text(result_df_諮商暨健康中心諮商輔導.iloc[:,0][i], result_df_諮商暨健康中心諮商輔導.iloc[:,1][i]+15, f'{result_df_諮商暨健康中心諮商輔導.iloc[:, 2][i]:.2%}', fontsize=12)
-# ### 添加一些图形元素
-# axes[1, 1].set_title('申請或參與過諮商暨健康中心的諮商輔導', fontsize=12)
-# axes[1, 1].set_ylabel('人數', fontsize=12)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# axes[1, 1].tick_params(axis='both', labelsize=10)  # 同时调整x轴和y轴
-# #axes[0, 1].legend()
-# ### 显示网格线
-# axes[1, 1].grid(True, linestyle='--', linewidth=0.5, color='gray')
-
-
-# #### 申請或參與過國際化資源 条形图
-# axes[1, 2].bar(result_df_國際化資源_reindexed.iloc[:,0], result_df_國際化資源_reindexed.iloc[:,1])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# for i in range(len(result_df_國際化資源_reindexed.iloc[:,0])):
-#     if i==2:
-#         axes[1, 2].text(result_df_國際化資源_reindexed.iloc[:,0][i], result_df_國際化資源_reindexed.iloc[:,1][i]+15, f'{result_df_國際化資源_reindexed.iloc[:, 2][i]:.2%}', fontsize=12, color='red')
-#     else:
-#         axes[1, 2].text(result_df_國際化資源_reindexed.iloc[:,0][i], result_df_國際化資源_reindexed.iloc[:,1][i]+15, f'{result_df_國際化資源_reindexed.iloc[:, 2][i]:.2%}', fontsize=12)
-# ### 添加一些图形元素
-# axes[1, 2].set_title('申請或參與過國際化資源', fontsize=12)
-# axes[1, 2].set_ylabel('人數', fontsize=12)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# axes[1, 2].tick_params(axis='both', labelsize=10)  # 同时调整x轴和y轴
-# #axes[0, 1].legend()
-# ### 显示网格线
-# axes[1, 2].grid(True, linestyle='--', linewidth=0.5, color='gray')
-
-
-# ##### 调整子图布局
-# plt.tight_layout()
-# ##### 显示整个图形
-# plt.show()
-# #%% (三六圖) 以上
-
-
-
-# ###### Part6-7 那些學習輔導方案或輔導活動對您是有幫助的?
-# df_sophomore.iloc[:,53] ##  7. 那些學習輔導方案或輔導活動對您是有幫助的?
-# ##### 将字符串按逗号分割并展平
-# split_values = df_sophomore.iloc[:,53].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# value_counts = split_values.value_counts()
-# #value_counts = df_sophomore.iloc[:,52].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (三七) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('那些學習輔導方案或輔導活動對您是有幫助的:')
-# print(result_df)
-# '''
-# 那些學習輔導方案或輔導活動對您是有幫助的:
-#                            人數     比例
-# 生活相關輔導(導師/領頭羊)            755  0.237
-# 學生學習輔導方案(學習輔導/自主學習/飛鷹助學)  628  0.198
-# 職涯輔導                      561  0.176
-# 國際化資源                     507  0.159
-# 外語教學中心學習輔導                491  0.154
-# 諮商暨健康中心的諮商輔導              237  0.075
-# '''
-# #### 將 index 變column
-# result_df_r = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_r.rename(columns={'index': '那些學習輔導方案或輔導活動對您是有幫助的'}, inplace=True)
-# print(result_df_r)
-
-# '''
-#         那些學習輔導方案或輔導活動對您是有幫助的   人數     比例
-#  0            生活相關輔導(導師/領頭羊)  755  0.237
-#  1  學生學習輔導方案(學習輔導/自主學習/飛鷹助學)  628  0.198
-#  2                      職涯輔導  561  0.176
-#  3                     國際化資源  507  0.159
-#  4                外語教學中心學習輔導  491  0.154
-#  5              諮商暨健康中心的諮商輔導  237  0.075
-# '''
-# #%% (三七) 以上
-
-
-# #%% (三七圖) 以下
-# #### 圖：哪些學習輔導方案或輔導活動對學生有幫助
-# ### 创建图形和坐标轴
-# plt.figure(figsize=(11, 8))
-# ### 绘制条形图
-# plt.bar(result_df_r.iloc[:,0], result_df_r.iloc[:,1])
-# #plt.barh(series.index, series)
-# ### 標示數據
-# for i in range(len(result_df_r.iloc[:,0])):
-#     plt.text(result_df_r.iloc[:,0][i], result_df_r.iloc[:,1][i]+15, f'{result_df_r.iloc[:, 2][i]:.2%}', fontsize=16)
-
-# ### 添加一些图形元素
-# plt.title('哪些學習輔導方案或輔導活動對學生有幫助', fontsize=16)
-# plt.ylabel('人數', fontsize=16)
-# #plt.ylabel('本校現在所提供的資源或支援事項')
-# ### 调整x轴和y轴刻度标签的字体大小
-# plt.tick_params(axis='both', labelsize=16)  # 同时调整x轴和y轴
-
-# plt.legend()
-# ### 显示网格线
-# plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
-# ### 显示图形
-# plt.show()
-
-
-
-# #%% (三七圖) 以上
-
-
-
 # ###### Part6-8 您在課業上，是否有其他需要協助的，如無，請填「無」。
 # df_sophomore.iloc[:,54] ##  8. 您在課業上，是否有其他需要協助的，如無，請填「無」。
 # ##### 将字符串按逗号分割并展平
