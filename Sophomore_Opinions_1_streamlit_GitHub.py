@@ -243,7 +243,7 @@ column_title = []
 
 ####### Part1  基本資料
 ###### Part1-1 您選擇目前就讀科系的理由為何 ?
-with st.expander("選擇目前就讀科系的理由 (多選):"):
+with st.expander("Part 1 基本資料. 1-1 選擇目前就讀科系的理由 (多選):"):
     # df_sophomore.iloc[:,7] ## 1.您選擇目前就讀科系的理由為何? (可複選)
     column_index = 7
     item_name = "選擇目前就讀科系的理由:"
@@ -592,7 +592,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part1-4 大學畢業後的規劃
-with st.expander("大學畢業後的規劃:"):
+with st.expander("1-2 大學畢業後的規劃:"):
     #df_sophomore.columns
     # df_sophomore.iloc[:,10] ## 4. 大學畢業後的規劃
     column_index = 10
@@ -789,7 +789,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part1-5 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
-with st.expander("學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源:"):
+with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,11] ## 5. 學習及生活費(書籍、住宿、交通、伙食等開銷) 主要來源。
     column_index = 11
@@ -1008,7 +1008,7 @@ st.markdown("##")  ## 更大的间隔
 
 ####### Part2  時間規劃
 ###### Part2-6 您二年級就學期間是否工讀 ?
-with st.expander("您二年級就學期間是否工讀:"):
+with st.expander("Part 2 時間規劃. 2-1 您二年級就學期間是否工讀:"):
     # df_sophomore.iloc[:,18] ## 6. 您二年級就學期間是否工讀?
     column_index = 18
     item_name = "您二年級就學期間是否工讀:"
@@ -1207,7 +1207,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-7 您二年級「上學期」平均每周工讀時數 ?
-with st.expander("您二年級「上學期」平均每周工讀時數:"):
+with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
     # df_sophomore.iloc[:,19] ## 7.您二年級「上學期」平均每周工讀時數 ?
     column_index = 19
     item_name = "您二年級「上學期」平均每周工讀時數:"
@@ -1417,7 +1417,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-8 您二年級「上學期」的工讀地點為何 ?
-with st.expander("您二年級「上學期」的工讀地點為何:"):
+with st.expander("2-3 您二年級「上學期」的工讀地點為何:"):
     # df_sophomore.iloc[:,20] ## 8.您二年級「上學期」的工讀地點為何 ?
     column_index = 20
     item_name = "您二年級「上學期」的工讀地點為何"
@@ -1611,7 +1611,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-9  您工讀最主要的原因為何?
-with st.expander("您工讀最主要的原因為何:"):
+with st.expander("2-4 您工讀最主要的原因為何:"):
     # df_sophomore.iloc[:,21] ##  9.您工讀最主要的原因為何?
     column_index = 21
     item_name = "您工讀最主要的原因為何"
@@ -1824,7 +1824,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-10  您工讀次要的原因為何?
-with st.expander("您工讀次要的原因為何:"):
+with st.expander("2-5 您工讀次要的原因為何:"):
     # df_sophomore.iloc[:,22] ##  10.您工讀次要的原因為何?
     column_index = 22
     item_name = "您工讀次要的原因為何"
@@ -2039,7 +2039,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-11 您每周平均上網時間為何?
-with st.expander("您每周平均上網時間為何:"):
+with st.expander("2-6 您每周平均上網時間為何:"):
     # df_sophomore.iloc[:,23] ##  11.您每周平均上網時間為何?
     column_index = 23
     item_name = "您每周平均上網時間為何"
@@ -2236,7 +2236,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-12 您上網主要用途為何? (最主要用途)
-with st.expander("您上網主要用途為何:"):
+with st.expander("2-7 您上網主要用途為何:"):
     # df_sophomore.iloc[:,24] ##  12.您上網主要用途為何? (最主要用途)
     column_index = 24
     item_name = "您上網主要用途為何"
@@ -2434,7 +2434,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-13 您上網次要用途為何? (次要用途)
-with st.expander("您上網次要用途為何:"):
+with st.expander("2-8 您上網次要用途為何:"):
     # df_sophomore.iloc[:,25] ##  13.您上網次要用途為何? (次要用途)
     column_index = 25
     item_name = "您上網次要用途為何"
@@ -2628,7 +2628,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-14 除了上課時間外，您每天平均念書的時間為何?
-with st.expander("除了上課時間外，您每天平均念書的時間為何:"):
+with st.expander("2-9 除了上課時間外，您每天平均念書的時間為何:"):
     # df_sophomore.iloc[:,26] ##  14.除了上課時間外，您每天平均念書的時間為何?
     column_index = 26
     item_name = "除了上課時間外，您每天平均念書的時間為何"
@@ -2826,7 +2826,7 @@ st.markdown("##")  ## 更大的间隔
 
 ####### Part3  學習投入 (依多數課程情況回答)
 ###### Part3-1 學習投入 (依多數課程情況回答): 上課時我
-with st.expander("學習投入(依多數課程情況回答):上課時我 (多選):"):
+with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回答):上課時我 (多選):"):
     # df_sophomore.iloc[:,28] ##  學習投入 (依多數課程情況回答): 上課時我
     column_index = 28
     item_name = "學習投入 (依多數課程情況回答): 上課時我:"
@@ -3043,7 +3043,7 @@ st.markdown("##")  ## 更大的间隔
 
 ####### Part4  學校學習環境滿意度
 ###### Part4-1 儀器設備
-with st.expander("儀器設備滿意度:"):
+with st.expander("Part 4 學校學習環境滿意度. 4-1 儀器設備滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,30] ## 1.儀器設備
     column_index = 30
@@ -3239,7 +3239,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part4-2 實驗器材
-with st.expander("實驗器材滿意度:"):
+with st.expander("4-2 實驗器材滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,31] ## 2.實驗器材
     column_index = 31
@@ -3436,7 +3436,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part4-3 教室空間
-with st.expander("教室空間滿意度:"):
+with st.expander("4-3 教室空間滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,32] ## 3.教室空間
     column_index = 32
@@ -3632,7 +3632,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part4-4 教室環境
-with st.expander("教室環境滿意度:"):
+with st.expander("4-4 教室環境滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,33] ## 4.教室環境
     column_index = 33
@@ -3829,7 +3829,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part4-5 自學空間
-with st.expander("自學空間滿意度:"):
+with st.expander("4-5 自學空間滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,34] ## 5.自學空間
     column_index = 34
@@ -4028,7 +4028,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part4-6 學校宿舍
-with st.expander("學校宿舍滿意度:"):
+with st.expander("4-6 學校宿舍滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,35] ## 6.學校宿舍
     column_index = 35
@@ -4225,7 +4225,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part4-7 校園網路
-with st.expander("校園網路滿意度:"):
+with st.expander("4-7 校園網路滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,36] ## 7.校園網路
     column_index = 36
@@ -4555,7 +4555,7 @@ st.markdown("##")  ## 更大的间隔
 
 ####### Part5  課程規劃與教師教學滿意度(依多數課程情況回答)
 ###### Part5-1 所屬學系專業必修課程規劃
-with st.expander("所屬學系專業必修課程規劃滿意度:"):
+with st.expander("Part 5 課程規劃與教師教學滿意度. 5-1 所屬學系專業必修課程規劃滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,40] ##  1. 所屬學系專業必修課程規劃
     column_index = 40
@@ -4752,7 +4752,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part5-2 所屬學系專業學程規劃
-with st.expander("所屬學系專業學程規劃滿意度:"):
+with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,41] ##  2.所屬學系專業學程規劃
     column_index = 41
@@ -4949,7 +4949,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part5-3 「專業必選修」課程授課老師的教學方式
-with st.expander("「專業必選修」課程授課老師的教學方式滿意度:"):
+with st.expander("5-3「專業必選修」課程授課老師的教學方式滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,42] ##  3.「專業必選修」課程授課老師的教學方式
     column_index = 42
@@ -5146,7 +5146,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part5-5 您覺得哪一種授課方式的學習效果比較好?
-with st.expander("授課方式的學習效果比較:"):
+with st.expander("5-4 授課方式的學習效果比較:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,44] ##  5. 您覺得哪一種授課方式的學習效果比較好?
     column_index = 44
@@ -5343,7 +5343,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part5-6 就學期間老師的影響 (可複選)
-with st.expander("就學期間老師的影響 (多選):"):
+with st.expander("5-5 就學期間老師的影響 (多選):"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,45] ##  6. 就學期間老師的影響 (可複選)
     column_index = 45
@@ -5559,7 +5559,7 @@ st.markdown("##")  ## 更大的间隔
 
 ####### Part6  學生學習與輔導資源
 ###### Part6-1 您是否申請或參與過「學生學習輔導方案」(學習輔導/自主學習/飛鷹助學) 學習輔導方案或輔導活動嗎?
-with st.expander("「學習輔導/自主學習/飛鷹助學」學習輔導方案或輔導活動參與經驗:"):
+with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主學習/飛鷹助學」學習輔導方案或輔導活動參與經驗:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,47] ##  1. 您是否申請或參與過「學生學習輔導方案」(學習輔導/自主學習/飛鷹助學) 學習輔導方案或輔導活動嗎?
     column_index = 47
@@ -5756,7 +5756,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part6-2 您是否申請或參與過「生活相關輔導」(導師/領頭羊) 學習輔導方案或輔導活動嗎?
-with st.expander("「生活相關輔導(導師/領頭羊)」學習輔導方案或輔導活動參與經驗:"):
+with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方案或輔導活動參與經驗:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,48] ##  2. 您是否申請或參與過「生活相關輔導」(導師/領頭羊) 學習輔導方案或輔導活動嗎?
     column_index = 48
@@ -5952,7 +5952,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part6-3 您是否申請或參與過「職涯輔導」 學習輔導方案或輔導活動嗎?
-with st.expander("「職涯輔導」學習輔導方案或輔導活動參與經驗:"):
+with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與經驗:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,49] ##  3. 您是否申請或參與過「職涯輔導」 學習輔導方案或輔導活動嗎?
     column_index = 49
@@ -6149,7 +6149,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part6-4 您是否申請或參與過「外語教學中心學習輔導」 學習輔導方案或輔導活動嗎?
-with st.expander("「外語教學中心學習輔導」學習輔導方案或輔導活動參與經驗:"):
+with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或輔導活動參與經驗:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,50] ##  4. 您是否申請或參與過「外語教學中心學習輔導」 學習輔導方案或輔導活動嗎?
     column_index = 50
@@ -6346,7 +6346,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part6-5 您是否申請或參與過「諮商暨健康中心的諮商輔導」 學習輔導方案或輔導活動嗎?
-with st.expander("「諮商暨健康中心的諮商輔導」學習輔導方案或輔導活動參與經驗:"):
+with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方案或輔導活動參與經驗:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,51] ##  5. 您是否申請或參與過「諮商暨健康中心的諮商輔導」 學習輔導方案或輔導活動嗎?
     column_index = 51
@@ -6543,7 +6543,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part6-6 您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動嗎?
-with st.expander("「國際化資源」學習輔導方案或輔導活動參與經驗:"):
+with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參與經驗:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,52] ##  6. 您是否申請或參與過「國際化資源」 學習輔導方案或輔導活動嗎?
     column_index = 52
@@ -6740,7 +6740,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part6-7 那些學習輔導方案或輔導活動對您是有幫助的?
-with st.expander("有幫助的學習輔導方案或輔導活動 (多選):"):
+with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,53] ##  7. 那些學習輔導方案或輔導活動對您是有幫助的?
     column_index = 53
