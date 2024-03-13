@@ -1237,7 +1237,8 @@ with st.expander("您二年級「上學期」平均每周工讀時數:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
@@ -1438,7 +1439,7 @@ with st.expander("您二年級「上學期」的工讀地點為何:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
