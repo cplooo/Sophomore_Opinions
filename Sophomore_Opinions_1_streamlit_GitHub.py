@@ -280,6 +280,7 @@ with st.expander("選擇目前就讀科系的理由 (多選):"):
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
         # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
         desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
