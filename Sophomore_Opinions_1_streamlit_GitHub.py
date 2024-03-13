@@ -3040,7 +3040,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
         annotation_fontsize = 8
         legend_fontsize = 14
         #### 绘制条形
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(15, 9))
         # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
         for i, college_name in enumerate(unique_level0):            
             df = combined_df.loc[college_name]
@@ -3096,7 +3096,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 创建图形和坐标轴
-        plt.figure(figsize=(11, 8))
+        plt.figure(figsize=(15, 9))
         #### 绘制条形图
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
@@ -3163,7 +3163,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
     annotation_fontsize = 8
     legend_fontsize = 14
     #### 绘制条形
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(15, 9))
     # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
     for i, college_name in enumerate(unique_level0):            
         df = combined_df.loc[college_name]
