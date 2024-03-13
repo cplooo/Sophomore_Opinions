@@ -1633,7 +1633,7 @@ with st.expander("您工讀最主要的原因為何:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
@@ -1846,7 +1846,7 @@ with st.expander("您工讀次要的原因為何:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
@@ -2061,7 +2061,7 @@ with st.expander("您每周平均上網時間為何:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
@@ -2258,7 +2258,7 @@ with st.expander("您上網主要用途為何:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
@@ -2456,7 +2456,7 @@ with st.expander("您上網次要用途為何:"):
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
@@ -2650,7 +2650,7 @@ with st.expander("除了上課時間外，您每天平均念書的時間為何:"
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
@@ -2849,7 +2849,7 @@ with st.expander("學習投入(依多數課程情況回答):上課時我 (多選
 
 
     ##### 使用Streamlit展示DataFrame，但不显示索引
-    st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
 
