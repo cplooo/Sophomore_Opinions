@@ -3032,15 +3032,15 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
-        title_fontsize = 15
-        xlabel_fontsize = 14
-        ylabel_fontsize = 14
-        xticklabel_fontsize = 14
-        yticklabel_fontsize = 14
-        annotation_fontsize = 8
-        legend_fontsize = 14
+        title_fontsize =17 #15
+        xlabel_fontsize =16 #14
+        ylabel_fontsize =16 #14
+        xticklabel_fontsize =16 #14
+        yticklabel_fontsize =16 #14
+        annotation_fontsize =10 #8
+        legend_fontsize =16 #14
         #### 绘制条形
-        fig, ax = plt.subplots(figsize=(15, 9))
+        fig, ax = plt.subplots(figsize=(20, 12))
         # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
         for i, college_name in enumerate(unique_level0):            
             df = combined_df.loc[college_name]
@@ -3096,7 +3096,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 创建图形和坐标轴
-        plt.figure(figsize=(15, 9))
+        plt.figure(figsize=(20, 12))
         #### 绘制条形图
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
@@ -3155,15 +3155,15 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
-    title_fontsize = 15
-    xlabel_fontsize = 14
-    ylabel_fontsize = 14
-    xticklabel_fontsize = 11
-    yticklabel_fontsize = 14
-    annotation_fontsize = 8
-    legend_fontsize = 14
+    title_fontsize =17 #15
+    xlabel_fontsize =16 #14
+    ylabel_fontsize =16 #14
+    xticklabel_fontsize =16 #11
+    yticklabel_fontsize =16 #14
+    annotation_fontsize =10 #8
+    legend_fontsize =16 #14
     #### 绘制条形
-    fig, ax = plt.subplots(figsize=(15, 9))
+    fig, ax = plt.subplots(figsize=(20, 12))
     # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
     for i, college_name in enumerate(unique_level0):            
         df = combined_df.loc[college_name]
