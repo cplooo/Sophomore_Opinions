@@ -728,7 +728,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -741,7 +741,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
 
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -950,7 +950,7 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -962,7 +962,7 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
         unique_level0 = combined_df.index.get_level_values(0).unique()
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1173,7 +1173,7 @@ with st.expander("Part 2 時間規劃. 2-1 您二年級就學期間是否工讀:
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1184,7 +1184,7 @@ with st.expander("Part 2 時間規劃. 2-1 您二年級就學期間是否工讀:
 
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1394,7 +1394,7 @@ with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1404,7 +1404,7 @@ with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1607,7 +1607,7 @@ with st.expander("2-3 您二年級「上學期」的工讀地點為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1617,7 +1617,7 @@ with st.expander("2-3 您二年級「上學期」的工讀地點為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1821,7 +1821,7 @@ with st.expander("2-4 您工讀最主要的原因為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1831,7 +1831,7 @@ with st.expander("2-4 您工讀最主要的原因為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2048,7 +2048,7 @@ with st.expander("2-5 您工讀次要的原因為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2058,7 +2058,7 @@ with st.expander("2-5 您工讀次要的原因為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2267,7 +2267,7 @@ with st.expander("2-6 您每周平均上網時間為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2277,7 +2277,7 @@ with st.expander("2-6 您每周平均上網時間為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2476,7 +2476,7 @@ with st.expander("2-7 您上網主要用途為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2486,7 +2486,7 @@ with st.expander("2-7 您上網主要用途為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2688,7 +2688,7 @@ with st.expander("2-8 您上網次要用途為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2698,7 +2698,7 @@ with st.expander("2-8 您上網次要用途為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2896,7 +2896,7 @@ with st.expander("2-9 除了上課時間外，您每天平均念書的時間為�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2906,7 +2906,7 @@ with st.expander("2-9 除了上課時間外，您每天平均念書的時間為�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3121,7 +3121,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3131,7 +3131,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3336,7 +3336,7 @@ with st.expander("Part 4 學校學習環境滿意度. 4-1 儀器設備滿意度:
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3346,7 +3346,7 @@ with st.expander("Part 4 學校學習環境滿意度. 4-1 儀器設備滿意度:
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3545,7 +3545,7 @@ with st.expander("4-2 實驗器材滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3555,7 +3555,7 @@ with st.expander("4-2 實驗器材滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3755,7 +3755,7 @@ with st.expander("4-3 教室空間滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3765,7 +3765,7 @@ with st.expander("4-3 教室空間滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3963,7 +3963,7 @@ with st.expander("4-4 教室環境滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3973,7 +3973,7 @@ with st.expander("4-4 教室環境滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4173,7 +4173,7 @@ with st.expander("4-5 自學空間滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4183,7 +4183,7 @@ with st.expander("4-5 自學空間滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4385,7 +4385,7 @@ with st.expander("4-6 學校宿舍滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4395,7 +4395,7 @@ with st.expander("4-6 學校宿舍滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4594,7 +4594,7 @@ with st.expander("4-7 校園網路滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4604,7 +4604,7 @@ with st.expander("4-7 校園網路滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4936,7 +4936,7 @@ with st.expander("Part 5 課程規劃與教師教學滿意度. 5-1 所屬學系�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4946,7 +4946,7 @@ with st.expander("Part 5 課程規劃與教師教學滿意度. 5-1 所屬學系�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5145,7 +5145,7 @@ with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5155,7 +5155,7 @@ with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5354,7 +5354,7 @@ with st.expander("5-3「專業必選修」課程授課老師的教學方式滿�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5364,7 +5364,7 @@ with st.expander("5-3「專業必選修」課程授課老師的教學方式滿�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5561,7 +5561,7 @@ with st.expander("5-4 授課方式的學習效果比較:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5571,7 +5571,7 @@ with st.expander("5-4 授課方式的學習效果比較:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5785,7 +5785,7 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5795,7 +5795,7 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5994,7 +5994,7 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6004,7 +6004,7 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6203,7 +6203,7 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6213,7 +6213,7 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6411,7 +6411,7 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6421,7 +6421,7 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6620,7 +6620,7 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6630,7 +6630,7 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6829,7 +6829,7 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6839,7 +6839,7 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7038,7 +7038,7 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7048,7 +7048,7 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7247,7 +7247,7 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7257,7 +7257,7 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
