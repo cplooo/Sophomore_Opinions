@@ -279,6 +279,7 @@ with st.expander("選擇目前就讀科系的理由 (多選):"):
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
         # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
         desired_order  = [item for item in dataframes[0]['項目'].tolist()]
         desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -356,7 +357,8 @@ with st.expander("選擇目前就讀科系的理由 (多選):"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
-        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        # plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        plt.barh(result_df['項目'][::-1].reset_index(drop=True), result_df['人數'][::-1].reset_index(drop=True), label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
             plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
