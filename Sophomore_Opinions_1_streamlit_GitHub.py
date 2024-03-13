@@ -309,7 +309,8 @@ with st.expander("選擇目前就讀科系的理由 (多選):"):
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(10, 6))
         # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-        for i, (college_name, df) in enumerate(unique_level0):            
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
             # 计算当前分组的条形数量
             num_bars = len(df)
             # 生成当前分组的y轴位置
