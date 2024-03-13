@@ -394,6 +394,8 @@ with st.expander("選擇目前就讀科系的理由 (多選):"):
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
         selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
@@ -404,6 +406,8 @@ with st.expander("選擇目前就讀科系的理由 (多選):"):
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]        
         combined_df = pd.concat(dataframes, keys=selected_options)
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
         
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -425,7 +429,10 @@ with st.expander("選擇目前就讀科系的理由 (多選):"):
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
+
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
