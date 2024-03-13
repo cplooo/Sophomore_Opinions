@@ -2596,6 +2596,9 @@ with st.expander("2-8 您上網次要用途為何:"):
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
