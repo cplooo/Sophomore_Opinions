@@ -5902,10 +5902,15 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
-        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -6008,6 +6013,9 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -6028,7 +6036,9 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
@@ -6099,10 +6109,15 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
-        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -6124,7 +6139,9 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
         legend_fontsize = 14
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(10, 6))
-        for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
             # 计算当前分组的条形数量
             num_bars = len(df)
             # 生成当前分组的y轴位置
@@ -6205,6 +6222,9 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -6225,7 +6245,9 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
@@ -6295,10 +6317,15 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
-        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -6320,7 +6347,9 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
         legend_fontsize = 14
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(10, 6))
-        for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
             # 计算当前分组的条形数量
             num_bars = len(df)
             # 生成当前分组的y轴位置
@@ -6401,6 +6430,9 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -6421,7 +6453,9 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
@@ -6492,10 +6526,15 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
-        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()]))
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -6517,7 +6556,9 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
         legend_fontsize = 14
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(10, 6))
-        for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
             # 计算当前分组的条形数量
             num_bars = len(df)
             # 生成当前分组的y轴位置
@@ -6598,6 +6639,9 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -6618,7 +6662,9 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
@@ -6689,10 +6735,15 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
-        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -6714,7 +6765,9 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
         legend_fontsize = 14
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(10, 6))
-        for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
             # 计算当前分组的条形数量
             num_bars = len(df)
             # 生成当前分组的y轴位置
@@ -6795,6 +6848,9 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -6815,7 +6871,9 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
@@ -6886,10 +6944,15 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
-        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()]))
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -6911,7 +6974,9 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
         legend_fontsize = 14
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(10, 6))
-        for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
             # 计算当前分组的条形数量
             num_bars = len(df)
             # 生成当前分组的y轴位置
@@ -6992,6 +7057,9 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -7012,7 +7080,9 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
@@ -7083,10 +7153,15 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
-        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()]))
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
 
         #### 設置 matplotlib 支持中文的字體: 
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
@@ -7108,7 +7183,9 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
         legend_fontsize = 14
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(10, 6))
-        for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
             # 计算当前分组的条形数量
             num_bars = len(df)
             # 生成当前分组的y轴位置
@@ -7189,6 +7266,9 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
 
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+
     #### 設置 matplotlib 支持中文的字體: 
     # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
     # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -7209,7 +7289,9 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
     legend_fontsize = 14
     #### 绘制条形
     fig, ax = plt.subplots(figsize=(10, 6))
-    for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
         # 计算当前分组的条形数量
         num_bars = len(df)
         # 生成当前分组的y轴位置
