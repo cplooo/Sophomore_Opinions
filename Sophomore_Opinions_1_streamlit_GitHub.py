@@ -1493,10 +1493,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-3 您一年級「上學期」的工讀地點為何 ?
-with st.expander("2-3 一年級「上學期」的工讀地點為何(不列計沒有工讀):"):
+with st.expander("2-3 一年級「上學期」的工讀地點(不列計沒有工讀):"):
     # df_sophomore.iloc[:,15] ## 3. 您一年級「上學期」的工讀地點為何 ?
     column_index = 15
-    item_name = "一年級「上學期」的工讀地點為何(不列計沒有工讀)"
+    item_name = "一年級「上學期」的工讀地點(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][3:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
@@ -1925,6 +1925,215 @@ with st.expander("2-4 一年級「下學期」平均每周工讀時數(不列計
 
 
 st.markdown("##")  ## 更大的间隔
+
+
+
+###### Part2-5 您一年級「下學期」的工讀地點為何？
+with st.expander("2-5 一年級「下學期」的工讀地點(不列計沒有工讀):"):
+    # df_sophomore.iloc[:,17] ## 5.您一年級「下學期」的工讀地點為何？
+    column_index = 17
+    item_name = "一年級「下學期」的工讀地點(不列計沒有工讀)"
+    column_title.append(df_sophomore.columns[column_index][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/value_counts.sum()  ## 因為二年級上學期沒有工讀的不會回答工讀地點, 因此 "value_counts.sum()" 不會等於 "填答人數"
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+
+    ##### 使用Streamlit畫單一圖
+    if 院_系 == '0':
+        collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 设置条形的宽度
+        bar_width = 0.2
+        #### 设置x轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        #### 设置字体大小
+        title_fontsize = 15
+        xlabel_fontsize = 14
+        ylabel_fontsize = 14
+        xticklabel_fontsize = 14
+        annotation_fontsize = 8
+        legend_fontsize = 14
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的x轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        ax.legend(fontsize=legend_fontsize)
+        ### 添加x轴标签
+        ## 计算每个组的中心位置作为x轴刻度位置
+        # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # group_centers = np.arange(len(dataframes[0]))
+        ## 添加x轴标签
+        # ax.set_xticks(group_centers)
+        # dataframes[0]['項目'].values
+        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+        ### 设置标题和轴标签
+        ax.set_title(item_name,fontsize=title_fontsize)
+        # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
+        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+    if 院_系 == '1':
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(11, 8))
+        #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
+        #### 添加一些图形元素
+        plt.title(item_name, fontsize=15)
+        plt.xlabel('人數', fontsize=14)
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+        plt.legend(fontsize=14)
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+
+    ##### 使用streamlit 畫比較圖
+    if 院_系 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+    elif 院_系 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
+        collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique() 
+
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+st.markdown("##")  ## 更大的间隔
+
 
 
 
@@ -2374,10 +2583,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-8 您二年級「上學期」的工讀地點為何 ?
-with st.expander("2-8 您二年級「上學期」的工讀地點為何(不列計沒有工讀):"):
+with st.expander("2-8 二年級「上學期」的工讀地點(不列計沒有工讀):"):
     # df_sophomore.iloc[:,20] ## 8.您二年級「上學期」的工讀地點為何 ?
     column_index = 20
-    item_name = "您二年級「上學期」的工讀地點為何(不列計沒有工讀)"
+    item_name = "二年級「上學期」的工讀地點(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
@@ -2582,10 +2791,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-9  您工讀最主要的原因為何?
-with st.expander("2-9 您工讀最主要的原因為何(不列計沒有工讀):"):
+with st.expander("2-9 工讀最主要的原因(不列計沒有工讀):"):
     # df_sophomore.iloc[:,21] ##  9.您工讀最主要的原因為何?
     column_index = 21
-    item_name = "您工讀最主要的原因為何(不列計沒有工讀)"
+    item_name = "工讀最主要的原因(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
@@ -2810,10 +3019,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-10  您工讀次要的原因為何?
-with st.expander("2-10 您工讀次要的原因為何(不列計沒有工讀):"):
+with st.expander("2-10 工讀次要的原因(不列計沒有工讀):"):
     # df_sophomore.iloc[:,22] ##  10.您工讀次要的原因為何?
     column_index = 22
-    item_name = "您工讀次要的原因為何(不列計沒有工讀)"
+    item_name = "工讀次要的原因(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
