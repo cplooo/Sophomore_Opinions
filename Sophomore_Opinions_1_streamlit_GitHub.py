@@ -3249,7 +3249,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-11 您每周平均上網時間為何?
-with st.expander("2-6 您每周平均上網時間為何:"):
+with st.expander("2-11 您每周平均上網時間為何:"):
     # df_sophomore.iloc[:,23] ##  11.您每周平均上網時間為何?
     column_index = 23
     item_name = "您每周平均上網時間為何"
@@ -3458,7 +3458,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-12 您上網主要用途為何? (最主要用途)
-with st.expander("2-7 您上網主要用途為何:"):
+with st.expander("2-12 您上網主要用途為何:"):
     # df_sophomore.iloc[:,24] ##  12.您上網主要用途為何? (最主要用途)
     column_index = 24
     item_name = "您上網主要用途為何"
@@ -3669,7 +3669,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-13 您上網次要用途為何? (次要用途)
-with st.expander("2-8 您上網次要用途為何:"):
+with st.expander("2-13 您上網次要用途為何:"):
     # df_sophomore.iloc[:,25] ##  13.您上網次要用途為何? (次要用途)
     column_index = 25
     item_name = "您上網次要用途為何"
@@ -3877,7 +3877,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-14 除了上課時間外，您每天平均念書的時間為何?
-with st.expander("2-9 除了上課時間外，您每天平均念書的時間為何:"):
+with st.expander("2-14 除了上課時間外，您每天平均念書的時間為何:"):
     # df_sophomore.iloc[:,26] ##  14.除了上課時間外，您每天平均念書的時間為何?
     column_index = 26
     item_name = "除了上課時間外，您每天平均念書的時間為何"
