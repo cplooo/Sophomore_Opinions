@@ -1472,7 +1472,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-7 您二年級「上學期」平均每周工讀時數 ?
-with st.expander("2-7 您二年級「上學期」平均每周工讀時數:"):
+with st.expander("2-7 您二年級「上學期」平均每周工讀時數(不列計沒有工讀):"):
     # df_sophomore.iloc[:,19] ## 7.您二年級「上學期」平均每周工讀時數 ?
     column_index = 19
     item_name = "您二年級「上學期」平均每周工讀時數(不列計沒有工讀)"
@@ -1700,7 +1700,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-8 您二年級「上學期」的工讀地點為何 ?
-with st.expander("2-8 您二年級「上學期」的工讀地點為何:"):
+with st.expander("2-8 您二年級「上學期」的工讀地點為何(不列計沒有工讀):"):
     # df_sophomore.iloc[:,20] ## 8.您二年級「上學期」的工讀地點為何 ?
     column_index = 20
     item_name = "您二年級「上學期」的工讀地點為何(不列計沒有工讀)"
@@ -1906,7 +1906,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-9  您工讀最主要的原因為何?
-with st.expander("2-9 您工讀最主要的原因為何:"):
+with st.expander("2-9 您工讀最主要的原因為何(不列計沒有工讀):"):
     # df_sophomore.iloc[:,21] ##  9.您工讀最主要的原因為何?
     column_index = 21
     item_name = "您工讀最主要的原因為何(不列計沒有工讀)"
@@ -2132,7 +2132,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-10  您工讀次要的原因為何?
-with st.expander("2-10 您工讀次要的原因為何:"):
+with st.expander("2-10 您工讀次要的原因為何(不列計沒有工讀):"):
     # df_sophomore.iloc[:,22] ##  10.您工讀次要的原因為何?
     column_index = 22
     item_name = "您工讀次要的原因為何(不列計沒有工讀)"
