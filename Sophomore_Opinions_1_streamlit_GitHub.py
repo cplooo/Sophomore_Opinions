@@ -367,8 +367,10 @@ with st.expander("Part 1 基本資料. 1-1 選擇目前就讀科系的理由 (�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
-        # plt.barh(result_df['項目'], result_df['人數'], label=choice)
-        plt.barh(result_df['項目'][::-1].reset_index(drop=True), result_df['人數'][::-1].reset_index(drop=True), label=choice)
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        # plt.barh(result_df['項目'][::-1].reset_index(drop=True), result_df['人數'][::-1].reset_index(drop=True), label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
             plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
@@ -711,6 +713,8 @@ with st.expander("1-2 大學畢業後的規劃:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -933,6 +937,8 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1156,6 +1162,8 @@ with st.expander("Part 2 時間規劃. 2-1 一年級就學期間是否曾經工�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1378,6 +1386,8 @@ with st.expander("2-2 一年級「上學期」平均每周工讀時數(不列計
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1590,6 +1600,8 @@ with st.expander("2-3 一年級「上學期」的工讀地點為何(不列計沒
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1798,6 +1810,8 @@ with st.expander("2-6 您二年級就學期間是否工讀:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2023,6 +2037,8 @@ with st.expander("2-7 您二年級「上學期」平均每周工讀時數(不列
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2237,6 +2253,8 @@ with st.expander("2-8 您二年級「上學期」的工讀地點為何(不列計
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2451,6 +2469,8 @@ with st.expander("2-9 您工讀最主要的原因為何(不列計沒有工讀):"
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2678,6 +2698,8 @@ with st.expander("2-10 您工讀次要的原因為何(不列計沒有工讀):"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
