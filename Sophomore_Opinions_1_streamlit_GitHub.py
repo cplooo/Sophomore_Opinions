@@ -40,6 +40,9 @@ def Frequency_Distribution(df, column_index):
     split_values = df.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
+    ##### 去掉 '沒有工讀' index的值:
+    if "沒有工讀" in value_counts.index:
+        value_counts = value_counts.drop('沒有工讀')
     ##### 计算不同子字符串的比例
     proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
@@ -57,6 +60,9 @@ def Frequency_Distribution_1(df, column_index):
     split_values = df.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
+    ##### 去掉 '沒有工讀' index的值:
+    if "沒有工讀" in value_counts.index:
+        value_counts = value_counts.drop('沒有工讀')
     ##### 计算不同子字符串的比例
     proportions = value_counts/df.shape[0]
     ##### 轉換成 numpy array
