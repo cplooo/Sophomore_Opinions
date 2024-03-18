@@ -40,6 +40,9 @@ def Frequency_Distribution(df, column_index):
     split_values = df.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
+    ##### 去掉 '沒有工讀' index的值:
+    if "沒有工讀" in value_counts.index:
+        value_counts = value_counts.drop('沒有工讀')
     ##### 计算不同子字符串的比例
     proportions = value_counts/value_counts.sum()
     ##### 轉換成 numpy array
@@ -57,6 +60,9 @@ def Frequency_Distribution_1(df, column_index):
     split_values = df.iloc[:,column_index].str.split(',').explode()
     ##### 计算不同子字符串的出现次数
     value_counts = split_values.value_counts()
+    ##### 去掉 '沒有工讀' index的值:
+    if "沒有工讀" in value_counts.index:
+        value_counts = value_counts.drop('沒有工讀')
     ##### 计算不同子字符串的比例
     proportions = value_counts/df.shape[0]
     ##### 轉換成 numpy array
@@ -101,6 +107,9 @@ df_sophomore_original = load_data('df_sophomore_original.pkl')
 
 
 ####### 預先設定
+###### 預設定院或系之選擇
+global 院_系, choice, df_sophomore, choice_faculty, df_sophomore_faculty, selected_options, collections, column_index, dataframes, desired_order, combined_df ,unique_level0 
+院_系 = '0'
 ###### 預設定 df_sophomore 以防止在等待選擇院系輸入時, 發生後面程式df_sophomore讀不到資料而產生錯誤
 choice='財金系' ##'化科系'
 df_sophomore = df_sophomore_original[df_sophomore_original['科系']==choice]
@@ -168,7 +177,7 @@ combined_df = pd.concat(dataframes, keys=selected_options)
 #     4  不須負擔生活費但想增加零用錢   2  0.0833
 #     5       學習應對與表達能力   6  0.2500
 # '''
-
+unique_level0 = combined_df.index.get_level_values(0).unique()
 
 
 ####### 設定呈現標題 
@@ -196,7 +205,7 @@ st.markdown("""
 st.markdown("##")  ## 更大的间隔
 
 
-global 院_系
+
 ####### 選擇院系
 ###### 選擇 院 or 系:
 院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
@@ -361,8 +370,10 @@ with st.expander("Part 1 基本資料. 1-1 選擇目前就讀科系的理由 (�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
-        # plt.barh(result_df['項目'], result_df['人數'], label=choice)
-        plt.barh(result_df['項目'][::-1].reset_index(drop=True), result_df['人數'][::-1].reset_index(drop=True), label=choice)
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        # plt.barh(result_df['項目'][::-1].reset_index(drop=True), result_df['人數'][::-1].reset_index(drop=True), label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
             plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
@@ -386,7 +397,7 @@ with st.expander("Part 1 基本資料. 1-1 選擇目前就讀科系的理由 (�
     # st.subheader("不同單位比較")
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -398,7 +409,7 @@ with st.expander("Part 1 基本資料. 1-1 選擇目前就讀科系的理由 (�
         unique_level0 = combined_df.index.get_level_values(0).unique()
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學院'項目'欄位的所有值
@@ -705,6 +716,8 @@ with st.expander("1-2 大學畢業後的規劃:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -728,7 +741,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -741,7 +754,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
 
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -927,6 +940,8 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -950,7 +965,7 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -962,7 +977,7 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
         unique_level0 = combined_df.index.get_level_values(0).unique()
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1041,8 +1056,1093 @@ st.markdown("##")  ## 更大的间隔
 
 
 ####### Part2  時間規劃
+###### Part2-1 您一年級就學期間是否曾經工讀?
+with st.expander("Part 2 時間規劃. 2-1 一年級就學期間是否曾經工讀:"):
+    # df_sophomore.iloc[:,13] ## 1. 您一年級就學期間是否曾經工讀?
+    column_index = 13
+    item_name = "一年級就學期間是否曾經工讀"
+    column_title.append(df_sophomore.columns[column_index][3:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+
+    ##### 使用Streamlit畫單一圖
+    if 院_系 == '0':
+        collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 设置条形的宽度
+        bar_width = 0.2
+        #### 设置x轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        #### 设置字体大小
+        title_fontsize = 15
+        xlabel_fontsize = 14
+        ylabel_fontsize = 14
+        xticklabel_fontsize = 14
+        annotation_fontsize = 8
+        legend_fontsize = 14
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的x轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        ax.legend(fontsize=legend_fontsize)
+        ### 添加x轴标签
+        ## 计算每个组的中心位置作为x轴刻度位置
+        # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # group_centers = np.arange(len(dataframes[0]))
+        ## 添加x轴标签
+        # ax.set_xticks(group_centers)
+        # dataframes[0]['項目'].values
+        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+        ### 设置标题和轴标签
+        ax.set_title(item_name,fontsize=title_fontsize)
+        # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
+        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+    if 院_系 == '1':
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(11, 8))
+        #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
+        #### 添加一些图形元素
+        plt.title(item_name, fontsize=15)
+        plt.xlabel('人數', fontsize=14)
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+        plt.legend(fontsize=14)
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+
+    ##### 使用streamlit 畫比較圖
+    if 院_系 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+    elif 院_系 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
+        collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()    
+
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+
+st.markdown("##")  ## 更大的间隔    
+
+
+
+###### Part2-2 您一年級「上學期」平均每周工讀時數 ?
+with st.expander("2-2 一年級「上學期」平均每周工讀時數(不列計沒有工讀):"):
+    # df_sophomore.iloc[:,14] ## 2. 您一年級「上學期」平均每周工讀時數 ?
+    column_index = 14
+    item_name = "一年級「上學期」平均每周工讀時數(不列計沒有工讀)"
+    column_title.append(df_sophomore.columns[column_index][3:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 因為沒有工讀的填答者有些有回覆 "沒有工讀", 有些沒有填答, 因此 "沒有工讀" 的人數要重新計算: 
+    #### 计算除了 "沒有工讀" 外其他index的值之和
+    ### 检查"沒有工讀"是否在Series的index中
+    if "沒有工讀" in value_counts.index:
+        ### 计算value_counts中除了 "沒有工讀" 外其他index的值之和(即為有工讀的)
+        sum_except_no_work = value_counts.drop('沒有工讀').sum()  ## 
+        ### 更新 "沒有工讀" 的值为total_students减去其他index的值之和
+        value_counts['沒有工讀'] = df_sophomore.shape[0] - sum_except_no_work
+        ### 去掉 '沒有工讀' index的值:
+        value_counts = value_counts.drop('沒有工讀')
+    
+       
+  
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/value_counts.sum()   ## 因為二年級沒有工讀的不會回答工讀時數, 因此 "value_counts.sum()" 不會等於 "填答人數"
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+
+    ##### 使用Streamlit畫單一圖
+    if 院_系 == '0':
+        collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()]))
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+        
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 设置条形的宽度
+        bar_width = 0.2
+        #### 设置x轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        #### 设置字体大小
+        title_fontsize = 15
+        xlabel_fontsize = 14
+        ylabel_fontsize = 14
+        xticklabel_fontsize = 14
+        annotation_fontsize = 8
+        legend_fontsize = 14
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的x轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        ax.legend(fontsize=legend_fontsize)
+        ### 添加x轴标签
+        ## 计算每个组的中心位置作为x轴刻度位置
+        # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # group_centers = np.arange(len(dataframes[0]))
+        ## 添加x轴标签
+        # ax.set_xticks(group_centers)
+        # dataframes[0]['項目'].values
+        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+        ### 设置标题和轴标签
+        ax.set_title(item_name,fontsize=title_fontsize)
+        # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
+        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+    if 院_系 == '1':
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(11, 8))
+        #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
+        #### 添加一些图形元素
+        plt.title(item_name, fontsize=15)
+        plt.xlabel('人數', fontsize=14)
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+        plt.legend(fontsize=14)
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+
+
+    ##### 使用streamlit 畫比較圖
+    if 院_系 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+    elif 院_系 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
+        collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+    
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
+    # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ax.set_xticklabels(df['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+
+st.markdown("##")  ## 更大的间隔
+
+
+
+###### Part2-3 您一年級「上學期」的工讀地點為何 ?
+with st.expander("2-3 一年級「上學期」的工讀地點(不列計沒有工讀):"):
+    # df_sophomore.iloc[:,15] ## 3. 您一年級「上學期」的工讀地點為何 ?
+    column_index = 15
+    item_name = "一年級「上學期」的工讀地點(不列計沒有工讀)"
+    column_title.append(df_sophomore.columns[column_index][3:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/value_counts.sum()  ## 因為二年級上學期沒有工讀的不會回答工讀地點, 因此 "value_counts.sum()" 不會等於 "填答人數"
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+
+    ##### 使用Streamlit畫單一圖
+    if 院_系 == '0':
+        collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 设置条形的宽度
+        bar_width = 0.2
+        #### 设置x轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        #### 设置字体大小
+        title_fontsize = 15
+        xlabel_fontsize = 14
+        ylabel_fontsize = 14
+        xticklabel_fontsize = 14
+        annotation_fontsize = 8
+        legend_fontsize = 14
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的x轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        ax.legend(fontsize=legend_fontsize)
+        ### 添加x轴标签
+        ## 计算每个组的中心位置作为x轴刻度位置
+        # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # group_centers = np.arange(len(dataframes[0]))
+        ## 添加x轴标签
+        # ax.set_xticks(group_centers)
+        # dataframes[0]['項目'].values
+        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+        ### 设置标题和轴标签
+        ax.set_title(item_name,fontsize=title_fontsize)
+        # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
+        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+    if 院_系 == '1':
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(11, 8))
+        #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
+        #### 添加一些图形元素
+        plt.title(item_name, fontsize=15)
+        plt.xlabel('人數', fontsize=14)
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+        plt.legend(fontsize=14)
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+
+    ##### 使用streamlit 畫比較圖
+    if 院_系 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+    elif 院_系 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
+        collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique() 
+
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+st.markdown("##")  ## 更大的间隔
+
+
+
+###### Part2-4 您一年級「下學期」平均每周工讀時數 ?
+with st.expander("2-4 一年級「下學期」平均每周工讀時數(不列計沒有工讀):"):
+    # df_sophomore.iloc[:,16] ## 4. 您一年級「下學期」平均每周工讀時數 ?
+    column_index = 16
+    item_name = "一年級「下學期」平均每周工讀時數(不列計沒有工讀)"
+    column_title.append(df_sophomore.columns[column_index][3:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 因為沒有工讀的填答者有些有回覆 "沒有工讀", 有些沒有填答, 因此 "沒有工讀" 的人數要重新計算: 
+    #### 计算除了 "沒有工讀" 外其他index的值之和
+    ### 检查"沒有工讀"是否在Series的index中
+    if "沒有工讀" in value_counts.index:
+        ### 计算value_counts中除了 "沒有工讀" 外其他index的值之和(即為有工讀的)
+        sum_except_no_work = value_counts.drop('沒有工讀').sum()  ## 
+        ### 更新 "沒有工讀" 的值为total_students减去其他index的值之和
+        value_counts['沒有工讀'] = df_sophomore.shape[0] - sum_except_no_work
+        ### 去掉 '沒有工讀' index的值:
+        value_counts = value_counts.drop('沒有工讀')
+    
+       
+  
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/value_counts.sum()   ## 因為二年級沒有工讀的不會回答工讀時數, 因此 "value_counts.sum()" 不會等於 "填答人數"
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+
+    ##### 使用Streamlit畫單一圖
+    if 院_系 == '0':
+        collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()]))
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+        
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 设置条形的宽度
+        bar_width = 0.2
+        #### 设置x轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        #### 设置字体大小
+        title_fontsize = 15
+        xlabel_fontsize = 14
+        ylabel_fontsize = 14
+        xticklabel_fontsize = 14
+        annotation_fontsize = 8
+        legend_fontsize = 14
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的x轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        ax.legend(fontsize=legend_fontsize)
+        ### 添加x轴标签
+        ## 计算每个组的中心位置作为x轴刻度位置
+        # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # group_centers = np.arange(len(dataframes[0]))
+        ## 添加x轴标签
+        # ax.set_xticks(group_centers)
+        # dataframes[0]['項目'].values
+        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+        ### 设置标题和轴标签
+        ax.set_title(item_name,fontsize=title_fontsize)
+        # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
+        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+    if 院_系 == '1':
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(11, 8))
+        #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
+        #### 添加一些图形元素
+        plt.title(item_name, fontsize=15)
+        plt.xlabel('人數', fontsize=14)
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+        plt.legend(fontsize=14)
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+
+
+    ##### 使用streamlit 畫比較圖
+    if 院_系 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+    elif 院_系 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
+        collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique()
+    
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
+    # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ax.set_xticklabels(df['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+
+st.markdown("##")  ## 更大的间隔
+
+
+
+###### Part2-5 您一年級「下學期」的工讀地點為何？
+with st.expander("2-5 一年級「下學期」的工讀地點(不列計沒有工讀):"):
+    # df_sophomore.iloc[:,17] ## 5.您一年級「下學期」的工讀地點為何？
+    column_index = 17
+    item_name = "一年級「下學期」的工讀地點(不列計沒有工讀)"
+    column_title.append(df_sophomore.columns[column_index][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/value_counts.sum()  ## 因為二年級上學期沒有工讀的不會回答工讀地點, 因此 "value_counts.sum()" 不會等於 "填答人數"
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+
+    ##### 使用Streamlit畫單一圖
+    if 院_系 == '0':
+        collections = [df_sophomore, df_sophomore_faculty, df_sophomore_original]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
+        # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
+        #### 只看所選擇學系的項目, 並且按照此選擇學系的項目從高至低的項目次數排列
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]
+        desired_order = desired_order[::-1]
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=[choice,choice_faculty,'全校'])
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 设置条形的宽度
+        bar_width = 0.2
+        #### 设置x轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        #### 设置字体大小
+        title_fontsize = 15
+        xlabel_fontsize = 14
+        ylabel_fontsize = 14
+        xticklabel_fontsize = 14
+        annotation_fontsize = 8
+        legend_fontsize = 14
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的x轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        ax.legend(fontsize=legend_fontsize)
+        ### 添加x轴标签
+        ## 计算每个组的中心位置作为x轴刻度位置
+        # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # group_centers = np.arange(len(dataframes[0]))
+        ## 添加x轴标签
+        # ax.set_xticks(group_centers)
+        # dataframes[0]['項目'].values
+        # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+        ### 设置标题和轴标签
+        ax.set_title(item_name,fontsize=title_fontsize)
+        # ax.set_xlabel('满意度',fontsize=xlabel_fontsize)
+        ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+    if 院_系 == '1':
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(11, 8))
+        #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=14)
+        #### 添加一些图形元素
+        plt.title(item_name, fontsize=15)
+        plt.xlabel('人數', fontsize=14)
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        plt.tick_params(axis='both', labelsize=14)  # 同时调整x轴和y轴
+        plt.legend(fontsize=14)
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
+
+    ##### 使用streamlit 畫比較圖
+    if 院_系 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+    elif 院_系 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
+        collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
+        dataframes = [Frequency_Distribution(df, column_index) for df in collections]
+        ## 形成所有學系'項目'欄位的所有值
+        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        ## 缺的項目值加以擴充， 並統一一樣的項目次序
+        dataframes = [adjust_df(df, desired_order) for df in dataframes]
+        combined_df = pd.concat(dataframes, keys=selected_options)
+
+    # 获取level 0索引的唯一值并保持原始顺序
+    unique_level0 = combined_df.index.get_level_values(0).unique() 
+
+    #### 設置 matplotlib 支持中文的字體: 
+    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+    #### 设置条形的宽度
+    bar_width = 0.2
+    #### 设置x轴的中心位置
+    r = np.arange(len(dataframes[0]))  ## 
+    #### 设置字体大小
+    title_fontsize = 15
+    xlabel_fontsize = 14
+    ylabel_fontsize = 14
+    xticklabel_fontsize = 14
+    annotation_fontsize = 8
+    legend_fontsize = 14
+    #### 绘制条形
+    fig, ax = plt.subplots(figsize=(10, 6))
+    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+    for i, college_name in enumerate(unique_level0):            
+        df = combined_df.loc[college_name]
+        # 计算当前分组的条形数量
+        num_bars = len(df)
+        # 生成当前分组的x轴位置
+        index = np.arange(num_bars) + i * bar_width
+        # index = r + i * bar_width
+        rects = ax.bar(index, df['比例'], width=bar_width, label=college_name)
+
+        # # 在每个条形上标示比例
+        # for rect, ratio in zip(rects, df['比例']):
+        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+    ### 添加图例
+    ax.legend(fontsize=legend_fontsize)
+    ### 添加x轴标签
+    ## 计算每个组的中心位置r作为x轴刻度位置
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+    ### 设置标题和轴标签
+    ax.set_title(item_name,fontsize=title_fontsize)
+    # ax.set_xlabel('項目',fontsize=xlabel_fontsize)
+    ax.set_ylabel('比例',fontsize=ylabel_fontsize)
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+st.markdown("##")  ## 更大的间隔
+
+
+
+
+
 ###### Part2-6 您二年級就學期間是否工讀 ?
-with st.expander("Part 2 時間規劃. 2-1 您二年級就學期間是否工讀:"):
+with st.expander("2-6 您二年級就學期間是否工讀:"):
     # df_sophomore.iloc[:,18] ## 6. 您二年級就學期間是否工讀?
     column_index = 18
     item_name = "您二年級就學期間是否工讀:"
@@ -1150,6 +2250,8 @@ with st.expander("Part 2 時間規劃. 2-1 您二年級就學期間是否工讀:
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1173,7 +2275,7 @@ with st.expander("Part 2 時間規劃. 2-1 您二年級就學期間是否工讀:
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1184,7 +2286,7 @@ with st.expander("Part 2 時間規劃. 2-1 您二年級就學期間是否工讀:
 
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1254,10 +2356,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-7 您二年級「上學期」平均每周工讀時數 ?
-with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
+with st.expander("2-7 您二年級「上學期」平均每周工讀時數(不列計沒有工讀):"):
     # df_sophomore.iloc[:,19] ## 7.您二年級「上學期」平均每周工讀時數 ?
     column_index = 19
-    item_name = "您二年級「上學期」平均每周工讀時數:"
+    item_name = "您二年級「上學期」平均每周工讀時數(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
@@ -1267,10 +2369,15 @@ with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
     #### 计算除了 "沒有工讀" 外其他index的值之和
     ### 检查"沒有工讀"是否在Series的index中
     if "沒有工讀" in value_counts.index:
+        ### 计算value_counts中除了 "沒有工讀" 外其他index的值之和(即為有工讀的)
         sum_except_no_work = value_counts.drop('沒有工讀').sum()  ## 
         ### 更新 "沒有工讀" 的值为total_students减去其他index的值之和
         value_counts['沒有工讀'] = df_sophomore.shape[0] - sum_except_no_work
+        ### 去掉 '沒有工讀' index的值:
+        value_counts = value_counts.drop('沒有工讀')
     
+       
+  
     ##### 计算不同子字符串的比例
     proportions = value_counts/value_counts.sum()   ## 因為二年級沒有工讀的不會回答工讀時數, 因此 "value_counts.sum()" 不會等於 "填答人數"
     ##### 轉換成 numpy array
@@ -1370,6 +2477,8 @@ with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1394,7 +2503,7 @@ with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1404,7 +2513,7 @@ with st.expander("2-2 您二年級「上學期」平均每周工讀時數:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1477,10 +2586,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-8 您二年級「上學期」的工讀地點為何 ?
-with st.expander("2-3 您二年級「上學期」的工讀地點為何:"):
+with st.expander("2-8 二年級「上學期」的工讀地點(不列計沒有工讀):"):
     # df_sophomore.iloc[:,20] ## 8.您二年級「上學期」的工讀地點為何 ?
     column_index = 20
-    item_name = "您二年級「上學期」的工讀地點為何"
+    item_name = "二年級「上學期」的工讀地點(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
@@ -1584,6 +2693,8 @@ with st.expander("2-3 您二年級「上學期」的工讀地點為何:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1607,7 +2718,7 @@ with st.expander("2-3 您二年級「上學期」的工讀地點為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1617,7 +2728,7 @@ with st.expander("2-3 您二年級「上學期」的工讀地點為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1683,10 +2794,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-9  您工讀最主要的原因為何?
-with st.expander("2-4 您工讀最主要的原因為何:"):
+with st.expander("2-9 工讀最主要的原因(不列計沒有工讀):"):
     # df_sophomore.iloc[:,21] ##  9.您工讀最主要的原因為何?
     column_index = 21
-    item_name = "您工讀最主要的原因為何"
+    item_name = "工讀最主要的原因(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
@@ -1798,6 +2909,8 @@ with st.expander("2-4 您工讀最主要的原因為何:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -1821,7 +2934,7 @@ with st.expander("2-4 您工讀最主要的原因為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1831,7 +2944,7 @@ with st.expander("2-4 您工讀最主要的原因為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -1909,10 +3022,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-10  您工讀次要的原因為何?
-with st.expander("2-5 您工讀次要的原因為何:"):
+with st.expander("2-10 工讀次要的原因(不列計沒有工讀):"):
     # df_sophomore.iloc[:,22] ##  10.您工讀次要的原因為何?
     column_index = 22
-    item_name = "您工讀次要的原因為何"
+    item_name = "工讀次要的原因(不列計沒有工讀)"
     column_title.append(df_sophomore.columns[column_index][2:])
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
@@ -2025,6 +3138,8 @@ with st.expander("2-5 您工讀次要的原因為何:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2048,7 +3163,7 @@ with st.expander("2-5 您工讀次要的原因為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2058,7 +3173,7 @@ with st.expander("2-5 您工讀次要的原因為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2137,7 +3252,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-11 您每周平均上網時間為何?
-with st.expander("2-6 您每周平均上網時間為何:"):
+with st.expander("2-11 您每周平均上網時間為何:"):
     # df_sophomore.iloc[:,23] ##  11.您每周平均上網時間為何?
     column_index = 23
     item_name = "您每周平均上網時間為何"
@@ -2244,6 +3359,8 @@ with st.expander("2-6 您每周平均上網時間為何:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2267,7 +3384,7 @@ with st.expander("2-6 您每周平均上網時間為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2277,7 +3394,7 @@ with st.expander("2-6 您每周平均上網時間為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2346,7 +3463,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-12 您上網主要用途為何? (最主要用途)
-with st.expander("2-7 您上網主要用途為何:"):
+with st.expander("2-12 您上網主要用途為何:"):
     # df_sophomore.iloc[:,24] ##  12.您上網主要用途為何? (最主要用途)
     column_index = 24
     item_name = "您上網主要用途為何"
@@ -2453,6 +3570,8 @@ with st.expander("2-7 您上網主要用途為何:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2476,7 +3595,7 @@ with st.expander("2-7 您上網主要用途為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2486,7 +3605,7 @@ with st.expander("2-7 您上網主要用途為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2557,7 +3676,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-13 您上網次要用途為何? (次要用途)
-with st.expander("2-8 您上網次要用途為何:"):
+with st.expander("2-13 您上網次要用途為何:"):
     # df_sophomore.iloc[:,25] ##  13.您上網次要用途為何? (次要用途)
     column_index = 25
     item_name = "您上網次要用途為何"
@@ -2665,6 +3784,8 @@ with st.expander("2-8 您上網次要用途為何:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2688,7 +3809,7 @@ with st.expander("2-8 您上網次要用途為何:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2698,7 +3819,7 @@ with st.expander("2-8 您上網次要用途為何:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2765,7 +3886,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part2-14 除了上課時間外，您每天平均念書的時間為何?
-with st.expander("2-9 除了上課時間外，您每天平均念書的時間為何:"):
+with st.expander("2-14 除了上課時間外，您每天平均念書的時間為何:"):
     # df_sophomore.iloc[:,26] ##  14.除了上課時間外，您每天平均念書的時間為何?
     column_index = 26
     item_name = "除了上課時間外，您每天平均念書的時間為何"
@@ -2873,6 +3994,8 @@ with st.expander("2-9 除了上課時間外，您每天平均念書的時間為�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -2896,7 +4019,7 @@ with st.expander("2-9 除了上課時間外，您每天平均念書的時間為�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -2906,7 +4029,7 @@ with st.expander("2-9 除了上課時間外，您每天平均念書的時間為�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3098,6 +4221,8 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
         #### 创建图形和坐标轴
         plt.figure(figsize=(20, 12))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -3121,7 +4246,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index))  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3131,7 +4256,7 @@ with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index))
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index))
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution_1(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3313,6 +4438,8 @@ with st.expander("Part 4 學校學習環境滿意度. 4-1 儀器設備滿意度:
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -3336,7 +4463,7 @@ with st.expander("Part 4 學校學習環境滿意度. 4-1 儀器設備滿意度:
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3346,7 +4473,7 @@ with st.expander("Part 4 學校學習環境滿意度. 4-1 儀器設備滿意度:
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3522,6 +4649,8 @@ with st.expander("4-2 實驗器材滿意度:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -3545,7 +4674,7 @@ with st.expander("4-2 實驗器材滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3555,7 +4684,7 @@ with st.expander("4-2 實驗器材滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3732,6 +4861,8 @@ with st.expander("4-3 教室空間滿意度:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -3755,7 +4886,7 @@ with st.expander("4-3 教室空間滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3765,7 +4896,7 @@ with st.expander("4-3 教室空間滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3940,6 +5071,8 @@ with st.expander("4-4 教室環境滿意度:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -3963,7 +5096,7 @@ with st.expander("4-4 教室環境滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -3973,7 +5106,7 @@ with st.expander("4-4 教室環境滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4150,6 +5283,8 @@ with st.expander("4-5 自學空間滿意度:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -4173,7 +5308,7 @@ with st.expander("4-5 自學空間滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4183,7 +5318,7 @@ with st.expander("4-5 自學空間滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4362,6 +5497,8 @@ with st.expander("4-6 學校宿舍滿意度:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -4385,7 +5522,7 @@ with st.expander("4-6 學校宿舍滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4395,7 +5532,7 @@ with st.expander("4-6 學校宿舍滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4571,6 +5708,8 @@ with st.expander("4-7 校園網路滿意度:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -4594,7 +5733,7 @@ with st.expander("4-7 校園網路滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4604,7 +5743,7 @@ with st.expander("4-7 校園網路滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4913,6 +6052,8 @@ with st.expander("Part 5 課程規劃與教師教學滿意度. 5-1 所屬學系�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -4936,7 +6077,7 @@ with st.expander("Part 5 課程規劃與教師教學滿意度. 5-1 所屬學系�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -4946,7 +6087,7 @@ with st.expander("Part 5 課程規劃與教師教學滿意度. 5-1 所屬學系�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5122,6 +6263,8 @@ with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -5145,7 +6288,7 @@ with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5155,7 +6298,7 @@ with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5331,6 +6474,8 @@ with st.expander("5-3「專業必選修」課程授課老師的教學方式滿�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -5354,7 +6499,7 @@ with st.expander("5-3「專業必選修」課程授課老師的教學方式滿�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5364,7 +6509,7 @@ with st.expander("5-3「專業必選修」課程授課老師的教學方式滿�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5538,6 +6683,8 @@ with st.expander("5-4 授課方式的學習效果比較:"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -5561,7 +6708,7 @@ with st.expander("5-4 授課方式的學習效果比較:"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5571,7 +6718,7 @@ with st.expander("5-4 授課方式的學習效果比較:"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5762,6 +6909,8 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -5785,7 +6934,7 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5795,7 +6944,7 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -5971,6 +7120,8 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -5994,7 +7145,7 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6004,7 +7155,7 @@ with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6180,6 +7331,8 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -6203,7 +7356,7 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6213,7 +7366,7 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6388,6 +7541,8 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -6411,7 +7566,7 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6421,7 +7576,7 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6597,6 +7752,8 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -6620,7 +7777,7 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6630,7 +7787,7 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6806,6 +7963,8 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -6829,7 +7988,7 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -6839,7 +7998,7 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7015,6 +8174,8 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -7038,7 +8199,7 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7048,7 +8209,7 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7224,6 +8385,8 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
         #### 创建图形和坐标轴
         plt.figure(figsize=(11, 8))
         #### 绘制条形图
+        ### 反轉 result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
@@ -7247,7 +8410,7 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
     ##### 使用streamlit 畫比較圖
     if 院_系 == '0':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=['化科系','企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', df_sophomore_original['科系'].unique(), default=[choice,'企管系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
         collections = [df_sophomore_original[df_sophomore_original['科系']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
@@ -7257,7 +8420,7 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         ## 使用multiselect组件让用户进行多重选择
-        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=['理學院','資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', df_sophomore_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         collections = [df_sophomore_original[df_sophomore_original['學院']==i] for i in selected_options]
         dataframes = [Frequency_Distribution(df, column_index) for df in collections]
         ## 形成所有學系'項目'欄位的所有值
