@@ -776,6 +776,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
         ## 形成所有學系'項目'欄位的所有值
         # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
+        desired_order = desired_order[::-1]
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
