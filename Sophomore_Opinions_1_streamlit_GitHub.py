@@ -1065,8 +1065,17 @@ st.markdown("##")  ## 更大的间隔
 
 
 ####### Part2  時間規劃
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">Part 2. 時間規劃.</p>
+""", unsafe_allow_html=True)
 ###### Part2-1 您一年級就學期間是否曾經工讀?
-with st.expander("Part 2 時間規劃. 2-1 一年級就學期間是否曾經工讀:"):
+with st.expander("2-1 一年級就學期間是否曾經工讀:"):
     # df_sophomore.iloc[:,13] ## 1. 您一年級就學期間是否曾經工讀?
     column_index = 13
     item_name = "一年級就學期間是否曾經工讀"
@@ -4108,9 +4117,18 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-####### Part3  學習投入 (依多數課程情況回答)
+####### Part3  學習投入(依多數課程情況回答)
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">Part 3 學習投入(依多數課程情況回答).</p>
+""", unsafe_allow_html=True)
 ###### Part3-1 學習投入 (依多數課程情況回答): 上課時我
-with st.expander("Part 3 學習投入. 3-1 學習投入(依多數課程情況回答):上課時我 (多選):"):
+with st.expander("3-1 學習投入(依多數課程情況回答):上課時我 (多選):"):
     # df_sophomore.iloc[:,28] ##  學習投入 (依多數課程情況回答): 上課時我
     column_index = 28
     item_name = "學習投入 (依多數課程情況回答): 上課時我:"
@@ -4341,8 +4359,17 @@ st.markdown("##")  ## 更大的间隔
 
 
 ####### Part4  學校學習環境滿意度
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">Part 4. 學校學習環境滿意度.</p>
+""", unsafe_allow_html=True)
 ###### Part4-1 儀器設備
-with st.expander("Part 4 學校學習環境滿意度. 4-1 儀器設備滿意度:"):
+with st.expander("4-1 儀器設備滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,30] ## 1.儀器設備
     column_index = 30
@@ -5955,8 +5982,17 @@ st.markdown("##")  ## 更大的间隔
 
 
 ####### Part5  課程規劃與教師教學滿意度(依多數課程情況回答)
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">Part 5. 課程規劃與教師教學滿意度.</p>
+""", unsafe_allow_html=True)
 ###### Part5-1 所屬學系專業必修課程規劃
-with st.expander("Part 5 課程規劃與教師教學滿意度. 5-1 所屬學系專業必修課程規劃滿意度:"):
+with st.expander("5-1 所屬學系專業必修課程規劃滿意度:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,40] ##  1. 所屬學系專業必修課程規劃
     column_index = 40
@@ -7025,8 +7061,17 @@ st.markdown("##")  ## 更大的间隔
 
 
 ####### Part6  學生學習與輔導資源
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">Part 6. 學生學習與輔導資源.</p>
+""", unsafe_allow_html=True)
 ###### Part6-1 您是否申請或參與過「學生學習輔導方案」(學習輔導/自主學習/飛鷹助學) 學習輔導方案或輔導活動嗎?
-with st.expander("Part 6 學生學習與輔導資源. 6-1「學習輔導/自主學習/飛鷹助學」學習輔導方案或輔導活動參與經驗:"):
+with st.expander("6-1「學習輔導/自主學習/飛鷹助學」學習輔導方案或輔導活動參與經驗:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,47] ##  1. 您是否申請或參與過「學生學習輔導方案」(學習輔導/自主學習/飛鷹助學) 學習輔導方案或輔導活動嗎?
     column_index = 47
