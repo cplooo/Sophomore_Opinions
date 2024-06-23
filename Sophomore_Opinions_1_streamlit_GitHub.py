@@ -6141,6 +6141,11 @@ st.markdown("##")  ## 更大的间隔
 
 
 
+
+
+
+
+
 ####### Part5  課程規劃與教師教學滿意度(依多數課程情況回答)
 st.markdown("""
 <style>
@@ -7224,6 +7229,32 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+
+st.markdown("##")  ## 更大的间隔
+
+
+
+with st.expander("課程規劃與教師教學滿意度:"):
+    df_sophomore_r = df_sophomore.iloc[:,list(range(40, 46))].reset_index(drop=True)
+    df_sophomore_r.columns = [df_sophomore_r.columns[i][2:] if i<9 else df_sophomore_r.columns[i][2:] for i in range(df_sophomore_r.shape[1])]
+    figure_title =choice+': '+'課程規劃與教師教學滿意度'
+    # type(df_sophomore_r.iloc[:,0][0])
+    
+    # 使用 applymap 方法去掉字串的左右空格
+    df_sophomore_r = df_sophomore_r.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    
+    ####
+    df_sophomore_r = df_sophomore_r.applymap(lambda x: np.nan if x == '不適用' else x)
+
+    #### 選擇性地，去掉包含 NaN 的行
+    df_sophomore_r = df_sophomore_r.dropna()
+
+    # #### 轉換為int型態
+    # for column in df_sophomore_r.columns[0:df_sophomore_r.shape[1]]:
+    #     df_sophomore_r[column] = df_sophomore_r[column].astype(int)
+    
+    
+    LevelGroupsDraw(df_sophomore_r,level1='不滿意',level2='普通',level3='滿意',figure_title=figure_title,title_fontsize=13,xlabel_fontsize=12,ylabel_fontsize=12,yticklabel_fontsize=12,annotation_fontsize=12,legend_fontsize=12,width=10,height=6)
 
 st.markdown("##")  ## 更大的间隔 
 
