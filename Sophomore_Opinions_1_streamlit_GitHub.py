@@ -112,7 +112,7 @@ def LevelGroupsDraw(df,level1,level2,level3,figure_title,title_fontsize=15,xlabe
     ### 应用函数到每个行
     # 使用 lambda 函數和 apply 方法計算每列的群體比例
     levelGroups_proportions = df.iloc[:,0:df.shape[1]].apply(lambda col: pd.Series([(col == level1).sum() / len(col),  (col == level2).sum() / len(col), (col == level3).sum() / len(col)]), axis=0)
-    # levelGroups_proportions = df.iloc[:,0:df.shape[1]].apply(calculate_group_proportions, args=(level1, level2, level3, level4, level5)).round(2)
+    
     levelGroups_proportions = levelGroups_proportions.T    
 
     #### 畫圖: 低, 中, 高 三等級
@@ -6135,7 +6135,7 @@ with st.expander("學校學習環境滿意度:"):
     #     df_sophomore_r[column] = df_sophomore_r[column].astype(int)
     
     
-    LevelGroupsDraw(df_sophomore_r,level1='不滿意',level2='普通',level4='滿意',figure_title=figure_title,title_fontsize=13,xlabel_fontsize=12,ylabel_fontsize=12,yticklabel_fontsize=12,annotation_fontsize=12,legend_fontsize=12,width=10,height=6)
+    LevelGroupsDraw(df_sophomore_r,level1='不滿意',level2='普通',level3='滿意',figure_title=figure_title,title_fontsize=13,xlabel_fontsize=12,ylabel_fontsize=12,yticklabel_fontsize=12,annotation_fontsize=12,legend_fontsize=12,width=10,height=6)
 
 st.markdown("##")  ## 更大的间隔
 
