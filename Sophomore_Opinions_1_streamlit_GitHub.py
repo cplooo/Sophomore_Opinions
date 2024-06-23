@@ -96,6 +96,82 @@ def adjust_df(df, order):
 
 
 
+@st.cache_data(ttl=3600, show_spinner="正在加載資料...")  ## Add the caching decorator
+def LevelGroupsDraw(df,level1,level2,level3,figure_title,title_fontsize=15,xlabel_fontsize=14,ylabel_fontsize=14,yticklabel_fontsize=14,annotation_fontsize=14,legend_fontsize=14,width=10,height=6):
+    # df_freshman_r = df_freshman.iloc[:,list(range(colFirst, colEnd))].reset_index(drop=True)
+    # df_freshman_r.columns = [df_freshman_r.columns[i][4:]  for i in range(df_freshman_r.shape[1])]
+    # figure_title ='對目前就讀科系的瞭解程度之各項目三等級程現: 低(1+2),中(3),高(4+5)'
+    # # type(df_freshman_r.iloc[:,0][0])
+    
+    
+    # #### 轉換為int型態
+    # for column in df_freshman_r.columns[0:df_freshman_r.shape[1]]:
+    #     df_freshman_r[column] = df_freshman_r[column].astype(int)
+    
+    
+    ### 应用函数到每个行
+    # 使用 lambda 函數和 apply 方法計算每列的群體比例
+    levelGroups_proportions = df.iloc[:,0:df.shape[1]].apply(lambda col: pd.Series([(col == level1).sum() / len(col),  (col == level2).sum() / len(col), (col == level3).sum() / len(col)]), axis=0)
+    # levelGroups_proportions = df.iloc[:,0:df.shape[1]].apply(calculate_group_proportions, args=(level1, level2, level3, level4, level5)).round(2)
+    levelGroups_proportions = levelGroups_proportions.T    
+
+    #### 畫圖: 低, 中, 高 三等級
+    ### 設置 matplotlib 支持中文的字體: 
+    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题 
+
+    # ### 设置字体大小
+    # title_fontsize = 18
+    # xlabel_fontsize = 16
+    # ylabel_fontsize = 16
+    # yticklabel_fontsize = 16
+    # annotation_fontsize = 12
+    # legend_fontsize = 16
+    # width=10 
+    # height=9
+ 
+    ### 获取索引的数值表示
+    y_values = range(len(levelGroups_proportions.index))
+    
+    ### 创建图形和坐标轴
+    plt.figure(figsize=(width, height))
+    
+    ### 绘制散点图: '程度低 1+2'
+    plt.plot(levelGroups_proportions.iloc[:,0], y_values, '-b', label='Low', marker='o')
+    ## 標示數據
+    for i in range(len(y_values)):
+        plt.text(levelGroups_proportions.iloc[:,0][i]+0.02, y_values[i], f'{levelGroups_proportions.iloc[:,0][i].round(2)}',fontsize=annotation_fontsize)
+    
+    ### 绘制散点图: '程度中等 3'
+    plt.plot(levelGroups_proportions.iloc[:,1], y_values, '-r', label='Middle', marker='*')
+    ## 標示數據
+    for i in range(len(y_values)):
+        plt.text(levelGroups_proportions.iloc[:,1][i]+0.02, y_values[i], f'{levelGroups_proportions.iloc[:,1][i].round(2)}',fontsize=annotation_fontsize)
+
+    ### 绘制散点图: '程度高 4+5'
+    plt.plot(levelGroups_proportions.iloc[:,2], y_values, '-g', label='High', marker='x')
+    ## 標示數據
+    for i in range(len(y_values)):
+        plt.text(levelGroups_proportions.iloc[:,2][i]+0.02, y_values[i], f'{levelGroups_proportions.iloc[:,2][i].round(2)}',fontsize=annotation_fontsize)
+
+    ### 设置 Y 轴的刻度标签为索引名称
+    plt.yticks(y_values, levelGroups_proportions.index,fontsize=yticklabel_fontsize)
+    ### 添加一些图形元素
+    plt.title(figure_title,fontsize=title_fontsize)
+    plt.xlabel('比例',fontsize=xlabel_fontsize)
+    # plt.ylabel('項目',fontsize=ylabel_fontsize)
+    plt.legend(fontsize=legend_fontsize)
+    
+    ### 显示网格线
+    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+    plt.tight_layout()
+    # plt.show()
+    ### 在Streamlit中显示
+    st.pyplot(plt)
+
+
+
+
 
 ######  读取Pickle文件
 df_sophomore_original = load_data('df_sophomore_original.pkl')
@@ -4397,7 +4473,8 @@ with st.expander("3-1 學習投入(依多數課程情況回答):上課時我 (�
     ### 在Streamlit中显示
     st.pyplot(plt)
 
-st.markdown("##")  ## 更大的间隔   
+st.markdown("##")  ## 更大的间隔 
+  
 
 
 ####### Part4  學校學習環境滿意度
@@ -6034,6 +6111,30 @@ st.markdown("##")  ## 更大的间隔
 # result_df_r.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\校園學習環境不滿意項目建議.xlsx', index=False, engine='openpyxl')
 
 # #%% (二四) 以上
+
+
+
+
+with st.expander("學校學習環境滿意度:"):
+    df_sophomore_r = df_sophomore.iloc[:,list(range(30, 37))].reset_index(drop=True)
+    df_sophomore_r.columns = [df_sophomore_r.columns[i][2:] if i<9 else df_sophomore_r.columns[i][2:] for i in range(df_sophomore_r.shape[1])]
+    figure_title =choice+': '+'學校學習環境滿意度.'
+    # type(df_sophomore_r.iloc[:,0][0])
+    
+    ####
+    df_sophomore_r = df_sophomore_r.applymap(lambda x: np.nan if x == '不適用' else x)
+
+    #### 選擇性地，去掉包含 NaN 的行
+    df_sophomore_r = df_sophomore_r.dropna()
+
+    # #### 轉換為int型態
+    # for column in df_sophomore_r.columns[0:df_sophomore_r.shape[1]]:
+    #     df_sophomore_r[column] = df_sophomore_r[column].astype(int)
+    
+    
+    LevelGroupsDraw(df_sophomore_r,level1='不滿意',level2='普通',level4='滿意',figure_title=figure_title,title_fontsize=13,xlabel_fontsize=12,ylabel_fontsize=12,yticklabel_fontsize=12,annotation_fontsize=12,legend_fontsize=12,width=10,height=6)
+
+st.markdown("##")  ## 更大的间隔
 
 
 
