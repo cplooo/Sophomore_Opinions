@@ -7235,7 +7235,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 with st.expander("課程規劃與教師教學滿意度:"):
-    df_sophomore_r = df_sophomore.iloc[:,list(range(40, 46))].reset_index(drop=True)
+    df_sophomore_r = df_sophomore.iloc[:,list(range(40, 43))].reset_index(drop=True)
     df_sophomore_r.columns = [df_sophomore_r.columns[i][2:] if i<9 else df_sophomore_r.columns[i][2:] for i in range(df_sophomore_r.shape[1])]
     figure_title =choice+': '+'課程規劃與教師教學滿意度'
     # type(df_sophomore_r.iloc[:,0][0])
@@ -7244,7 +7244,7 @@ with st.expander("課程規劃與教師教學滿意度:"):
     df_sophomore_r = df_sophomore_r.applymap(lambda x: x.strip() if isinstance(x, str) else x)
     
     ####
-    df_sophomore_r = df_sophomore_r.applymap(lambda x: np.nan if x == '不適用' else x)
+    df_sophomore_r = df_sophomore_r.applymap(lambda x: np.nan if x == '不清楚' else x)
 
     #### 選擇性地，去掉包含 NaN 的行
     df_sophomore_r = df_sophomore_r.dropna()
