@@ -6121,6 +6121,9 @@ with st.expander("學校學習環境滿意度:"):
     figure_title =choice+': '+'學校學習環境滿意度.'
     # type(df_sophomore_r.iloc[:,0][0])
     
+    # 使用 applymap 方法去掉字串的左右空格
+    df_sophomore_r = df_sophomore_r.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+    
     ####
     df_sophomore_r = df_sophomore_r.applymap(lambda x: np.nan if x == '不適用' else x)
 
