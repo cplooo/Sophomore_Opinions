@@ -136,20 +136,20 @@ def LevelGroupsDraw(df,level1,level2,level3,figure_title,title_fontsize=15,xlabe
     ### 创建图形和坐标轴
     plt.figure(figsize=(width, height))
     
-    ### 绘制散点图: '程度低 1+2'
-    plt.plot(levelGroups_proportions.iloc[:,0], y_values, '-b', label='Low', marker='o')
+    ### 绘制散点图: '不滿意'
+    plt.plot(levelGroups_proportions.iloc[:,0], y_values, '-b', label='不滿意', marker='o')
     ## 標示數據
     for i in range(len(y_values)):
         plt.text(levelGroups_proportions.iloc[:,0][i]+0.02, y_values[i], f'{levelGroups_proportions.iloc[:,0][i].round(2)}',fontsize=annotation_fontsize)
     
-    ### 绘制散点图: '程度中等 3'
-    plt.plot(levelGroups_proportions.iloc[:,1], y_values, '-r', label='Middle', marker='*')
+    ### 绘制散点图: '普通'
+    plt.plot(levelGroups_proportions.iloc[:,1], y_values, '-r', label='普通', marker='*')
     ## 標示數據
     for i in range(len(y_values)):
         plt.text(levelGroups_proportions.iloc[:,1][i]+0.02, y_values[i], f'{levelGroups_proportions.iloc[:,1][i].round(2)}',fontsize=annotation_fontsize)
 
-    ### 绘制散点图: '程度高 4+5'
-    plt.plot(levelGroups_proportions.iloc[:,2], y_values, '-g', label='High', marker='x')
+    ### 绘制散点图: '滿意'
+    plt.plot(levelGroups_proportions.iloc[:,2], y_values, '-g', label='滿意', marker='x')
     ## 標示數據
     for i in range(len(y_values)):
         plt.text(levelGroups_proportions.iloc[:,2][i]+0.02, y_values[i], f'{levelGroups_proportions.iloc[:,2][i].round(2)}',fontsize=annotation_fontsize)
