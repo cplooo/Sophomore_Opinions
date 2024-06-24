@@ -867,7 +867,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.1
+    bar_width = 0.05
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
