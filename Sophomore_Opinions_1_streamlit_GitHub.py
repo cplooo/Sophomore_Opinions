@@ -6038,69 +6038,77 @@ st.markdown("##")  ## 更大的间隔
 
 
 
+###### Part4-8 您最喜歡的校園地點(如無，請寫"無")
+with st.expander("4-8. 您最喜歡的校園地點:"):
+    df_sophomore.iloc[:,37] ##  8. 您最喜歡的校園地點(如無，請寫"無")
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,37].str.split(',| |，|、').explode()
+    # ##### 过滤出只包含'是'或'否'的子字符串
+    # filtered_values = split_values[split_values.isin(['是', '否'])]
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    #value_counts = df_sophomore.iloc[:,37].value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts / value_counts.sum()
+    
+    
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({
+        '人數': value_counts,
+        '比例': proportions.round(3)
+    })
+    # print('最喜歡的校園地點:')
+    # print(result_df)
+    # '''
+    # 最喜歡的校園地點:
+    #           人數     比例
+    # 無      1005  0.536
+    # 圖書館     409  0.218
+    # 蓋夏圖書館    61  0.033
+    # 體育館      32  0.017
+    # 至善       22  0.012
+    #     ...    ...
+    # 社窩        1  0.001
+    # 學餐多       1  0.001
+    # no        1  0.001
+    # 靜廳        1  0.001
+    # 格倫樓       1  0.001
+    
+    # [187 rows x 2 columns]
+    # '''
+    #### 將 index 變column
+    result_df_r = result_df.reset_index()
+    #### 重新命名新的column
+    result_df_r.rename(columns={'index': '最喜歡的校園地點'}, inplace=True)
+    
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(result_df_r.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+    
+    # print(result_df_r)
+    
+    # '''
+    #     最喜歡的校園地點    人數     比例
+    # 0          無  1005  0.536
+    # 1        圖書館   409  0.218
+    # 2      蓋夏圖書館    61  0.033
+    # 3        體育館    32  0.017
+    # 4         至善    22  0.012
+    # ..       ...   ...    ...
+    # 182       社窩     1  0.001
+    # 183      學餐多     1  0.001
+    # 184       no     1  0.001
+    # 185       靜廳     1  0.001
+    # 186      格倫樓     1  0.001
+    
+    # [187 rows x 3 columns]
+    # '''
+    
+    # result_df_r.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\最喜歡的校園地點.xlsx', index=False, engine='openpyxl')
 
-# ###### Part4-8 您最喜歡的校園地點(如無，請寫"無")
-# df_sophomore.iloc[:,37] ##  8. 您最喜歡的校園地點(如無，請寫"無")
-# ##### 将字符串按逗号分割并展平
-# split_values = df_sophomore.iloc[:,37].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# value_counts = split_values.value_counts()
-# #value_counts = df_sophomore.iloc[:,37].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (二三) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('最喜歡的校園地點:')
-# print(result_df)
-# '''
-# 最喜歡的校園地點:
-#          人數     比例
-# 無      1005  0.536
-# 圖書館     409  0.218
-# 蓋夏圖書館    61  0.033
-# 體育館      32  0.017
-# 至善       22  0.012
-#     ...    ...
-# 社窩        1  0.001
-# 學餐多       1  0.001
-# no        1  0.001
-# 靜廳        1  0.001
-# 格倫樓       1  0.001
-
-# [187 rows x 2 columns]
-# '''
-# #### 將 index 變column
-# result_df_r = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_r.rename(columns={'index': '最喜歡的校園地點'}, inplace=True)
-# print(result_df_r)
-
-# '''
-#     最喜歡的校園地點    人數     比例
-# 0          無  1005  0.536
-# 1        圖書館   409  0.218
-# 2      蓋夏圖書館    61  0.033
-# 3        體育館    32  0.017
-# 4         至善    22  0.012
-# ..       ...   ...    ...
-# 182       社窩     1  0.001
-# 183      學餐多     1  0.001
-# 184       no     1  0.001
-# 185       靜廳     1  0.001
-# 186      格倫樓     1  0.001
-
-# [187 rows x 3 columns]
-# '''
-
-# result_df_r.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\最喜歡的校園地點.xlsx', index=False, engine='openpyxl')
-# #%% (二三) 以上
+st.markdown("##")  ## 更大的间隔
 
 
 # ###### Part4-9 請針對校園學習環境不滿意項目提供意見或建議 (儀器設備、實驗器材、教室空間、教室環境、自學空間、學校宿舍、校園網路)(如無，請寫"無")
