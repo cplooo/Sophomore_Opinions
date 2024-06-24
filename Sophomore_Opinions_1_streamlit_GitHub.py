@@ -583,59 +583,69 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-# ###### Part1-2 您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」
-# #df_sophomore.columns
-# df_sophomore.iloc[:,8] ## 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」
+###### Part1-2 您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」
+with st.expander("1-2 您的大一專業基礎課程學習情況，學習良好的課程 (多選):"):
+    #df_sophomore.columns
+    df_sophomore.iloc[:,8] ## 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」
+    
+    ##### 按'科系'分组，然后将 '2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」' 此行的字符串按逗号分割并展平
+    # split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    ##### 计算每个科系內部中不同子字符串的出现次数
+    # counts = split_values.groupby(level=0).value_counts()
+    counts = split_values.value_counts()
+    #type(counts)  ## pandas.core.series.Series
+    ##### 更改 series 的 index 欄位名稱
+    # counts.index.names = ['科系', '學習良好課程']
+    counts.index.names = ['學習良好課程']
+    
+    # print(counts)
+    # '''
+    # 科系   學習良好課程    
+    # 中文系  無             27
+    #       文學概論           8
+    #       語言學概論          7
+    #       兒童文學概論         5
+    #       國學導讀           4
+    #                     ..
+    # 食營系  食品基礎分析化學實驗     1
+    #       食品基礎分析實驗       1
+    #       食品工程           1
+    #       食物製備           1
+    #       食物製備實驗         1
+    # Name: 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」, Length: 590, dtype: int64
+    # '''
+    ##### 将 MultiIndex Series 'counts' 转换为DataFrame
+    #### 將 兩個index 變columns
+    counts_df = counts.reset_index()
+    #### 將新的兩個columns 重新命名
+    # counts_df.columns = ['科系', '學習良好課程', '人數']
+    counts_df.columns = ['學習良好課程', '人數']
+    # print(counts_df)
+    # '''
+    #       科系      學習良好課程  人數
+    # 0    中文系           無  27
+    # 1    中文系        文學概論   8
+    # 2    中文系       語言學概論   7
+    # 3    中文系      兒童文學概論   5
+    # 4    中文系        國學導讀   4
+    # ..   ...         ...  ..
+    # 585  食營系  食品基礎分析化學實驗   1
+    # 586  食營系    食品基礎分析實驗   1
+    # 587  食營系        食品工程   1
+    # 588  食營系        食物製備   1
+    # 589  食營系      食物製備實驗   1
+    
+    # [590 rows x 3 columns]
+    # '''
+    # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
+    
+    #### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
 
-# ##### 按'科系'分组，然后将 '2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」' 此行的字符串按逗号分割并展平
-# split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
-# ##### 计算每个科系內部中不同子字符串的出现次数
-# counts = split_values.groupby(level=0).value_counts()
-# #type(counts)  ## pandas.core.series.Series
-# ##### 更改 series 的 index 欄位名稱
-# counts.index.names = ['科系', '學習良好課程']
-
-# #%% (三) 以下
-# print(counts)
-# '''
-# 科系   學習良好課程    
-# 中文系  無             27
-#       文學概論           8
-#       語言學概論          7
-#       兒童文學概論         5
-#       國學導讀           4
-#                     ..
-# 食營系  食品基礎分析化學實驗     1
-#       食品基礎分析實驗       1
-#       食品工程           1
-#       食物製備           1
-#       食物製備實驗         1
-# Name: 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」, Length: 590, dtype: int64
-# '''
-# ##### 将 MultiIndex Series 'counts' 转换为DataFrame
-# #### 將 兩個index 變columns
-# counts_df = counts.reset_index()
-# #### 將新的兩個columns 重新命名
-# counts_df.columns = ['科系', '學習良好課程', '人數']
-# print(counts_df)
-# '''
-#       科系      學習良好課程  人數
-# 0    中文系           無  27
-# 1    中文系        文學概論   8
-# 2    中文系       語言學概論   7
-# 3    中文系      兒童文學概論   5
-# 4    中文系        國學導讀   4
-# ..   ...         ...  ..
-# 585  食營系  食品基礎分析化學實驗   1
-# 586  食營系    食品基礎分析實驗   1
-# 587  食營系        食品工程   1
-# 588  食營系        食物製備   1
-# 589  食營系      食物製備實驗   1
-
-# [590 rows x 3 columns]
-# '''
-# counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
-# #%% (三) 以上
+st.markdown("##")  ## 更大的间隔    
 
 
 # ###### Part1-3 您的大一專業基礎課程學習情況，學習不良的課程名稱請以「,」隔開，如無，請填「無」
