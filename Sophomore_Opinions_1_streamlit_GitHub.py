@@ -6077,14 +6077,15 @@ with st.expander("4-8. 您最喜歡的校園地點:"):
     # [187 rows x 2 columns]
     # '''
     #### 將 index 變column
-    result_df_r = result_df.reset_index()
+    # result_df_r = result_df.reset_index()
+    result_df.reset_index()
     #### 重新命名新的column
-    result_df_r.rename(columns={'index': '最喜歡的校園地點'}, inplace=True)
+    result_df.rename(columns={'index': '最喜歡的校園地點'}, inplace=True)
     
     ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
     # st.write(choice)
     st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-    st.write(result_df_r.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
     
     # print(result_df_r)
