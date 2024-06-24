@@ -586,11 +586,12 @@ st.markdown("##")  ## 更大的间隔
 ###### Part1-2 您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」
 with st.expander("1-2 您的大一專業基礎課程學習情況，學習良好的課程 (多選):"):
     #df_sophomore.columns
-    df_sophomore.iloc[:,8] ## 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」
+    # df_sophomore.iloc[:,8] ## 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」
     
     ##### 按'科系'分组，然后将 '2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」' 此行的字符串按逗号分割并展平
     # split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
-    split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    # split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    split_values = df_sophomore.iloc[:,8].apply(lambda x: x.str.split(',| |，').explode())
     ##### 计算每个科系內部中不同子字符串的出现次数
     # counts = split_values.groupby(level=0).value_counts()
     counts = split_values.value_counts()
