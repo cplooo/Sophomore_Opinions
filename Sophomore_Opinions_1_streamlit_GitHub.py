@@ -389,7 +389,7 @@ with st.expander("1-1 選擇目前就讀科系的理由 (多選):"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -517,7 +517,7 @@ with st.expander("1-1 選擇目前就讀科系的理由 (多選):"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的位置
     r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
     #### 设置字体大小
@@ -747,7 +747,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -867,7 +867,7 @@ with st.expander("1-2 大學畢業後的規劃:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -966,7 +966,7 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -1091,7 +1091,7 @@ with st.expander("1-3 學習及生活費(書籍、住宿、交通、伙食等開
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -1212,7 +1212,7 @@ with st.expander("2-1 一年級就學期間是否曾經工讀:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -1327,7 +1327,7 @@ with st.expander("2-1 一年級就學期間是否曾經工讀:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -1438,7 +1438,7 @@ with st.expander("2-2 一年級「上學期」平均每周工讀時數(不列計
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -1554,7 +1554,7 @@ with st.expander("2-2 一年級「上學期」平均每周工讀時數(不列計
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -1655,7 +1655,7 @@ with st.expander("2-3 一年級「上學期」的工讀地點(不列計沒有工
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -1769,7 +1769,7 @@ with st.expander("2-3 一年級「上學期」的工讀地點(不列計沒有工
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -1879,7 +1879,7 @@ with st.expander("2-4 一年級「下學期」平均每周工讀時數(不列計
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -1995,7 +1995,7 @@ with st.expander("2-4 一年級「下學期」平均每周工讀時數(不列計
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -2095,7 +2095,7 @@ with st.expander("2-5 一年級「下學期」的工讀地點(不列計沒有工
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -2209,7 +2209,7 @@ with st.expander("2-5 一年級「下學期」的工讀地點(不列計沒有工
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -2308,7 +2308,7 @@ with st.expander("2-6 您二年級就學期間是否工讀:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -2423,7 +2423,7 @@ with st.expander("2-6 您二年級就學期間是否工讀:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -2537,7 +2537,7 @@ with st.expander("2-7 您二年級「上學期」平均每周工讀時數(不列
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -2653,7 +2653,7 @@ with st.expander("2-7 您二年級「上學期」平均每周工讀時數(不列
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -2755,7 +2755,7 @@ with st.expander("2-8 二年級「上學期」的工讀地點(不列計沒有工
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -2869,7 +2869,7 @@ with st.expander("2-8 二年級「上學期」的工讀地點(不列計沒有工
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -2965,7 +2965,7 @@ with st.expander("2-9 工讀最主要的原因(不列計沒有工讀):"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -3088,7 +3088,7 @@ with st.expander("2-9 工讀最主要的原因(不列計沒有工讀):"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -3195,7 +3195,7 @@ with st.expander("2-10 工讀次要的原因(不列計沒有工讀):"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -3319,7 +3319,7 @@ with st.expander("2-10 工讀次要的原因(不列計沒有工讀):"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -3427,7 +3427,7 @@ with st.expander("2-11 您每周平均上網時間為何:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -3541,7 +3541,7 @@ with st.expander("2-11 您每周平均上網時間為何:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -3640,7 +3640,7 @@ with st.expander("2-12 您上網主要用途為何:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -3755,7 +3755,7 @@ with st.expander("2-12 您上網主要用途為何:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -3856,7 +3856,7 @@ with st.expander("2-13 您上網次要用途為何:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -3971,7 +3971,7 @@ with st.expander("2-13 您上網次要用途為何:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -4068,7 +4068,7 @@ with st.expander("2-14 除了上課時間外，您每天平均念書的時間為
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -4184,7 +4184,7 @@ with st.expander("2-14 除了上課時間外，您每天平均念書的時間為
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -4294,7 +4294,7 @@ with st.expander("3-1 學習投入(依多數課程情況回答):上課時我 (�
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -4421,7 +4421,7 @@ with st.expander("3-1 學習投入(依多數課程情況回答):上課時我 (�
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -4539,7 +4539,7 @@ with st.expander("4-1 儀器設備滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -4650,7 +4650,7 @@ with st.expander("4-1 儀器設備滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -4752,7 +4752,7 @@ with st.expander("4-2 實驗器材滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -4863,7 +4863,7 @@ with st.expander("4-2 實驗器材滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -4966,7 +4966,7 @@ with st.expander("4-3 教室空間滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -5076,7 +5076,7 @@ with st.expander("4-3 教室空間滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -5178,7 +5178,7 @@ with st.expander("4-4 教室環境滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -5289,7 +5289,7 @@ with st.expander("4-4 教室環境滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -5392,7 +5392,7 @@ with st.expander("4-5 自學空間滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -5503,7 +5503,7 @@ with st.expander("4-5 自學空間滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -5608,7 +5608,7 @@ with st.expander("4-6 學校宿舍滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -5718,7 +5718,7 @@ with st.expander("4-6 學校宿舍滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -5821,7 +5821,7 @@ with st.expander("4-7 校園網路滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -5931,7 +5931,7 @@ with st.expander("4-7 校園網路滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -6208,7 +6208,7 @@ with st.expander("5-1 所屬學系專業必修課程規劃滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -6318,7 +6318,7 @@ with st.expander("5-1 所屬學系專業必修課程規劃滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -6421,7 +6421,7 @@ with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -6531,7 +6531,7 @@ with st.expander("5-2 所屬學系專業學程規劃滿意度:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -6634,7 +6634,7 @@ with st.expander("5-3「專業必選修」課程授課老師的教學方式滿�
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -6744,7 +6744,7 @@ with st.expander("5-3「專業必選修」課程授課老師的教學方式滿�
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -6847,7 +6847,7 @@ with st.expander("5-4 授課方式的學習效果比較:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -6955,7 +6955,7 @@ with st.expander("5-4 授課方式的學習效果比較:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -7075,7 +7075,7 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -7183,7 +7183,7 @@ with st.expander("5-5 就學期間老師的影響 (多選):"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -7323,7 +7323,7 @@ with st.expander("6-1「學習輔導/自主學習/飛鷹助學」學習輔導方
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -7431,7 +7431,7 @@ with st.expander("6-1「學習輔導/自主學習/飛鷹助學」學習輔導方
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -7534,7 +7534,7 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -7644,7 +7644,7 @@ with st.expander("6-2「生活相關輔導(導師/領頭羊)」學習輔導方�
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -7746,7 +7746,7 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -7856,7 +7856,7 @@ with st.expander("6-3「職涯輔導」學習輔導方案或輔導活動參與�
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -7959,7 +7959,7 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -8069,7 +8069,7 @@ with st.expander("6-4「外語教學中心學習輔導」學習輔導方案或�
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -8172,7 +8172,7 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -8282,7 +8282,7 @@ with st.expander("6-5「諮商暨健康中心的諮商輔導」學習輔導方�
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -8385,7 +8385,7 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -8495,7 +8495,7 @@ with st.expander("6-6「國際化資源」學習輔導方案或輔導活動參�
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
@@ -8598,7 +8598,7 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.2
+        bar_width = 0.1
         #### 设置y轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -8708,7 +8708,7 @@ with st.expander("6-7 有幫助的學習輔導方案或輔導活動 (多選):"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.2
+    bar_width = 0.1
     #### 设置y轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
