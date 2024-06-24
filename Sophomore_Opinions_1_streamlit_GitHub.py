@@ -6040,6 +6040,65 @@ st.markdown("##")  ## 更大的间隔
 
 ###### Part4-8 您最喜歡的校園地點(如無，請寫"無")
 with st.expander("4-8. 您最喜歡的校園地點:"):
+    # df_sophomore.columns
+    # df_sophomore.iloc[:,37] ## 7.校園網路
+    column_index = 37
+    item_name = "校園網路滿意度"
+    column_title.append(df_sophomore.columns[column_index][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    # proportions = value_counts/value_counts.sum()
+    proportions = value_counts/df_sophomore.shape[0]
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+    
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+    
+    # df_sophomore.columns
+    # df_sophomore.iloc[:,36] ## 7.校園網路
+    column_index = 37
+    item_name = "您最喜歡的校園地點"
+    column_title.append(df_sophomore.columns[column_index][2:])
+    ##### 将字符串按逗号分割并展平
+    split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
+    ##### 计算不同子字符串的出现次数
+    value_counts = split_values.value_counts()
+    ##### 计算不同子字符串的比例
+    proportions = value_counts/value_counts.sum()
+    ##### 轉換成 numpy array
+    value_counts_numpy = value_counts.values
+    proportions_numpy = proportions.values
+    items_numpy = proportions.index.to_numpy()
+    ##### 创建一个新的DataFrame来显示结果
+    result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+
+    ##### 使用Streamlit展示DataFrame，但不显示索引
+    # st.write(item_name, result_df.to_html(index=False), unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+    
+    
+    
+    
+    
     df_sophomore.iloc[:,37] ##  8. 您最喜歡的校園地點(如無，請寫"無")
     ##### 将字符串按逗号分割并展平
     split_values = df_sophomore.iloc[:,37].str.split(',| |，|、').explode()
