@@ -1212,7 +1212,7 @@ with st.expander("2-1 一年級就學期間是否曾經工讀:"):
         matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
         matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
         #### 设置条形的宽度
-        bar_width = 0.1
+        bar_width = 0.05
         #### 设置x轴的位置
         r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
         #### 设置字体大小
@@ -1327,7 +1327,7 @@ with st.expander("2-1 一年級就學期間是否曾經工讀:"):
     matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
     matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
     #### 设置条形的宽度
-    bar_width = 0.1
+    bar_width = 0.05
     #### 设置x轴的中心位置
     r = np.arange(len(dataframes[0]))  ## 
     #### 设置字体大小
