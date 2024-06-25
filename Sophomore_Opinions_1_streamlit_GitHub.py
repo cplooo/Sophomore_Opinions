@@ -8799,6 +8799,46 @@ st.markdown("##")  ## 更大的间隔
 
 
 
+###### Part6-8 您在課業上，是否有其他需要協助的，如無，請填「無」。
+with st.expander("6-8. 您在課業上，是否有其他需要協助的:"):
+    #df_sophomore.columns
+    # df_sophomore.iloc[:,54] ## 8. 您在課業上，是否有其他需要協助的，如無，請填「無」。
+    column_index = 54
+    
+    ##### 将 column_index 此行的字符串按逗号分割并展平
+    # split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    # split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    split_values = df_sophomore.iloc[:,column_index].str.split(';').explode()
+
+    ##### 去掉每一個字串前後的space
+    split_values = split_values.str.strip()
+
+    ##### 计算每个科系內部中不同子字符串的出现次数
+    # counts = split_values.groupby(level=0).value_counts()
+    counts = split_values.value_counts()
+    #type(counts)  ## pandas.core.series.Series
+
+    ##### 更改 series 的 index 欄位名稱
+    # counts.index.names = ['科系', '學習良好課程']
+    counts.index.names = ['您在課業上，是否有其他需要協助的']
+    
+    ##### 将 Series 'counts' 转换为DataFrame
+    #### 將 index 變columns
+    counts_df = counts.reset_index()
+    #### 將新的兩個columns 重新命名
+    counts_df.columns = ['您在課業上，是否有其他需要協助的', '人數']
+    # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
+    
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+
+st.markdown("##")  ## 更大的间隔
+
+
+
+
 
 # ####### Part5  課程規劃與教師教學滿意度(依多數課程情況回答)
 # ###### Part5-4 有關上述課程規劃與教師教學滿意度，針對不滿意項目提供意見或建議 (專業必修課程規劃、專業學程規劃、專業必選修課程授課老師教學方式)，如無，請填「無」。
