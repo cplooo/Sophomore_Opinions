@@ -8799,6 +8799,46 @@ st.markdown("##")  ## 更大的间隔
 
 
 
+# ###### Part6-8 您在課業上，是否有其他需要協助的，如無，請填「無」。
+# with st.expander("6-8. 您在課業上，是否有其他需要協助的:"):
+#     #df_sophomore.columns
+#     # df_sophomore.iloc[:,54] ## 8. 您在課業上，是否有其他需要協助的，如無，請填「無」。
+#     column_index = 54
+    
+#     ##### 将 column_index 此行的字符串按逗号分割并展平
+#     # split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+#     # split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+#     split_values = df_sophomore.iloc[:,column_index].str.split(';').explode()
+
+#     ##### 去掉每一個字串前後的space
+#     split_values = split_values.str.strip()
+
+#     ##### 计算每个科系內部中不同子字符串的出现次数
+#     # counts = split_values.groupby(level=0).value_counts()
+#     counts = split_values.value_counts()
+#     #type(counts)  ## pandas.core.series.Series
+
+#     ##### 更改 series 的 index 欄位名稱
+#     # counts.index.names = ['科系', '學習良好課程']
+#     counts.index.names = ['您在課業上，是否有其他需要協助的']
+    
+#     ##### 将 Series 'counts' 转换为DataFrame
+#     #### 將 index 變columns
+#     counts_df = counts.reset_index()
+#     #### 將新的兩個columns 重新命名
+#     counts_df.columns = ['您在課業上，是否有其他需要協助的', '人數']
+#     # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
+    
+#     ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+#     # st.write(choice)
+#     st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+#     st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+
+# st.markdown("##")  ## 更大的间隔
+
+
+
+
 ###### Part6-8 您在課業上，是否有其他需要協助的，如無，請填「無」。
 with st.expander("6-8. 您在課業上，是否有其他需要協助的:"):
     #df_sophomore.columns
@@ -8829,10 +8869,36 @@ with st.expander("6-8. 您在課業上，是否有其他需要協助的:"):
     counts_df.columns = ['您在課業上，是否有其他需要協助的', '人數']
     # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
     
-    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
-    # st.write(choice)
-    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-    st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+
+    # 預設帳號和密碼，可以根據需要修改
+    USERNAME = 'user'
+    PASSWORD = 'pass'
+    
+    # 創建登錄表單
+    st.sidebar.title('登入')
+    username = st.sidebar.text_input('帳號')
+    password = st.sidebar.text_input('密碼', type='password')
+    
+    # 檢查登錄信息是否正確
+    if st.sidebar.button('登入'):
+        if username == USERNAME and password == PASSWORD:
+            st.sidebar.success('登錄成功！')
+            ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+            # st.write(choice)
+            st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+            st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+            
+        else:
+        st.sidebar.error('帳號或密碼錯誤')
+    # 在未成功登入之前，顯示提示信息
+    if 'success' not in st.session_state:
+        st.write('請在左側輸入帳號和密碼進行登入。')
+
+
+    # ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # # st.write(choice)
+    # st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    # st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
 
 st.markdown("##")  ## 更大的间隔
 
