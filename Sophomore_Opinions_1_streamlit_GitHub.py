@@ -320,11 +320,12 @@ elif 院_系 == '1':
 # combined_df = pd.concat(dataframes, keys=selected_options)
 # # combined_df = pd.concat([dataframes[0], dataframes[1]], axis=0)
 
-
-
-
 df_streamlit = []
 column_title = []
+
+st.markdown("##")  ## 更大的间隔
+
+
 
 ####### Part1  基本資料
 st.markdown("""
@@ -6114,72 +6115,6 @@ with st.expander("4-9. 校園學習環境不滿意項目建議:"):
 
 st.markdown("##")  ## 更大的间隔
 
-# ###### Part4-9 請針對校園學習環境不滿意項目提供意見或建議 (儀器設備、實驗器材、教室空間、教室環境、自學空間、學校宿舍、校園網路)(如無，請寫"無")
-# df_sophomore.iloc[:,38] ##  9. 請針對校園學習環境不滿意項目提供意見或建議 (儀器設備、實驗器材、教室空間、教室環境、自學空間、學校宿舍、校園網路)(如無，請寫"無")
-# ##### 将字符串按逗号分割并展平
-# #split_values = df_sophomore.iloc[:,37].str.split(',| |，|、').explode()
-# # ##### 过滤出只包含'是'或'否'的子字符串
-# # filtered_values = split_values[split_values.isin(['是', '否'])]
-# ##### 计算不同子字符串的出现次数
-# #value_counts = split_values.value_counts()
-# value_counts = df_sophomore.iloc[:,38].value_counts()
-# ##### 计算不同子字符串的比例
-# proportions = value_counts / value_counts.sum()
-
-# #%% (二四) 以下
-# ##### 创建一个新的DataFrame来显示结果
-# result_df = pd.DataFrame({
-#     '人數': value_counts,
-#     '比例': proportions.round(3)
-# })
-# print('校園學習環境不滿意項目建議:')
-# print(result_df)
-# '''
-# 校園學習環境不滿意項目建議:
-#                        人數     比例
-# 無                    1321  0.725
-# 校園網路                   13  0.007
-# 學校宿舍                    8  0.004
-# ㄨˊ                      6  0.003
-# 「無」                     5  0.003
-#                   ...    ...
-# 階梯教室的座位太擁擠、桌子太小         1  0.001
-# 宿舍網路改善，宿舍加冰箱            1  0.001
-# 校園網路還是太差                1  0.001
-# 教室內椅子不要放那麼多，校園網路很卡      1  0.001
-# 學校Wifi 思源收不到，選課介面分散     1  0.001
-
-# [452 rows x 2 columns]
-# '''
-
-# #### 將 index 變column
-# result_df_r = result_df.reset_index()
-# #### 重新命名新的column
-# result_df_r.rename(columns={'index': '校園學習環境不滿意項目建議'}, inplace=True)
-# print(result_df_r)
-
-# '''
-#            校園學習環境不滿意項目建議    人數     比例
-# 0                      無  1321  0.725
-# 1                   校園網路    13  0.007
-# 2                   學校宿舍     8  0.004
-# 3                     ㄨˊ     6  0.003
-# 4                    「無」     5  0.003
-# ..                   ...   ...    ...
-# 447      階梯教室的座位太擁擠、桌子太小     1  0.001
-# 448         宿舍網路改善，宿舍加冰箱     1  0.001
-# 449             校園網路還是太差     1  0.001
-# 450   教室內椅子不要放那麼多，校園網路很卡     1  0.001
-# 451  學校Wifi 思源收不到，選課介面分散     1  0.001
-
-# [452 rows x 3 columns]
-# '''
-
-# result_df_r.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\校園學習環境不滿意項目建議.xlsx', index=False, engine='openpyxl')
-
-# #%% (二四) 以上
-
-
 
 
 with st.expander("學校學習環境滿意度:"):
@@ -6862,8 +6797,45 @@ st.markdown("##")  ## 更大的间隔
 
 
 
+###### Part5-4 有關上述課程規劃與教師教學滿意度，針對不滿意項目提供意見
+with st.expander("5-4. 有關上述課程規劃與教師教學滿意度，針對不滿意項目提供建議:"):
+    #df_sophomore.columns
+    # df_sophomore.iloc[:,43] ## 
+    column_index = 43
+    
+    ##### 将 column_index 此行的字符串按逗号分割并展平
+    # split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    # split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    split_values = df_sophomore.iloc[:,column_index].str.split(';').explode()
+
+    ##### 去掉每一個字串前後的space
+    split_values = split_values.str.strip()
+
+    ##### 计算每个科系內部中不同子字符串的出现次数
+    # counts = split_values.groupby(level=0).value_counts()
+    counts = split_values.value_counts()
+    #type(counts)  ## pandas.core.series.Series
+
+    ##### 更改 series 的 index 欄位名稱
+    # counts.index.names = ['科系', '學習良好課程']
+    counts.index.names = ['課程規劃與教師教學滿意度，針對不滿意項目提供建議']
+    
+    ##### 将 Series 'counts' 转换为DataFrame
+    #### 將 index 變columns
+    counts_df = counts.reset_index()
+    #### 將新的兩個columns 重新命名
+    counts_df.columns = ['課程規劃與教師教學滿意度，針對不滿意項目提供建議', '人數']
+    # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
+    
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+
+st.markdown("##")  ## 更大的间隔
+
 ###### Part5-5 您覺得哪一種授課方式的學習效果比較好?
-with st.expander("5-4 授課方式的學習效果比較:"):
+with st.expander("5-5 授課方式的學習效果比較:"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,44] ##  5. 您覺得哪一種授課方式的學習效果比較好?
     column_index = 44
@@ -7074,7 +7046,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### Part5-6 就學期間老師的影響 (可複選)
-with st.expander("5-5 就學期間老師的影響 (多選):"):
+with st.expander("5-6 就學期間老師的影響 (多選):"):
     # df_sophomore.columns
     # df_sophomore.iloc[:,45] ##  6. 就學期間老師的影響 (可複選)
     column_index = 45
