@@ -168,6 +168,8 @@ def LevelGroupsDraw(df,level1,level2,level3,figure_title,title_fontsize=15,xlabe
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+    
+    plt.close()  # 關閉當前圖形以釋放內存
 
 
 
@@ -447,6 +449,7 @@ with st.expander("1-1 選擇目前就讀科系的理由 (多選):"):
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        st.pyplot(plt)
 
     if 院_系 == '1':
         #### 設置中文顯示
@@ -478,7 +481,7 @@ with st.expander("1-1 選擇目前就讀科系的理由 (多選):"):
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
-
+        plt.close()  # 關閉當前圖形以釋放內存
 
     ##### 使用streamlit 畫比較圖
     # st.subheader("不同單位比較")
@@ -575,6 +578,7 @@ with st.expander("1-1 選擇目前就讀科系的理由 (多選):"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+    plt.close()  # 關閉當前圖形以釋放內存
 
 st.markdown("##")  ## 更大的间隔    
 
@@ -853,6 +857,7 @@ with st.expander("1-4 大學畢業後的規劃:"):
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        plt.close()  # 關閉當前圖形以釋放內存
 
     if 院_系 == '1':
         #### 設置中文顯示
@@ -883,6 +888,7 @@ with st.expander("1-4 大學畢業後的規劃:"):
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        plt.close()  # 關閉當前圖形以釋放內存
 
 
     ##### 使用streamlit 畫比較圖
@@ -966,6 +972,7 @@ with st.expander("1-4 大學畢業後的規劃:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+    plt.close()  # 關閉當前圖形以釋放內存
 
 st.markdown("##")  ## 更大的间隔    
 
@@ -1081,6 +1088,7 @@ with st.expander("1-5 學習及生活費(書籍、住宿、交通、伙食等開
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        plt.close()  # 關閉當前圖形以釋放內存
 
     if 院_系 == '1':
         #### 設置中文顯示
@@ -1111,6 +1119,7 @@ with st.expander("1-5 學習及生活費(書籍、住宿、交通、伙食等開
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        plt.close()  # 關閉當前圖形以釋放內存
 
 
     ##### 使用streamlit 畫比較圖
@@ -1201,6 +1210,7 @@ with st.expander("1-5 學習及生活費(書籍、住宿、交通、伙食等開
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+    plt.close()  # 關閉當前圖形以釋放內存
 
 st.markdown("##")  ## 更大的间隔    
 
@@ -1317,6 +1327,7 @@ with st.expander("2-1 一年級就學期間是否曾經工讀:"):
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        plt.close()  # 關閉當前圖形以釋放內存
 
     if 院_系 == '1':
         #### 設置中文顯示
@@ -1347,6 +1358,7 @@ with st.expander("2-1 一年級就學期間是否曾經工讀:"):
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        plt.close()  # 關閉當前圖形以釋放內存
 
 
     ##### 使用streamlit 畫比較圖
@@ -1425,6 +1437,7 @@ with st.expander("2-1 一年級就學期間是否曾經工讀:"):
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+    plt.close()  # 關閉當前圖形以釋放內存
 
 
 st.markdown("##")  ## 更大的间隔    
@@ -6138,7 +6151,7 @@ with st.expander("學校學習環境滿意度:"):
     
     
     LevelGroupsDraw(df_sophomore_r,level1='不滿意',level2='普通',level3='滿意',figure_title=figure_title,title_fontsize=13,xlabel_fontsize=12,ylabel_fontsize=12,yticklabel_fontsize=12,annotation_fontsize=12,legend_fontsize=12,width=10,height=6)
-
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔
 
 
@@ -7294,7 +7307,7 @@ with st.expander("課程規劃與教師教學滿意度:"):
     
     
     LevelGroupsDraw(df_sophomore_r,level1='不滿意',level2='普通',level3='滿意',figure_title=figure_title,title_fontsize=13,xlabel_fontsize=12,ylabel_fontsize=12,yticklabel_fontsize=12,annotation_fontsize=12,legend_fontsize=12,width=10,height=6)
-
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
@@ -8870,35 +8883,35 @@ with st.expander("6-8. 您在課業上，是否有其他需要協助的:"):
     # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
     
 
-    # 預設帳號和密碼，可以根據需要修改
-    USERNAME = 'user'
-    PASSWORD = 'pass'
+    # # 預設帳號和密碼，可以根據需要修改
+    # USERNAME = 'user'
+    # PASSWORD = 'pass'
     
-    # 創建登錄表單
-    st.sidebar.title('登入')
-    username = st.sidebar.text_input('帳號')
-    password = st.sidebar.text_input('密碼', type='password')
+    # # 創建登錄表單
+    # st.sidebar.title('登入')
+    # username = st.sidebar.text_input('帳號')
+    # password = st.sidebar.text_input('密碼', type='password')
     
-    # 檢查登錄信息是否正確
-    if st.sidebar.button('登入'):
-        if username == USERNAME and password == PASSWORD:
-            st.sidebar.success('登錄成功！')
-            ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
-            # st.write(choice)
-            st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-            st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+    # # 檢查登錄信息是否正確
+    # if st.sidebar.button('登入'):
+    #     if username == USERNAME and password == PASSWORD:
+    #         st.sidebar.success('登錄成功！')
+    #         ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    #         # st.write(choice)
+    #         st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    #         st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
             
-        else:
-            st.sidebar.error('帳號或密碼錯誤')
-    # 在未成功登入之前，顯示提示信息
-    if 'success' not in st.session_state:
-        st.write('請在左側輸入帳號和密碼進行登入。')
+    #     else:
+    #         st.sidebar.error('帳號或密碼錯誤')
+    # # 在未成功登入之前，顯示提示信息
+    # if 'success' not in st.session_state:
+    #     st.write('請在左側輸入帳號和密碼進行登入。')
 
 
-    # ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
-    # # st.write(choice)
-    # st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-    # st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
 
 st.markdown("##")  ## 更大的间隔
 
