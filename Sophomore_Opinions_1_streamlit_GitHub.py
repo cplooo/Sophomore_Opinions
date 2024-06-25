@@ -6038,109 +6038,81 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-# ###### Part4-8 您最喜歡的校園地點(如無，請寫"無")
-# with st.expander("4-8. 您最喜歡的校園地點:"):
-#     # df_sophomore.columns
-#     # df_sophomore.iloc[:,37] ## 7.校園網路
-#     column_index = 37
-#     item_name = "您最喜歡的校園地點"
-#     column_title.append(df_sophomore.columns[column_index][6:])
-#     ##### 将字符串按逗号分割并展平
-#     split_values = df_sophomore.iloc[:,column_index].str.split(',').explode()
-#     ##### 计算不同子字符串的出现次数
-#     value_counts = split_values.value_counts()
-#     ##### 计算不同子字符串的比例
-#     # proportions = value_counts/value_counts.sum()
-#     proportions = value_counts/df_sophomore.shape[0]
-#     ##### 轉換成 numpy array
-#     value_counts_numpy = value_counts.values
-#     proportions_numpy = proportions.values
-#     items_numpy = proportions.index.to_numpy()
-#     ##### 创建一个新的DataFrame来显示结果
-#     result_df = pd.DataFrame({'項目':items_numpy, '人數': value_counts_numpy,'比例': proportions_numpy.round(4)})
-#     ##### 存到 list 'df_streamlit'
-#     df_streamlit.append(result_df)  
-
-    
-#     ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
-#     # st.write(choice)
-#     st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-#     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
-#     st.markdown("##")  ## 更大的间隔
-
-    
-# st.markdown("##")  ## 更大的间隔
-
-
-
 ###### Part4-8 您最喜歡的校園地點(如無，請寫"無")
 with st.expander("4-8. 您最喜歡的校園地點:"):
     #df_sophomore.columns
     # df_sophomore.iloc[:,37] ## 
     column_index = 37
     
-    ##### 将 '2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」' 此行的字符串按逗号分割并展平
+    ##### 将 column_index 此行的字符串按逗号分割并展平
     # split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
     # split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
     split_values = df_sophomore.iloc[:,column_index].str.split(',| |，').explode()
-    ### 去掉每一個字串前後的space
+
+    ##### 去掉每一個字串前後的space
     split_values = split_values.str.strip()
+
     ##### 计算每个科系內部中不同子字符串的出现次数
     # counts = split_values.groupby(level=0).value_counts()
     counts = split_values.value_counts()
     #type(counts)  ## pandas.core.series.Series
+
     ##### 更改 series 的 index 欄位名稱
     # counts.index.names = ['科系', '學習良好課程']
     counts.index.names = ['您最喜歡的校園地點']
     
-    # print(counts)
-    # '''
-    # 科系   學習良好課程    
-    # 中文系  無             27
-    #       文學概論           8
-    #       語言學概論          7
-    #       兒童文學概論         5
-    #       國學導讀           4
-    #                     ..
-    # 食營系  食品基礎分析化學實驗     1
-    #       食品基礎分析實驗       1
-    #       食品工程           1
-    #       食物製備           1
-    #       食物製備實驗         1
-    # Name: 2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」, Length: 590, dtype: int64
-    # '''
-    ##### 将 MultiIndex Series 'counts' 转换为DataFrame
-    #### 將 兩個index 變columns
+    ##### 将 Series 'counts' 转换为DataFrame
+    #### 將 index 變columns
     counts_df = counts.reset_index()
     #### 將新的兩個columns 重新命名
-    # counts_df.columns = ['科系', '學習良好課程', '人數']
     counts_df.columns = ['您最喜歡的校園地點', '人數']
-    # print(counts_df)
-    # '''
-    #       科系      學習良好課程  人數
-    # 0    中文系           無  27
-    # 1    中文系        文學概論   8
-    # 2    中文系       語言學概論   7
-    # 3    中文系      兒童文學概論   5
-    # 4    中文系        國學導讀   4
-    # ..   ...         ...  ..
-    # 585  食營系  食品基礎分析化學實驗   1
-    # 586  食營系    食品基礎分析實驗   1
-    # 587  食營系        食品工程   1
-    # 588  食營系        食物製備   1
-    # 589  食營系      食物製備實驗   1
-    
-    # [590 rows x 3 columns]
-    # '''
     # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
     
-    #### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
     # st.write(choice)
     st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
     st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
 
 st.markdown("##")  ## 更大的间隔 
 
+
+
+###### Part4-9 請針對校園學習環境不滿意項目提供意見或建議 (儀器設備、實驗器材、教室空間、教室環境、自學空間、學校宿舍、校園網路)(如無，請寫"無")
+with st.expander("4-8. 您最喜歡的校園地點:"):
+    #df_sophomore.columns
+    # df_sophomore.iloc[:,38] ## 
+    column_index = 38
+    
+    ##### 将 column_index 此行的字符串按逗号分割并展平
+    # split_values = df_sophomore.groupby('科系')['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    # split_values = df_sophomore.['2.您的大一專業基礎課程學習情況，學習良好的課程名稱請以「,」隔開，如無，請填「無」'].apply(lambda x: x.str.split(',| |，').explode())
+    split_values = df_sophomore.iloc[:,column_index].str.split(',| |，').explode()
+
+    ##### 去掉每一個字串前後的space
+    split_values = split_values.str.strip()
+
+    ##### 计算每个科系內部中不同子字符串的出现次数
+    # counts = split_values.groupby(level=0).value_counts()
+    counts = split_values.value_counts()
+    #type(counts)  ## pandas.core.series.Series
+
+    ##### 更改 series 的 index 欄位名稱
+    # counts.index.names = ['科系', '學習良好課程']
+    counts.index.names = ['校園學習環境不滿意項目建議']
+    
+    ##### 将 Series 'counts' 转换为DataFrame
+    #### 將 index 變columns
+    counts_df = counts.reset_index()
+    #### 將新的兩個columns 重新命名
+    counts_df.columns = ['校園學習環境不滿意項目建議', '人數']
+    # counts_df.to_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\大二學生學習投入問卷調查分析\112\各學系大一學習良好課程.xlsx', index=False, engine='openpyxl')
+    
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(counts_df.to_html(index=False), unsafe_allow_html=True)
+
+st.markdown("##")  ## 更大的间隔
 
 # ###### Part4-9 請針對校園學習環境不滿意項目提供意見或建議 (儀器設備、實驗器材、教室空間、教室環境、自學空間、學校宿舍、校園網路)(如無，請寫"無")
 # df_sophomore.iloc[:,38] ##  9. 請針對校園學習環境不滿意項目提供意見或建議 (儀器設備、實驗器材、教室空間、教室環境、自學空間、學校宿舍、校園網路)(如無，請寫"無")
