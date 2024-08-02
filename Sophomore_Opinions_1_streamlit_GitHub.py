@@ -1661,7 +1661,7 @@ with st.expander("2-2 一年級「上學期」平均每周工讀時數(不列計
     ## 计算每个组的中心位置r作为x轴刻度位置
     # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
     ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    # ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
+    # ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))  ## <注意> 使用這個程式設定ticks 會錯誤 (要使用 r 而不是 np.arange(num_bars))
     # ax.set_xticklabels(desired_order, fontsize=xticklabel_fontsize)
     # ax.set_xticklabels(df['項目'].values, fontsize=xticklabel_fontsize)
     ax.set_xticklabels(desired_order, fontsize=xticklabel_fontsize)
