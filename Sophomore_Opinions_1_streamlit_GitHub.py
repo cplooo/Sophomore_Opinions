@@ -2107,8 +2107,8 @@ with st.expander("2-4 一年級「下學期」平均每周工讀時數(不列計
     ### 添加x轴标签
     ## 计算每个组的中心位置r作为x轴刻度位置
     # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    # ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
     # ax.set_xticklabels(desired_order, fontsize=xticklabel_fontsize)
     ax.set_xticklabels(desired_order, fontsize=xticklabel_fontsize)
     ### 设置标题和轴标签
@@ -2774,8 +2774,8 @@ with st.expander("2-7 您二年級「上學期」平均每周工讀時數(不列
     ### 添加x轴标签
     ## 计算每个组的中心位置r作为x轴刻度位置
     # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
+    ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+    # ax.set_xticks(np.arange(num_bars) + bar_width * (len(dataframes) / 2))
     # ax.set_xticklabels(desired_order, fontsize=xticklabel_fontsize)
     ax.set_xticklabels(desired_order, fontsize=xticklabel_fontsize)
     ### 设置标题和轴标签
