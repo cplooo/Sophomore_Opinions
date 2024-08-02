@@ -1468,7 +1468,11 @@ with st.expander("2-2 一年級「上學期」平均每周工讀時數(不列計
        
   
     ##### 计算不同子字符串的比例
-    proportions = value_counts/value_counts.sum()   ## 因為二年級沒有工讀的不會回答工讀時數, 因此 "value_counts.sum()" 不會等於 "填答人數"
+    if value_counts.sum()!=0:
+        proportions = value_counts/value_counts.sum()   ## 因為二年級沒有工讀的不會回答工讀時數, 因此 "value_counts.sum()" 不會等於 "填答人數"
+    else:
+        proportions = value_counts
+    
     ##### 轉換成 numpy array
     value_counts_numpy = value_counts.values
     proportions_numpy = proportions.values
